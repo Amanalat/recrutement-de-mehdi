@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Le Recrutement de Mehdi</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07070f;--bg2:#0f0f1e;--bg3:#16162a;--border:#22223a;
+  --text:#e4e4f4;--dim:#6060a0;
+  --c:#4f8fff;--c2:rgba(79,143,255,.12);
+  --r:#f59e0b;--r2:rgba(245,158,11,.12);
+  --g:#22c55e;--red:#ef4444;--yel:#f5c842;
+  --rad:12px;--rad-sm:8px;
+}
+html,body{height:100%;font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;font-size:16px}
+button{font-family:inherit;cursor:pointer}
+
+/* ── SCREENS ── */
+.screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+
+/* ── WELCOME ── */
+.welcome-box{text-align:center;max-width:480px;width:100%}
+.game-eyebrow{font-size:.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--dim);margin-bottom:14px}
+.game-title{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,6vw,3.4rem);font-weight:900;line-height:1.1;margin-bottom:10px;background:linear-gradient(135deg,#fff 40%,var(--dim));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.game-desc{color:var(--dim);margin-bottom:40px;font-size:.95rem}
+.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+@media(max-width:420px){.role-grid{grid-template-columns:1fr}}
+.role-card{background:var(--bg2);border:2px solid var(--border);border-radius:var(--rad);padding:22px 16px;text-align:center;transition:all .2s;color:var(--text)}
+.role-card:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.4)}
+.role-c{border-color:color-mix(in srgb,var(--c) 40%,transparent)}
+.role-c:hover{background:var(--c2);border-color:var(--c)}
+.role-r{border-color:color-mix(in srgb,var(--r) 40%,transparent)}
+.role-r:hover{background:var(--r2);border-color:var(--r)}
+.role-icon{font-size:2rem;margin-bottom:8px}
+.role-name{font-weight:700;font-size:.95rem;margin-bottom:4px}
+.role-hint{font-size:.75rem;color:var(--dim)}
+.admin-link{background:none;border:none;color:var(--dim);font-size:.8rem;padding:6px 12px;border-radius:var(--rad-sm);transition:color .2s}
+.admin-link:hover{color:var(--text)}
+.preview-link{background:var(--bg2);border:1px solid var(--border);color:var(--dim);font-size:.8rem;padding:8px 16px;border-radius:var(--rad-sm);transition:all .2s;display:inline-block;margin-bottom:8px}
+.preview-link:hover{color:var(--text);border-color:#444}
+
+/* ── PREVIEW ── */
+.preview-wrap{max-width:1100px;width:100%;margin:0 auto;padding:28px 20px}
+.preview-header{display:flex;align-items:center;gap:16px;margin-bottom:28px;flex-wrap:wrap}
+.preview-header h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;flex:1}
+.preview-step-nav{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.pnav-btn{padding:6px 12px;border-radius:var(--rad-sm);border:1px solid var(--border);background:var(--bg2);color:var(--dim);font-size:.78rem;transition:all .15s}
+.pnav-btn:hover{border-color:#555;color:var(--text)}
+.pnav-btn-cur{background:var(--bg3);border-color:#555;color:var(--text);font-weight:600}
+.preview-body{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:0}
+@media(max-width:720px){.preview-body{grid-template-columns:1fr}}
+.preview-col{display:flex;flex-direction:column;gap:14px}
+.preview-col-hdr{display:flex;align-items:center;gap:8px;margin-bottom:2px}
+.preview-doc-wrap{overflow-x:auto}
+.preview-doc-wrap .doc{max-width:100%}
+.preview-ctx{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rad);padding:14px 16px}
+.preview-ctx-lbl{font-size:.65rem;text-transform:uppercase;letter-spacing:1px;color:var(--dim);margin-bottom:6px}
+.preview-ctx p{font-size:.84rem;color:var(--text);line-height:1.65}
+.preview-vote-q{background:var(--bg3);border-radius:var(--rad-sm);padding:12px 14px;font-size:.84rem;color:var(--dim);font-style:italic;border-left:3px solid var(--border)}
+.preview-divider{width:1px;background:var(--border);display:none}
+.preview-step-title{font-size:.72rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--dim);text-align:center;margin-bottom:16px}
+
+/* ── AUTH ── */
+.auth-box{max-width:380px;width:100%}
+.auth-box h2{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;margin-bottom:6px}
+.auth-sub{color:var(--dim);font-size:.9rem;margin-bottom:24px}
+.code-input{width:100%;padding:14px 16px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--rad-sm);color:var(--text);font-size:1rem;margin-bottom:10px;outline:none;transition:border-color .2s}
+.code-input:focus{border-color:var(--c)}
+.err{color:var(--red);font-size:.82rem;margin-bottom:10px}
+
+/* ── PARTICIPANT SCREENS ── */
+.part-screen{align-items:flex-start;padding:0}
+.part-inner{width:100%;max-width:520px;margin:0 auto;padding:20px}
+.role-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:100px;font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px}
+.badge-c{background:var(--c2);color:var(--c);border:1px solid color-mix(in srgb,var(--c) 30%,transparent)}
+.badge-r{background:var(--r2);color:var(--r);border:1px solid color-mix(in srgb,var(--r) 30%,transparent)}
+.step-chip{display:inline-block;background:var(--bg3);border:1px solid var(--border);border-radius:100px;padding:3px 12px;font-size:.72rem;color:var(--dim);margin-bottom:16px}
+.ctx-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rad);padding:16px 18px;margin-bottom:16px}
+.ctx-label{font-size:.65rem;text-transform:uppercase;letter-spacing:1px;color:var(--dim);margin-bottom:6px}
+.ctx-card p{font-size:.88rem;color:var(--text);line-height:1.65}
+.ctx-small p{font-size:.82rem}
+
+.waiting-row{display:flex;align-items:center;gap:10px;color:var(--dim);font-size:.85rem;padding:8px 0}
+.dot-pulse{width:8px;height:8px;border-radius:50%;background:var(--g);animation:dpulse 1.6s ease-in-out infinite}
+@keyframes dpulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.7)}}
+
+.vote-area{padding-top:4px}
+.vote-q{font-size:1.1rem;font-weight:600;margin-bottom:24px;line-height:1.5}
+.likert-wrap{margin-bottom:28px}
+.likert-ends{display:flex;justify-content:space-between;margin-bottom:8px}
+.likert-ends span{font-size:.7rem;color:var(--dim);max-width:38%}
+.likert-ends span:last-child{text-align:right}
+.likert-row{display:flex;gap:8px;justify-content:center}
+.lbtn{width:54px;height:54px;border-radius:50%;border:2px solid var(--border);background:var(--bg2);color:var(--text);font-size:1.1rem;font-weight:700;transition:all .15s}
+.lbtn:hover{border-color:var(--c);background:var(--c2);transform:scale(1.08)}
+.lbtn-sel{border-color:var(--g)!important;background:rgba(34,197,94,.15)!important;color:var(--g)}
+
+/* ── VOTED ── */
+.voted-box{text-align:center}
+.voted-icon{width:72px;height:72px;border-radius:50%;background:rgba(34,197,94,.15);border:2px solid var(--g);color:var(--g);font-size:1.8rem;display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+.voted-box h2{font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:8px}
+.voted-box p{color:var(--dim);font-size:.9rem}
+
+/* ── BUTTONS ── */
+.btn-primary{width:100%;padding:15px;border-radius:var(--rad-sm);border:none;background:var(--g);color:#000;font-size:.95rem;font-weight:700;transition:opacity .2s}
+.btn-primary:hover:not(:disabled){opacity:.85}
+.btn-disabled{opacity:.3;cursor:not-allowed!important}
+.back{background:none;border:none;color:var(--dim);font-size:.85rem;display:flex;align-items:center;gap:6px;margin-bottom:20px;padding:0;transition:color .2s}
+.back:hover{color:var(--text)}
+
+/* ── ADMIN LAYOUT ── */
+.admin-layout{display:grid;grid-template-columns:1fr 300px;min-height:100vh}
+.admin-layout.proj-mode{grid-template-columns:1fr}
+.admin-layout.proj-mode .admin-sidebar{display:none}
+
+.doc-panel{background:var(--bg);padding:40px 32px;overflow-y:auto;display:flex;flex-direction:column;align-items:center}
+.doc-step-label{font-size:.72rem;text-transform:uppercase;letter-spacing:2px;color:var(--dim);margin-bottom:20px;text-align:center}
+
+.admin-sidebar{background:var(--bg2);border-left:1px solid var(--border);overflow-y:auto}
+.sidebar-inner{padding:20px;display:flex;flex-direction:column;gap:0}
+.sb-section{padding:14px 0}
+.sb-label{font-size:.65rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--dim);margin-bottom:10px}
+.sb-divider{height:1px;background:var(--border);margin:0 0}
+
+.progress-row{display:flex;gap:5px;margin-bottom:10px}
+.pdot{flex:1;height:4px;border-radius:2px;background:var(--border);transition:background .3s}
+.pdot-done{background:var(--g)}
+.pdot-cur{background:var(--yel)}
+.step-display{font-family:'Playfair Display',serif;font-size:2.6rem;font-weight:900;line-height:1;color:var(--text)}
+.step-display span{font-size:1rem;color:var(--dim);font-family:'DM Sans',sans-serif;font-weight:400}
+.step-name{font-size:.78rem;color:var(--dim);margin-bottom:10px;margin-top:2px}
+.nav-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.nav-btn{padding:9px;border-radius:var(--rad-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text);font-size:.8rem;font-weight:600;transition:all .15s}
+.nav-btn:hover:not(:disabled){border-color:#555}
+.nav-btn:disabled{opacity:.3;cursor:not-allowed}
+.nav-next{background:rgba(79,143,255,.1);border-color:color-mix(in srgb,var(--c) 40%,transparent);color:var(--c)}
+.nav-next:hover:not(:disabled){background:rgba(79,143,255,.2)!important}
+
+.action-btn{width:100%;padding:10px 14px;border-radius:var(--rad-sm);font-size:.82rem;font-weight:600;margin-bottom:6px;transition:all .15s}
+.action-btn:last-child{margin-bottom:0}
+.btn-start{background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.4);color:var(--g)}
+.btn-start:hover{background:rgba(34,197,94,.2)}
+.btn-stop{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.4);color:var(--red)}
+.btn-stop:hover{background:rgba(239,68,68,.2)}
+.btn-results{background:rgba(245,200,66,.08);border:1px solid rgba(245,200,66,.3);color:var(--yel)}
+.btn-results:hover{background:rgba(245,200,66,.15)}
+.btn-results-active{background:rgba(245,200,66,.2);border:1px solid var(--yel);color:var(--yel)}
+.btn-proj{background:var(--bg3);border:1px solid var(--border);color:var(--dim)}
+.btn-proj:hover{color:var(--text);border-color:#555}
+.btn-reset{background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.25);color:var(--red)}
+.btn-reset:hover{background:rgba(239,68,68,.15)}
+
+.vote-mini-counts{margin-top:10px;display:flex;flex-direction:column;gap:5px}
+.vmc-row{display:flex;align-items:center;gap:8px;font-size:.8rem;color:var(--dim)}
+.vmc-row strong{margin-left:auto;color:var(--text);font-size:.9rem}
+.vmc-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.dot-c{background:var(--c)}
+.dot-r{background:var(--r)}
+
+/* ── RESULTS ── */
+.results-panel{margin-top:12px;display:flex;flex-direction:column;gap:12px}
+.res-team{background:var(--bg3);border-radius:var(--rad-sm);padding:12px}
+.res-team-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.res-team-name{font-size:.75rem;font-weight:600;color:var(--dim)}
+.res-avg{font-size:1.3rem;font-weight:800;font-family:'Playfair Display',serif}
+.res-avg small{font-size:.6rem;font-weight:400;color:var(--dim);font-family:'DM Sans',sans-serif}
+.avg-c{color:var(--c)}
+.avg-r{color:var(--r)}
+.res-bars{display:flex;gap:4px;align-items:flex-end;height:72px}
+.res-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;height:100%;justify-content:flex-end}
+.res-bar{width:100%;border-radius:3px 3px 0 0;min-height:4px;transition:height .4s}
+.bar-c{background:var(--c)}
+.bar-r{background:var(--r)}
+.res-bar-lbl{font-size:.6rem;color:var(--dim)}
+.res-bar-n{font-size:.6rem;color:var(--text);font-weight:600}
+
+/* ── DOCUMENTS (white paper on dark) ── */
+.doc{background:#fff;color:#1a1a2e;border-radius:var(--rad);box-shadow:0 8px 60px rgba(0,0,0,.6);max-width:660px;width:100%;overflow:hidden}
+.doc-paper{padding:32px}
+
+/* CV */
+.cv-header{border-bottom:2.5px solid #1a1a2e;padding-bottom:16px;margin-bottom:20px}
+.cv-name{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;letter-spacing:1px;color:#0a0a1a}
+.cv-title{font-size:.95rem;color:#555;margin:2px 0}
+.cv-contact{font-family:monospace;font-size:.75rem;color:#888;margin-top:4px}
+.cv-section{margin-bottom:18px}
+.cv-section-title{font-size:.65rem;text-transform:uppercase;letter-spacing:2px;color:#aaa;border-bottom:1px solid #eee;padding-bottom:5px;margin-bottom:12px;font-weight:600}
+.cv-job{margin-bottom:14px}
+.cv-job-top{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:4px;margin-bottom:5px}
+.cv-job-top strong{font-size:.85rem;color:#111}
+.cv-date{font-size:.72rem;color:#999;font-family:monospace;white-space:nowrap}
+.cv-job ul{padding-left:18px}
+.cv-job li{font-size:.83rem;color:#444;margin-bottom:2px;line-height:1.5}
+.cv-gap{background:#fffbeb;border-left:3px solid #f59e0b;padding:7px 12px;font-size:.78rem;color:#92400e;margin:6px 0;border-radius:0 4px 4px 0}
+.cv-section p{font-size:.83rem;color:#444;margin-bottom:3px}
+
+/* Transcript */
+.transcript-header{background:#1e1e2e;color:#aaa;padding:10px 16px;margin:-32px -32px 24px;font-size:.8rem;font-family:monospace;display:flex;justify-content:space-between}
+.transcript-body{display:flex;flex-direction:column;gap:13px}
+.tline{display:flex;gap:12px}
+.tspk{font-weight:700;font-size:.68rem;text-transform:uppercase;letter-spacing:1px;width:56px;flex-shrink:0;padding-top:3px}
+.tline-rh .tspk{color:#c2410c}
+.tline-c .tspk{color:#1d4ed8}
+.ttxt{font-size:.87rem;color:#222;line-height:1.65}
+.ttxt em{color:#999;font-size:.82rem}
+
+/* Email */
+.email-meta{background:#f4f4f6;margin:-32px -32px 22px;padding:18px 32px;border-bottom:1px solid #e0e0e8}
+.email-alert{background:#fff7ed;border-bottom-color:#fed7aa}
+.email-row{display:flex;gap:10px;margin-bottom:3px;font-size:.83rem}
+.email-lbl{color:#aaa;width:48px;flex-shrink:0}
+.email-body p{font-size:.87rem;color:#1a1a2e;margin-bottom:13px;line-height:1.7}
+.email-table{background:#f4f4f6;border-radius:6px;padding:10px 14px;margin:10px 0}
+.email-tr{display:flex;gap:12px;padding:4px 0;border-bottom:1px solid #e8e8f0;font-size:.82rem}
+.email-tr:last-child{border-bottom:none}
+.email-tr span:first-child{color:#999;width:110px;flex-shrink:0}
+.email-attach{background:#eff6ff;border-radius:6px;padding:9px 12px;font-size:.78rem;color:#1d4ed8;margin-top:14px;border:1px solid #bfdbfe}
+
+/* Slack */
+.slack-topbar{background:#3c0063;color:#e0c8ff;padding:11px 20px;font-size:.85rem;font-weight:600}
+.slack-body{padding:20px}
+.slack-msg{display:flex;gap:10px;margin-bottom:14px}
+.slack-reply{padding-left:30px}
+.slack-time{font-size:.68rem;color:#aaa;width:36px;flex-shrink:0;padding-top:2px}
+.slack-content{flex:1}
+.slack-user{font-weight:700;font-size:.82rem;color:#1a1a2e;display:block;margin-bottom:2px}
+.slack-badge{background:#eee;font-weight:400;font-size:.68rem;padding:1px 6px;border-radius:3px;margin-left:4px;font-style:normal;color:#666}
+.slack-text{font-size:.85rem;color:#222;display:block;margin-bottom:3px;line-height:1.5}
+.slack-react{font-size:.78rem;color:#888;display:block}
+.slack-note{background:#f5f5f5;border-radius:6px;padding:9px 12px;font-size:.75rem;color:#999;font-style:italic;margin-top:6px}
+
+/* Eval */
+.eval-top{text-align:center;border-bottom:2.5px solid #1a1a2e;padding-bottom:14px;margin-bottom:16px}
+.eval-confid{display:inline-block;background:#fef2f2;color:#b91c1c;font-size:.65rem;font-weight:700;letter-spacing:2px;padding:3px 12px;border-radius:100px;margin-bottom:7px;border:1px solid #fecaca}
+.eval-title{font-size:.9rem;font-weight:700;letter-spacing:.5px;margin-bottom:7px;font-family:'Playfair Display',serif}
+.eval-meta{font-size:.75rem;color:#777;line-height:1.8}
+.eval-grid{margin-bottom:16px}
+.eval-row{display:grid;grid-template-columns:2fr 80px 2fr;gap:10px;padding:7px 0;border-bottom:1px solid #f0f0f0;font-size:.8rem;align-items:center}
+.eval-head{font-weight:700;font-size:.67rem;text-transform:uppercase;letter-spacing:1px;color:#bbb}
+.eval-row span:last-child{color:#666;font-style:italic}
+.estars{letter-spacing:2px;color:#f59e0b;font-size:.9rem}
+.elow{color:#ef4444}
+.eval-comment{background:#f8f8fb;border-radius:6px;padding:13px;margin-bottom:14px}
+.eval-comment-lbl{font-size:.67rem;text-transform:uppercase;letter-spacing:1px;color:#aaa;margin-bottom:7px;font-weight:600}
+.eval-comment p{font-size:.85rem;color:#333;line-height:1.65;font-style:italic}
+.eval-decision{display:flex;flex-wrap:wrap;gap:14px;font-size:.8rem;color:#555;padding-top:10px;border-top:2px solid #1a1a2e}
+.eval-pending{color:#c2410c;font-weight:600}
+
+
+/* ── BIAIS PANEL ── */
+.biais-panel{background:linear-gradient(135deg,rgba(245,200,66,.06),rgba(79,143,255,.06));border:1px solid rgba(245,200,66,.25);border-radius:var(--rad);padding:14px 16px;margin-top:10px}
+.biais-top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.biais-icon{font-size:1.1rem}
+.biais-name{font-weight:800;font-size:.85rem;color:var(--yel)}
+.biais-def{font-size:.78rem;color:var(--dim);line-height:1.55;margin-bottom:10px;font-style:italic}
+.biais-split{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:520px){.biais-split{grid-template-columns:1fr}}
+.biais-side{border-radius:var(--rad-sm);padding:9px 11px;font-size:.78rem;line-height:1.55}
+.biais-side-c{background:var(--c2);border:1px solid rgba(79,143,255,.2)}
+.biais-side-r{background:var(--r2);border:1px solid rgba(245,158,11,.2)}
+.biais-side-lbl{font-size:.62rem;text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:4px;display:block}
+.biais-side-c .biais-side-lbl{color:var(--c)}
+.biais-side-r .biais-side-lbl{color:var(--r)}
+.biais-side p{color:var(--text)}
+
+/* preview biais */
+.preview-biais{margin-top:14px}
+/* ── PROJ TOGGLE ── */
+.proj-toggle-btn{position:fixed;top:12px;right:12px;background:rgba(15,15,30,.8);border:1px solid var(--border);color:var(--dim);padding:5px 13px;border-radius:100px;font-size:.72rem;cursor:pointer;backdrop-filter:blur(8px);z-index:100;transition:all .2s}
+.proj-toggle-btn:hover{color:var(--text);border-color:#555}
+
+@media(max-width:640px){
+  .admin-layout{grid-template-columns:1fr}
+  .admin-sidebar{border-left:none;border-top:1px solid var(--border)}
+  .doc-paper{padding:20px}
+  .transcript-header{margin:-20px -20px 18px}
+  .email-meta{margin:-20px -20px 18px;padding:14px 20px}
+  .lbtn{width:48px;height:48px;font-size:1rem}
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+'use strict';
+
+// ══ CONFIG ══
+const ADMIN_CODE = 'mehdi2024';
+
+const STEPS = [
+  {title:'Étape 1',sub:'Découverte du CV',
+   q:'À la lecture de ce CV, ce profil vous semble-t-il convaincant pour un poste de chargé de communication ?',
+   min:'Pas du tout convaincant',max:'Tout à fait convaincant',
+   biais:'Biais de disponibilité',
+   baisDef:"L'information la plus saillante visuellement écrase les autres, même si elle est minoritaire.",
+   biaisC:"Vous voyez d'abord vos réalisations concrètes — l'asso, les chiffres, les compétences. Le trou d'un mois est anecdotique dans votre histoire.",
+   biaisR:"Le trou visuel dans la chronologie attire immédiatement l'œil. Même si tout le reste est solide, c'est cette absence qui reste en mémoire."},
+  {title:'Étape 2',sub:'Le trou dans le CV',
+   q:'Comment évaluez-vous la façon dont Mehdi répond à la question sur son parcours ?',
+   min:'Très mal',max:'Très bien',
+   biais:'Biais de confirmation',
+   baisDef:"On interprète les nouvelles informations de façon à confirmer ce qu'on croyait déjà.",
+   biaisC:"Vous pensez avoir répondu honnêtement — vous avez dit 'raisons personnelles', ce qui est vrai. Vous avez l'impression d'avoir été clair.",
+   biaisR:"Vous êtes entré dans cet entretien avec un doute sur le trou. Chaque réponse vague de Mehdi confirme votre hypothèse initiale, même si elle pourrait s'expliquer autrement."},
+  {title:'Étape 3',sub:'La décision de recrutement',
+   q:'Cette décision de recrutement vous semble-t-elle réussie ?',
+   min:'Pas du tout réussie',max:'Tout à fait réussie',
+   biais:'Dissonance cognitive',
+   baisDef:"Face à une décision prise sous contrainte, on reconstruit des arguments pour se convaincre qu'elle était bonne.",
+   biaisC:"Un délai de 48h, c'est court — mais vous l'interprétez comme une marque de confiance et d'enthousiasme de leur part.",
+   biaisR:"Vous avez recruté sous pression, avec des réserves. Vous construisez maintenant mentalement des raisons pour valider votre choix — et minimiser vos doutes initiaux."},
+  {title:'Étape 4',sub:'Le premier jour',
+   q:'Comment évaluez-vous le déroulement de ce premier jour ?',
+   min:'Très mauvais',max:'Très bon',
+   biais:"Erreur fondamentale d'attribution",
+   baisDef:"On explique le comportement des autres par leur personnalité, pas par leur situation.",
+   biaisC:"Le problème vient clairement de l'organisation : pas d'accueil prévu, manager absent, aucun accès aux outils. Ce n'est pas vous.",
+   biaisR:"Vous avez posté un message de bienvenue, l'ordi était là. Si Mehdi a l'air perdu, c'est peut-être qu'il manque d'autonomie — pas que l'onboarding était insuffisant."},
+  {title:'Étape 5',sub:"L'erreur de charte graphique",
+   q:'À qui revient la responsabilité de cette erreur ?',
+   min:'Entièrement à Mehdi',max:"Entièrement à l'entreprise",
+   biais:'Malédiction de la connaissance',
+   baisDef:"Une fois qu'on sait quelque chose, on ne peut plus imaginer ne pas le savoir — et on oublie que les autres l'ignorent.",
+   biaisC:"Vous avez utilisé les fichiers disponibles sur le drive partagé, personne ne vous a dit qu'ils étaient obsolètes. Comment auriez-vous pu savoir ?",
+   biaisR:"L'email de mise à jour a été envoyé à toute l'équipe. Pour vous, l'information était disponible — vous ne réalisez pas immédiatement que Mehdi n'était pas encore là à ce moment."},
+  {title:'Étape 6',sub:"Fin de période d'essai",
+   q:"Cette évaluation de fin de période d'essai vous semble-t-elle juste ?",
+   min:'Pas du tout juste',max:'Tout à fait juste',
+   biais:'Biais rétrospectif + ancrage',
+   baisDef:"Un événement passé déforme le jugement global, et on croit avoir 'su depuis le début' ce qui allait poser problème.",
+   biaisC:"Les critiques portent sur des comportements (initiative, proactivité) que personne ne vous a jamais définis ni demandés explicitement. Comment être jugé sur des règles qu'on ne vous a pas données ?",
+   biaisR:"L'incident de la charte a ancré une image négative. En relisant le bilan, les doutes du recrutement initial semblent confirmés — comme si vous l'aviez toujours su."},
+];
+
+const CTX = {
+  c:[
+    "Vous avez soigneusement mis en valeur votre bénévolat dans le CV, mais vous savez que le trou va sauter aux yeux. Vous êtes stressé mais préparé.",
+    "Vous avez quitté Lumeo après un an de harcèlement managérial non reconnu. Vous choisissez de dire 'raisons personnelles' — vous avez peur d'être mal jugé si vous dites la vérité.",
+    "Vous avez reçu une autre offre ce matin même. Vous devez décider avant vendredi midi. Vous choisissez ComStudio car vous croyez au projet, malgré le délai très court.",
+    "Vous arrivez motivé à 9h mais personne ne vous attend vraiment. Votre manager est en réunion puis part en déjeuner client. Vous passez la journée seul, sans accès réel aux outils.",
+    "Vous avez envoyé les visuels avec les fichiers trouvés sur le drive partagé de l'équipe. Personne ne vous a informé que la charte graphique avait été mise à jour en janvier.",
+    "Votre manager évoque un 'manque d'initiative' sans citer d'exemple concret. Vous avez l'impression d'avoir été jugé sur des critères que personne ne vous avait expliqués.",
+  ],
+  r:[
+    "Le poste est ouvert depuis 4 mois. Le dernier candidat similaire est parti au bout de 3 semaines sans explication. La direction pousse à recruter rapidement.",
+    "Votre grille interne valorise la transparence sur les ruptures de contrat. Vous notez : 'évasif sur les raisons de départ'. Vous avez encore 3 autres candidats en attente.",
+    "Votre N+1 veut 'prendre quelqu'un rapidement'. Vous proposez Mehdi avec réserve. Le contrat est signé le jour même, sans vérification de références.",
+    "Vous êtes en réunion stratégique toute la matinée. Vous pensez que le manager direct gère l'onboarding comme d'habitude. Un message de bienvenue Slack a bien été posté.",
+    "Vous recevez la réclamation du partenaire. La nouvelle charte graphique avait été envoyée par email à toute l'équipe le 15 janvier — soit 6 semaines avant l'arrivée de Mehdi.",
+    "Le bilan avec Thomas est clair : 2/5 en autonomie et initiative. Pour un poste de chargé de communication, la proactivité est attendue dès le premier mois.",
+  ],
+};
+
+const DOCS = [
+`<div class="doc doc-paper">
+  <div class="cv-header">
+    <div class="cv-name">MEHDI ARIF</div>
+    <div class="cv-title">Chargé de communication</div>
+    <div class="cv-contact">mehdi.arif@email.com &nbsp;·&nbsp; 06 XX XX XX XX &nbsp;·&nbsp; Paris 75011</div>
+  </div>
+  <div class="cv-section">
+    <div class="cv-section-title">Expériences professionnelles</div>
+    <div class="cv-job">
+      <div class="cv-job-top"><strong>Chargé de communication — Agence Lumeo, Paris</strong><span class="cv-date">Sept. 2020 – Nov. 2021 · 14 mois</span></div>
+      <ul><li>Gestion des réseaux sociaux (45 000 abonnés cumulés)</li><li>Production de contenus print et digitaux</li><li>Coordination avec les équipes créatives</li></ul>
+    </div>
+    <div class="cv-gap">▸ Décembre 2021 — période de transition</div>
+    <div class="cv-job">
+      <div class="cv-job-top"><strong>Bénévole Communication — Association Passerelle, Paris</strong><span class="cv-date">Janv. 2022 – Juin 2023 · 18 mois</span></div>
+      <ul><li>Refonte du site web et des supports de communication</li><li>Animation des réseaux sociaux (+200 % d'engagement)</li><li>Relation presse : 3 articles obtenus</li></ul>
+    </div>
+  </div>
+  <div class="cv-section">
+    <div class="cv-section-title">Formation</div>
+    <p>Licence Information-Communication — Université Lyon 2</p>
+    <p>Formation "Community Management" — OpenClassrooms (2022)</p>
+  </div>
+  <div class="cv-section">
+    <div class="cv-section-title">Compétences</div>
+    <p>Canva &nbsp;·&nbsp; Adobe Suite &nbsp;·&nbsp; Meta Business Suite &nbsp;·&nbsp; Notion &nbsp;·&nbsp; Mailchimp</p>
+  </div>
+</div>`,
+
+`<div class="doc doc-paper">
+  <div class="transcript-header"><span>🎙 EXTRAIT D'ENTRETIEN — Enregistrement RH nº2</span><span>Durée : 3 min 12</span></div>
+  <div class="transcript-body">
+    <div class="tline tline-rh"><span class="tspk">Sophie</span><span class="ttxt">Sur votre CV, entre novembre 2021 et janvier 2022, je vois une période qui n'est pas renseignée. C'était quoi, cette période ?</span></div>
+    <div class="tline tline-c"><span class="tspk">Mehdi</span><span class="ttxt">Oui, tout à fait. J'ai quitté l'agence Lumeo fin novembre et j'ai pris un peu de temps pour moi avant de m'engager chez Passerelle. C'était une transition voulue.</span></div>
+    <div class="tline tline-rh"><span class="tspk">Sophie</span><span class="ttxt">D'accord. Et ce départ de Lumeo, c'était dans quelles circonstances ?</span></div>
+    <div class="tline tline-c"><span class="tspk">Mehdi</span><span class="ttxt">C'était... une décision personnelle. Le poste ne correspondait plus à ce que je cherchais, disons. J'avais envie de m'investir différemment.</span></div>
+    <div class="tline tline-rh"><span class="tspk">Sophie</span><span class="ttxt">Est-ce que vous pouvez m'en dire un peu plus sur ce qui n'allait pas ?</span></div>
+    <div class="tline tline-c"><span class="tspk">Mehdi</span><span class="ttxt"><em>[silence — 3 secondes]</em>&nbsp; Disons que l'environnement de travail n'était pas idéal pour moi. Mais j'en tire des apprentissages, et c'est ce qui m'a amené vers le bénévolat ensuite.</span></div>
+    <div class="tline tline-rh"><span class="tspk">Sophie</span><span class="ttxt">Très bien. Et chez Passerelle, c'était une expérience enrichissante ?</span></div>
+    <div class="tline tline-c"><span class="tspk">Mehdi</span><span class="ttxt">Vraiment, oui. C'est là où j'ai le plus progressé, en fait.</span></div>
+  </div>
+</div>`,
+
+`<div class="doc doc-paper">
+  <div class="email-meta">
+    <div class="email-row"><span class="email-lbl">De :</span><span>sophie.martin@comstudio.fr</span></div>
+    <div class="email-row"><span class="email-lbl">À :</span><span>mehdi.arif@email.com</span></div>
+    <div class="email-row"><span class="email-lbl">Objet :</span><strong>Offre de poste — Chargé de communication</strong></div>
+    <div class="email-row"><span class="email-lbl">Date :</span><span>Mercredi 14 février, 17h43</span></div>
+  </div>
+  <div class="email-body">
+    <p>Bonjour Mehdi,</p>
+    <p>Suite à nos échanges, nous avons le plaisir de vous adresser une proposition formelle pour le poste de <strong>Chargé de communication</strong> au sein de ComStudio.</p>
+    <div class="email-table">
+      <div class="email-tr"><span>Contrat</span><span>CDI — temps plein</span></div>
+      <div class="email-tr"><span>Rémunération</span><span>2 400 € brut / mois</span></div>
+      <div class="email-tr"><span>Prise de poste</span><span>Lundi 4 mars</span></div>
+      <div class="email-tr"><span>Période d'essai</span><span>2 mois renouvelable une fois</span></div>
+    </div>
+    <p>Nous vous remercions de bien vouloir nous confirmer votre accord <strong>avant vendredi 16 février, 12h00</strong>. Passé ce délai, nous serions contraints de nous tourner vers d'autres candidatures.</p>
+    <p>Dans l'attente de votre retour,<br><strong>Sophie Martin</strong><br><em>Responsable Ressources Humaines — ComStudio</em></p>
+  </div>
+</div>`,
+
+`<div class="doc" style="padding:0;overflow:hidden;max-width:660px;width:100%">
+  <div class="slack-topbar">💬 Slack — #général — Lundi 4 mars</div>
+  <div class="slack-body">
+    <div class="slack-msg"><div class="slack-time">09:02</div><div class="slack-content"><span class="slack-user">sophie.martin</span><span class="slack-text">Bienvenue à Mehdi qui nous rejoint aujourd'hui en tant que chargé de com' ! 🎉</span><span class="slack-react">👋 👋 🎉 😊</span></div></div>
+    <div class="slack-msg"><div class="slack-time">09:48</div><div class="slack-content"><span class="slack-user">thomas.rey <em class="slack-badge">Manager</em></span><span class="slack-text">Mehdi, désolé je suis en réunion jusqu'à 11h. Tu peux t'installer au bureau 12, l'ordi est configuré. Les accès arrivent dans la journée. On se fait un point à 11h si t'as des questions !</span><span class="slack-react">—</span></div></div>
+    <div class="slack-msg"><div class="slack-time">12:31</div><div class="slack-content"><span class="slack-user">thomas.rey <em class="slack-badge">Manager</em></span><span class="slack-text">Finalement j'ai un déjeuner client, on reporte à demain matin 9h ?</span><span class="slack-react">—</span></div></div>
+    <div class="slack-msg slack-reply"><div class="slack-time">12:34</div><div class="slack-content"><span class="slack-user">mehdi.arif</span><span class="slack-text">Pas de souci, à demain ! 👍</span></div></div>
+    <div class="slack-note">📷 &nbsp;Bureau 12, 09h17 — ordinateur éteint, badge posé sur le clavier</div>
+  </div>
+</div>`,
+
+`<div class="doc doc-paper">
+  <div class="email-meta email-alert">
+    <div class="email-row"><span class="email-lbl">De :</span><span>contact@fondation-espoir.org</span></div>
+    <div class="email-row"><span class="email-lbl">À :</span><span>thomas.rey@comstudio.fr</span></div>
+    <div class="email-row"><span class="email-lbl">Cc :</span><span>sophie.martin@comstudio.fr</span></div>
+    <div class="email-row"><span class="email-lbl">Objet :</span><strong>⚠️ Envoi avec ancienne identité visuelle</strong></div>
+    <div class="email-row"><span class="email-lbl">Date :</span><span>Jeudi 21 mars, 11h14</span></div>
+  </div>
+  <div class="email-body">
+    <p>Bonjour Thomas,</p>
+    <p>Nous avons bien reçu les éléments envoyés hier par votre collaborateur <strong>Mehdi Arif</strong> concernant notre prochaine campagne de communication.</p>
+    <p>Cependant, nous constatons que les visuels transmis utilisent votre <strong>ancienne charte graphique</strong> (logo et couleurs pré-janvier 2024), alors que nous avions déjà intégré votre nouvelle identité dans nos propres documents de travail.</p>
+    <p>Pourriez-vous nous faire parvenir une version corrigée rapidement ? Nous avons une réunion de validation interne <strong>vendredi matin</strong>.</p>
+    <p>Merci de votre compréhension.<br><strong>Isabelle Fontaine</strong><br><em>Chargée de partenariats — Fondation Espoir</em></p>
+    <div class="email-attach">📎 visuel_campagne_comstudio_v1.pdf &nbsp;<span style="color:#999;font-style:italic">— Logo version 2022 visible</span></div>
+  </div>
+</div>`,
+
+`<div class="doc doc-paper">
+  <div class="eval-top">
+    <div class="eval-confid">CONFIDENTIEL</div>
+    <div class="eval-title">Évaluation — Fin de période d'essai</div>
+    <div class="eval-meta">Mehdi Arif &nbsp;·&nbsp; Chargé de communication &nbsp;·&nbsp; Manager : Thomas Rey &nbsp;·&nbsp; 3 mai</div>
+  </div>
+  <div class="eval-grid">
+    <div class="eval-row eval-head"><span>Critère</span><span>Note</span><span>Commentaire</span></div>
+    <div class="eval-row"><span>Qualité du travail</span><span class="estars">●●●●○</span><span>"Bonne exécution sur les tâches confiées"</span></div>
+    <div class="eval-row"><span>Respect des délais</span><span class="estars">●●●●○</span><span>"Ponctuel et fiable"</span></div>
+    <div class="eval-row"><span>Intégration équipe</span><span class="estars">●●●○○</span><span>"Apprécié mais reste discret"</span></div>
+    <div class="eval-row"><span>Autonomie / Initiative</span><span class="estars elow">●●○○○</span><span>"Attend les consignes plutôt que de proposer"</span></div>
+    <div class="eval-row"><span>Maîtrise des outils</span><span class="estars elow">●●○○○</span><span>"Quelques erreurs en début de poste"</span></div>
+  </div>
+  <div class="eval-comment">
+    <div class="eval-comment-lbl">Appréciation générale — Thomas Rey</div>
+    <p>"Mehdi est agréable et sérieux dans l'exécution. On note cependant un manque de proactivité qui nous interpelle pour un profil com'. On aurait aimé plus de prises d'initiative spontanées."</p>
+  </div>
+  <div class="eval-decision">
+    <span>☐ Renouvellement confirmé</span>
+    <span>☐ Période d'essai non renouvelée</span>
+    <span class="eval-pending">☑ Décision en attente — point RH prévu</span>
+  </div>
+</div>`,
+];
+
+// ══ STORAGE ══
+const KGS = 'mh_gs2';
+const KV  = n => `mh_v2_${n}`;
+
+async function sGet(k){try{const r=await window.storage.get(k,true);return r?JSON.parse(r.value):null}catch(e){return null}}
+async function sSet(k,v){try{await window.storage.set(k,JSON.stringify(v),true)}catch(e){}}
+
+async function getGS(){return await sGet(KGS)||{step:0,voting:false,results:false}}
+async function setGS(gs){await sSet(KGS,gs)}
+async function getVotes(n){return await sGet(KV(n))||[]}
+async function addVote(n,team,val){const v=await getVotes(n);v.push({t:team,v:val});await sSet(KV(n),v)}
+async function resetAll(){
+  await setGS({step:0,voting:false,results:false});
+  for(let i=0;i<6;i++)await sSet(KV(i),[]);
+}
+
+// ══ APP STATE ══
+let S={view:'welcome',role:null,voted:{},gs:null,votes:[],proj:false,sel:null,authErr:false};
+let pollTmr=null;
+
+function startPoll(){if(pollTmr)clearInterval(pollTmr);pollTmr=setInterval(tick,2600)}
+function stopPoll(){if(pollTmr){clearInterval(pollTmr);pollTmr=null}}
+
+async function tick(){
+  const gs=await getGS();
+  if(S.view==='admin'){
+    const votes=(gs.voting||gs.results)?await getVotes(gs.step):S.votes;
+    const gsChanged=JSON.stringify(gs)!==JSON.stringify(S.gs);
+    const vChanged=JSON.stringify(votes)!==JSON.stringify(S.votes);
+    if(gsChanged||vChanged){S.gs=gs;S.votes=votes;render()}
+    return;
+  }
+  const prevStep=S.gs?S.gs.step:-1;
+  S.gs=gs;
+  if(gs.voting&&!S.voted[gs.step]){
+    if(S.view!=='vote'||prevStep!==gs.step){S.sel=null;S.view='vote';render()}
+  } else if(!gs.voting&&S.view==='vote'){
+    S.view='wait';render();
+  } else if(S.view==='wait'&&gs.voting&&!S.voted[gs.step]){
+    S.sel=null;S.view='vote';render();
+  }
+}
+
+// ══ RENDER ══
+function render(){
+  const r=document.getElementById('root');
+  if(S.view==='welcome') r.innerHTML=vWelcome();
+  else if(S.view==='auth') r.innerHTML=vAuth();
+  else if(S.view==='wait') r.innerHTML=vWait();
+  else if(S.view==='vote') r.innerHTML=vVote();
+  else if(S.view==='voted') r.innerHTML=vVoted();
+  else if(S.view==='admin') r.innerHTML=vAdmin();
+  else if(S.view==='preview') r.innerHTML=vPreview();
+  bind();
+}
+
+function vWelcome(){return`
+<div class="screen">
+  <div class="welcome-box">
+    <div class="game-eyebrow">Jeu pédagogique · Média &amp; recrutement</div>
+    <h1 class="game-title">Le Recrutement<br>de Mehdi</h1>
+    <p class="game-desc">Choisissez votre rôle dans cette histoire</p>
+    <div class="role-grid">
+      <button class="role-card role-c" onclick="chooseRole('c')">
+        <div class="role-icon">👤</div>
+        <div class="role-name">Je suis le candidat</div>
+        <div class="role-hint">Vous êtes Mehdi Arif</div>
+      </button>
+      <button class="role-card role-r" onclick="chooseRole('r')">
+        <div class="role-icon">📋</div>
+        <div class="role-name">Je suis le recruteur</div>
+        <div class="role-hint">Vous êtes Sophie Martin, RRH</div>
+      </button>
+    </div>
+    <button class="preview-link" onclick="S.view='preview';S.previewStep=0;render()">👁 Aperçu complet — les 6 étapes</button><br>
+    <button class="admin-link" onclick="S.view='auth';render()">Espace animateur →</button>
+  </div>
+</div>`}
+
+function vAuth(){return`
+<div class="screen">
+  <div class="auth-box">
+    <button class="back" onclick="S.view='welcome';S.authErr=false;render()">← Retour</button>
+    <h2>Espace animateur</h2>
+    <p class="auth-sub">Entrez le code d'accès pour contrôler la session.</p>
+    <input class="code-input" id="ci" type="password" placeholder="Code animateur" autocomplete="off">
+    ${S.authErr?'<p class="err">Code incorrect.</p>':''}
+    <button class="btn-primary" onclick="tryAuth()">Accéder →</button>
+  </div>
+</div>`}
+
+function vWait(){
+  const gs=S.gs||{step:0};const step=STEPS[gs.step];const ctx=CTX[S.role][gs.step];
+  return`
+<div class="screen part-screen">
+  <div class="part-inner">
+    <div class="role-badge ${S.role==='c'?'badge-c':'badge-r'}">${S.role==='c'?'👤 Candidat — Mehdi':'📋 Recruteur — Sophie'}</div><br>
+    <div class="step-chip">${step.title} · ${step.sub}</div>
+    <div class="ctx-card"><div class="ctx-label">Votre contexte</div><p>${ctx}</p></div>
+    <div class="waiting-row"><div class="dot-pulse"></div><span>${gs.voting?'Vote en cours...':'En attente de l\'animateur...'}</span></div>
+  </div>
+</div>`}
+
+function vVote(){
+  const gs=S.gs||{step:0};const step=STEPS[gs.step];const ctx=CTX[S.role][gs.step];
+  return`
+<div class="screen part-screen">
+  <div class="part-inner">
+    <div class="role-badge ${S.role==='c'?'badge-c':'badge-r'}">${S.role==='c'?'👤 Candidat — Mehdi':'📋 Recruteur — Sophie'}</div><br>
+    <div class="step-chip">${step.title} · ${step.sub}</div>
+    <div class="ctx-card ctx-small"><div class="ctx-label">Votre contexte</div><p>${ctx}</p></div>
+    <div class="vote-area">
+      <p class="vote-q">${step.q}</p>
+      <div class="likert-wrap">
+        <div class="likert-ends"><span>${step.min}</span><span>${step.max}</span></div>
+        <div class="likert-row">
+          ${[1,2,3,4,5].map(n=>`<button class="lbtn${S.sel===n?' lbtn-sel':''}" onclick="selL(${n})">${n}</button>`).join('')}
+        </div>
+      </div>
+      <button class="btn-primary${S.sel?'':' btn-disabled'}" onclick="submitVote()" ${S.sel?'':'disabled'}>Valider mon vote →</button>
+    </div>
+  </div>
+</div>`}
+
+function vVoted(){return`
+<div class="screen">
+  <div class="voted-box">
+    <div class="voted-icon">✓</div>
+    <h2>Vote enregistré !</h2>
+    <p>En attente de la prochaine étape...</p>
+    <div class="waiting-row" style="justify-content:center;margin-top:24px"><div class="dot-pulse"></div></div>
+  </div>
+</div>`}
+
+function vAdmin(){
+  const gs=S.gs||{step:0,voting:false,results:false};
+  const step=STEPS[gs.step];
+  const votes=S.votes||[];
+  const vC=votes.filter(v=>v.t==='c');
+  const vR=votes.filter(v=>v.t==='r');
+  const avgC=vC.length?(vC.reduce((s,v)=>s+v.v,0)/vC.length).toFixed(1):'—';
+  const avgR=vR.length?(vR.reduce((s,v)=>s+v.v,0)/vR.length).toFixed(1):'—';
+  const dC=[1,2,3,4,5].map(n=>vC.filter(v=>v.v===n).length);
+  const dR=[1,2,3,4,5].map(n=>vR.filter(v=>v.v===n).length);
+  const mx=Math.max(1,...dC,...dR);
+  const dots=STEPS.map((_,i)=>`<div class="pdot${i<gs.step?' pdot-done':i===gs.step?' pdot-cur':''}"></div>`).join('');
+  const barC=dC.map((n,i)=>`<div class="res-bar-wrap"><div class="res-bar bar-c" style="height:${Math.round(n/mx*56)+4}px"></div><div class="res-bar-lbl">${i+1}</div><div class="res-bar-n">${n}</div></div>`).join('');
+  const barR=dR.map((n,i)=>`<div class="res-bar-wrap"><div class="res-bar bar-r" style="height:${Math.round(n/mx*56)+4}px"></div><div class="res-bar-lbl">${i+1}</div><div class="res-bar-n">${n}</div></div>`).join('');
+  return`
+${S.proj?`<button class="proj-toggle-btn" onclick="toggleProj()">↙ Quitter</button>`:''}
+<div class="admin-layout${S.proj?' proj-mode':''}">
+  <div class="doc-panel">
+    <div class="doc-step-label">${step.title} — ${step.sub}</div>
+    ${DOCS[gs.step]}
+  </div>
+  <div class="admin-sidebar">
+    <div class="sidebar-inner">
+      <div class="sb-section">
+        <div class="sb-label">Navigation</div>
+        <div class="progress-row">${dots}</div>
+        <div class="step-display">${gs.step+1}<span> / 6</span></div>
+        <div class="step-name">${step.sub}</div>
+        <div class="nav-row">
+          <button class="nav-btn" onclick="aPrev()" ${gs.step===0?'disabled':''}>← Préc.</button>
+          <button class="nav-btn nav-next" onclick="aNext()" ${gs.step===5?'disabled':''}>Suiv. →</button>
+        </div>
+      </div>
+      <div class="sb-divider"></div>
+      <div class="sb-section">
+        <div class="sb-label">Vote</div>
+        <button class="action-btn ${gs.voting?'btn-stop':'btn-start'}" onclick="toggleVote()">${gs.voting?'⏹ Clore le vote':'▶ Lancer le vote'}</button>
+        <div class="vote-mini-counts">
+          <div class="vmc-row"><span class="vmc-dot dot-c"></span><span>Candidats</span><strong>${vC.length}</strong></div>
+          <div class="vmc-row"><span class="vmc-dot dot-r"></span><span>Recruteurs</span><strong>${vR.length}</strong></div>
+        </div>
+      </div>
+      <div class="sb-divider"></div>
+      <div class="sb-section">
+        <div class="sb-label">Résultats</div>
+        <button class="action-btn ${gs.results?'btn-results-active':'btn-results'}" onclick="toggleRes()">${gs.results?'🔒 Masquer':'📊 Afficher les résultats'}</button>
+        ${gs.results?`
+        <div class="results-panel">
+          <div class="res-team res-team-c">
+            <div class="res-team-hdr"><span class="res-team-name">👤 Candidats</span><span class="res-avg avg-c">${avgC}<small>/5</small></span></div>
+            <div class="res-bars">${barC}</div>
+          </div>
+          <div class="res-team res-team-r">
+            <div class="res-team-hdr"><span class="res-team-name">📋 Recruteurs</span><span class="res-avg avg-r">${avgR}<small>/5</small></span></div>
+            <div class="res-bars">${barR}</div>
+          </div>
+        </div>`:''}
+      </div>
+      <div class="sb-divider"></div>
+      <div class="sb-section">
+        <div class="sb-label">Révélation</div>
+        <button class="action-btn ${gs.biais?'btn-results-active':'btn-results'}" onclick="toggleBiais()">${gs.biais?'🔒 Masquer le biais':'🧠 Révéler le biais cognitif'}</button>
+        ${gs.biais?`<div class="biais-panel" style="margin-top:10px">
+          <div class="biais-top"><span class="biais-icon">🧠</span><span class="biais-name">${step.biais}</span></div>
+          <p class="biais-def">${step.baisDef}</p>
+          <div class="biais-split">
+            <div class="biais-side biais-side-c"><span class="biais-side-lbl">👤 Candidat</span><p>${step.biaisC}</p></div>
+            <div class="biais-side biais-side-r"><span class="biais-side-lbl">📋 Recruteur</span><p>${step.biaisR}</p></div>
+          </div>
+        </div>`:''}
+      </div>
+      <div class="sb-divider"></div>
+      <div class="sb-section">
+        <button class="action-btn btn-proj" onclick="toggleProj()">⛶ ${S.proj?'Quitter la projection':'Mode projection'}</button>
+        <button class="action-btn btn-reset" onclick="doReset()">↺ Réinitialiser</button>
+      </div>
+    </div>
+  </div>
+</div>`}
+
+
+function vPreview(){
+  const i=S.previewStep||0;
+  const step=STEPS[i];
+  const navBtns=STEPS.map((_,n)=>`<button class="pnav-btn${n===i?' pnav-btn-cur':''}" onclick="S.previewStep=${n};render()">${n+1}</button>`).join('');
+  return`
+<div style="min-height:100vh;padding:0 0 60px">
+  <div class="preview-wrap">
+    <div class="preview-header">
+      <div>
+        <button class="back" style="margin-bottom:8px" onclick="S.view='welcome';render()">← Accueil</button>
+        <h2>Aperçu complet du scénario</h2>
+      </div>
+      <div class="preview-step-nav">${navBtns}</div>
+    </div>
+    <div class="preview-step-title">${step.title} — ${step.sub}</div>
+    <div class="preview-body">
+      <div class="preview-col">
+        <div class="preview-col-hdr"><span class="role-badge badge-c">👤 Candidat — Mehdi</span></div>
+        <div class="preview-ctx"><div class="preview-ctx-lbl">Contexte secret</div><p>${CTX.c[i]}</p></div>
+        <div class="preview-doc-wrap">${DOCS[i]}</div>
+        <div class="preview-vote-q">❓ ${step.q}<br><small style="font-size:.75rem;color:var(--dim);font-style:normal;display:block;margin-top:4px">${step.min} → ${step.max}</small></div>
+      </div>
+      <div class="preview-col">
+        <div class="preview-col-hdr"><span class="role-badge badge-r">📋 Recruteur — Sophie</span></div>
+        <div class="preview-ctx"><div class="preview-ctx-lbl">Contexte secret</div><p>${CTX.r[i]}</p></div>
+        <div class="preview-doc-wrap">${DOCS[i]}</div>
+        <div class="preview-vote-q">❓ ${step.q}<br><small style="font-size:.75rem;color:var(--dim);font-style:normal;display:block;margin-top:4px">${step.min} → ${step.max}</small></div>
+      </div>
+    </div>
+    <div class="biais-panel preview-biais">
+      <div class="biais-top"><span class="biais-icon">🧠</span><span class="biais-name">${step.biais}</span></div>
+      <p class="biais-def">${step.baisDef}</p>
+      <div class="biais-split">
+        <div class="biais-side biais-side-c"><span class="biais-side-lbl">👤 Candidat</span><p>${step.biaisC}</p></div>
+        <div class="biais-side biais-side-r"><span class="biais-side-lbl">📋 Recruteur</span><p>${step.biaisR}</p></div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:28px">
+      <button class="nav-btn" onclick="if(S.previewStep>0){S.previewStep--;render()}" ${i===0?'disabled':''}>← Étape précédente</button>
+      <button class="nav-btn nav-next" onclick="if(S.previewStep<5){S.previewStep++;render()}" ${i===5?'disabled':''}>Étape suivante →</button>
+    </div>
+  </div>
+</div>`}
+
+// ══ ACTIONS ══
+async function chooseRole(role){S.role=role;S.gs=await getGS();S.view='wait';startPoll();render()}
+
+async function tryAuth(){
+  const val=document.getElementById('ci')?.value||'';
+  if(val.trim()===ADMIN_CODE){
+    S.gs=await getGS();S.votes=await getVotes(S.gs.step);
+    S.view='admin';S.authErr=false;startPoll();render();
+  } else {S.authErr=true;render()}
+}
+
+function selL(n){S.sel=n;render()}
+
+async function submitVote(){
+  if(!S.sel)return;
+  const gs=S.gs||{step:0};
+  await addVote(gs.step,S.role,S.sel);
+  S.voted[gs.step]=true;S.view='voted';render();
+}
+
+async function aPrev(){
+  const gs=await getGS();if(gs.step<=0)return;
+  gs.step--;gs.voting=false;gs.results=false;gs.biais=false;
+  await setGS(gs);S.gs=gs;S.votes=await getVotes(gs.step);render();
+}
+
+async function aNext(){
+  const gs=await getGS();if(gs.step>=5)return;
+  gs.step++;gs.voting=false;gs.results=false;gs.biais=false;
+  await setGS(gs);S.gs=gs;S.votes=await getVotes(gs.step);render();
+}
+
+async function toggleVote(){
+  const gs=await getGS();gs.voting=!gs.voting;
+  await setGS(gs);S.gs=gs;S.votes=await getVotes(gs.step);render();
+}
+
+async function toggleBiais(){
+  const gs=await getGS();gs.biais=!gs.biais;
+  await setGS(gs);S.gs=gs;render();
+}
+
+async function toggleRes(){
+  const gs=await getGS();gs.results=!gs.results;
+  await setGS(gs);S.gs=gs;render();
+}
+
+function toggleProj(){S.proj=!S.proj;render()}
+
+async function doReset(){
+  if(confirm('Réinitialiser toute la partie ? Tous les votes seront perdus.'))
+  {await resetAll();S.gs={step:0,voting:false,results:false};S.votes=[];render()}
+}
+
+function bind(){
+  const ci=document.getElementById('ci');
+  if(ci)ci.addEventListener('keydown',e=>{if(e.key==='Enter')tryAuth()});
+}
+
+// ══ BOOT ══
+render();
+</script>
+</body>
+</html>
