@@ -570,6 +570,7 @@ function vWait(){
   return`
 <div class="screen part-screen">
   <div class="part-inner">
+    <button class="back" onclick="S.view='welcome';stopPoll();render()">← Retour au menu</button><br>
     <div class="role-badge ${S.role==='c'?'badge-c':'badge-r'}">${S.role==='c'?'👤 Candidat — Mehdi':'📋 Recruteur — Sophie'}</div><br>
     <div class="step-chip">${step.title} · ${step.sub}</div>
     <div class="ctx-card"><div class="ctx-label">Votre contexte</div><p>${ctx}</p></div>
@@ -582,6 +583,7 @@ function vVote(){
   return`
 <div class="screen part-screen">
   <div class="part-inner">
+    <button class="back" onclick="S.view='welcome';stopPoll();render()">← Retour au menu</button><br>
     <div class="role-badge ${S.role==='c'?'badge-c':'badge-r'}">${S.role==='c'?'👤 Candidat — Mehdi':'📋 Recruteur — Sophie'}</div><br>
     <div class="step-chip">${step.title} · ${step.sub}</div>
     <div class="ctx-card ctx-small"><div class="ctx-label">Votre contexte</div><p>${ctx}</p></div>
