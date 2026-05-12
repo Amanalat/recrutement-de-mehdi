@@ -284,195 +284,9 @@ button{font-family:inherit;cursor:pointer}
 </head>
 <body>
 <div id="root"></div>
+<script src="data.js"></script>
 <script>
 'use strict';
-
-// ══ CONFIG ══
-const ADMIN_CODE = 'mehdi2024';
-
-const STEPS = [
-  {title:'Étape 1',sub:'Découverte du CV',
-   q:'À la lecture de ce CV, ce profil vous semble-t-il convaincant pour un poste de chargé de communication ?',
-   min:'Pas du tout convaincant',max:'Tout à fait convaincant',
-   biais:'Biais de disponibilité',
-   baisDef:"L'information la plus saillante visuellement écrase les autres, même si elle est minoritaire.",
-   biaisC:"Vous voyez d'abord vos réalisations concrètes — l'asso, les chiffres, les compétences. Le trou d'un mois est anecdotique dans votre histoire.",
-   biaisR:"Le trou visuel dans la chronologie attire immédiatement l'œil. Même si tout le reste est solide, c'est cette absence qui reste en mémoire."},
-  {title:'Étape 2',sub:'Le trou dans le CV',
-   q:'Comment évaluez-vous la façon dont Mehdi répond à la question sur son parcours ?',
-   min:'Très mal',max:'Très bien',
-   biais:'Effet Pygmalion',
-   baisDef:"Les attentes qu'on a envers quelqu'un influencent inconsciemment notre comportement — et provoquent chez l'autre la réaction qu'on redoutait.",
-   biaisC:"Vous sentez que Sophie pose ses questions avec une certaine froideur. Cela vous met sur la défensive, et vous choisissez de rester vague plutôt que de vous livrer.",
-   biaisR:"Votre doute sur le trou a changé votre façon de conduire l'entretien : ton plus fermé, questions plus courtes. Mehdi s'est refermé — vous avez obtenu exactement ce que vous craigniez."},
-  {title:'Étape 3',sub:'La décision de recrutement',
-   q:'Cette décision de recrutement vous semble-t-elle réussie ?',
-   min:'Pas du tout réussie',max:'Tout à fait réussie',
-   biais:'Rationalisation',
-   baisDef:"Après avoir pris une décision sous contrainte, on fabrique des justifications logiques pour se convaincre qu'elle était bonne — et réduire l'inconfort du doute.",
-   biaisC:"Un délai de 48h, c'est court — mais vous l'interprétez comme une marque de confiance et d'enthousiasme de leur part.",
-   biaisR:"Vous avez recruté sous pression, avec des réserves. Presque immédiatement, vous construisez des arguments pour vous convaincre que c'était le bon choix — 'il a du potentiel', 'on verra bien' — plutôt que d'admettre votre incertitude."},
-  {title:'Étape 4',sub:'Le premier jour',
-   q:'Comment évaluez-vous le déroulement de ce premier jour ?',
-   min:'Très mauvais',max:'Très bon',
-   biais:"Erreur fondamentale d'attribution",
-   baisDef:"On explique le comportement des autres par leur personnalité, pas par leur situation.",
-   biaisC:"Le problème vient clairement de l'organisation : pas d'accueil prévu, manager absent, aucun accès aux outils. Ce n'est pas vous.",
-   biaisR:"Vous avez posté un message de bienvenue, l'ordi était là. Si Mehdi a l'air perdu, c'est peut-être qu'il manque d'autonomie — pas que l'onboarding était insuffisant."},
-  {title:'Étape 5',sub:"L'erreur de charte graphique",
-   q:'À qui revient la responsabilité de cette erreur ?',
-   min:'Entièrement à Mehdi',max:"Entièrement à l'entreprise",
-   biais:'Malédiction de la connaissance',
-   baisDef:"Une fois qu'on sait quelque chose, on ne peut plus imaginer ne pas le savoir — et on oublie que les autres l'ignorent.",
-   biaisC:"Vous avez utilisé les fichiers disponibles sur le drive partagé, personne ne vous a dit qu'ils étaient obsolètes. Comment auriez-vous pu savoir ?",
-   biaisR:"L'email de mise à jour a été envoyé à toute l'équipe. Pour vous, l'information était disponible — vous ne réalisez pas immédiatement que Mehdi n'était pas encore là à ce moment."},
-  {title:'Étape 6',sub:"Fin de période d'essai",
-   q:"Cette évaluation de fin de période d'essai vous semble-t-elle juste ?",
-   min:'Pas du tout juste',max:'Tout à fait juste',
-   biais:'Biais rétrospectif + ancrage',
-   baisDef:"Un événement passé déforme le jugement global, et on croit avoir 'su depuis le début' ce qui allait poser problème.",
-   biaisC:"Les critiques portent sur des comportements (initiative, proactivité) que personne ne vous a jamais définis ni demandés explicitement. Comment être jugé sur des règles qu'on ne vous a pas données ?",
-   biaisR:"L'incident de la charte a ancré une image négative. En relisant le bilan, les doutes du recrutement initial semblent confirmés — comme si vous l'aviez toujours su."},
-];
-
-const CTX = {
-  c:[
-    "Vous avez soigneusement mis en valeur votre bénévolat dans le CV, mais vous savez que le trou va sauter aux yeux. Vous êtes stressé mais préparé.",
-    "Vous avez quitté Lumeo après un an de harcèlement managérial non reconnu. Vous choisissez de dire 'raisons personnelles' — vous avez peur d'être mal jugé si vous dites la vérité.",
-    "Vous avez reçu une autre offre ce matin même. Vous devez décider avant vendredi midi. Vous choisissez ComStudio car vous croyez au projet, malgré le délai très court.",
-    "Vous arrivez motivé à 9h mais personne ne vous attend vraiment. Votre manager est en réunion puis part en déjeuner client. Vous passez la journée seul, sans accès réel aux outils.",
-    "Vous avez envoyé les visuels avec les fichiers trouvés sur le drive partagé de l'équipe. Personne ne vous a informé que la charte graphique avait été mise à jour en janvier.",
-    "Votre manager évoque un 'manque d'initiative' sans citer d'exemple concret. Vous avez l'impression d'avoir été jugé sur des critères que personne ne vous avait expliqués.",
-  ],
-  r:[
-    "Le poste est ouvert depuis 4 mois. Le dernier candidat similaire est parti au bout de 3 semaines sans explication. La direction pousse à recruter rapidement.",
-    "Votre grille interne valorise la transparence sur les ruptures de contrat. Vous notez : 'évasif sur les raisons de départ'. Vous avez encore 3 autres candidats en attente.",
-    "Votre N+1 veut 'prendre quelqu'un rapidement'. Vous proposez Mehdi avec réserve. Le contrat est signé le jour même, sans vérification de références.",
-    "Vous êtes en réunion stratégique toute la matinée. Vous pensez que le manager direct gère l'onboarding comme d'habitude. Un message de bienvenue Slack a bien été posté.",
-    "Vous recevez la réclamation du partenaire. La nouvelle charte graphique avait été envoyée par email à toute l'équipe le 15 janvier — soit 6 semaines avant l'arrivée de Mehdi.",
-    "Le bilan avec Thomas est clair : 2/5 en autonomie et initiative. Pour un poste de chargé de communication, la proactivité est attendue dès le premier mois.",
-  ],
-};
-
-const DOCS = [
-`<div class="doc doc-paper">
-  <div class="cv-header">
-    <div class="cv-name">MEHDI ARIF</div>
-    <div class="cv-title">Chargé de communication</div>
-    <div class="cv-contact">mehdi.arif@email.com &nbsp;·&nbsp; 06 XX XX XX XX &nbsp;·&nbsp; Paris 75011</div>
-  </div>
-  <div class="cv-section">
-    <div class="cv-section-title">Expériences professionnelles</div>
-    <div class="cv-job">
-      <div class="cv-job-top"><strong>Chargé de communication — Agence Lumeo, Paris</strong><span class="cv-date">Sept. 2020 – Nov. 2021 · 14 mois</span></div>
-      <ul><li>Gestion des réseaux sociaux (45 000 abonnés cumulés)</li><li>Production de contenus print et digitaux</li><li>Coordination avec les équipes créatives</li></ul>
-    </div>
-    <div class="cv-gap">▸ Décembre 2021 — période de transition</div>
-    <div class="cv-job">
-      <div class="cv-job-top"><strong>Bénévole Communication — Association Passerelle, Paris</strong><span class="cv-date">Janv. 2022 – Juin 2023 · 18 mois</span></div>
-      <ul><li>Refonte du site web et des supports de communication</li><li>Animation des réseaux sociaux (+200 % d'engagement)</li><li>Relation presse : 3 articles obtenus</li></ul>
-    </div>
-  </div>
-  <div class="cv-section">
-    <div class="cv-section-title">Formation</div>
-    <p>Licence Information-Communication — Université Lyon 2</p>
-    <p>Formation "Community Management" — OpenClassrooms (2022)</p>
-  </div>
-  <div class="cv-section">
-    <div class="cv-section-title">Compétences</div>
-    <p>Canva &nbsp;·&nbsp; Adobe Suite &nbsp;·&nbsp; Meta Business Suite &nbsp;·&nbsp; Notion &nbsp;·&nbsp; Mailchimp</p>
-  </div>
-</div>`,
-
-`<div class="doc doc-paper">
-  <div class="transcript-header"><span>🎙 EXTRAIT D'ENTRETIEN — Enregistrement RH nº2</span><span>Durée : 3 min 12</span></div>
-  <div class="transcript-body">
-    <div class="tline tline-rh"><span class="tspk">Sophie</span><span class="ttxt">Sur votre CV, entre novembre 2021 et janvier 2022, je vois une période qui n'est pas renseignée. C'était quoi, cette période ?</span></div>
-    <div class="tline tline-c"><span class="tspk">Mehdi</span><span class="ttxt">Oui, tout à fait. J'ai quitté l'agence Lumeo fin novembre et j'ai pris un peu de temps pour moi avant de m'engager chez Passerelle. C'était une transition voulue.</span></div>
-    <div class="tline tline-rh"><span class="tspk">Sophie</span><span class="ttxt">D'accord. Et ce départ de Lumeo, c'était dans quelles circonstances ?</span></div>
-    <div class="tline tline-c"><span class="tspk">Mehdi</span><span class="ttxt">C'était... une décision personnelle. Le poste ne correspondait plus à ce que je cherchais, disons. J'avais envie de m'investir différemment.</span></div>
-    <div class="tline tline-rh"><span class="tspk">Sophie</span><span class="ttxt">Est-ce que vous pouvez m'en dire un peu plus sur ce qui n'allait pas ?</span></div>
-    <div class="tline tline-c"><span class="tspk">Mehdi</span><span class="ttxt"><em>[silence — 3 secondes]</em>&nbsp; Disons que l'environnement de travail n'était pas idéal pour moi. Mais j'en tire des apprentissages, et c'est ce qui m'a amené vers le bénévolat ensuite.</span></div>
-    <div class="tline tline-rh"><span class="tspk">Sophie</span><span class="ttxt">Très bien. Et chez Passerelle, c'était une expérience enrichissante ?</span></div>
-    <div class="tline tline-c"><span class="tspk">Mehdi</span><span class="ttxt">Vraiment, oui. C'est là où j'ai le plus progressé, en fait.</span></div>
-  </div>
-</div>`,
-
-`<div class="doc doc-paper">
-  <div class="email-meta">
-    <div class="email-row"><span class="email-lbl">De :</span><span>sophie.martin@comstudio.fr</span></div>
-    <div class="email-row"><span class="email-lbl">À :</span><span>mehdi.arif@email.com</span></div>
-    <div class="email-row"><span class="email-lbl">Objet :</span><strong>Offre de poste — Chargé de communication</strong></div>
-    <div class="email-row"><span class="email-lbl">Date :</span><span>Mercredi 14 février, 17h43</span></div>
-  </div>
-  <div class="email-body">
-    <p>Bonjour Mehdi,</p>
-    <p>Suite à nos échanges, nous avons le plaisir de vous adresser une proposition formelle pour le poste de <strong>Chargé de communication</strong> au sein de ComStudio.</p>
-    <div class="email-table">
-      <div class="email-tr"><span>Contrat</span><span>CDI — temps plein</span></div>
-      <div class="email-tr"><span>Rémunération</span><span>2 400 € brut / mois</span></div>
-      <div class="email-tr"><span>Prise de poste</span><span>Lundi 4 mars</span></div>
-      <div class="email-tr"><span>Période d'essai</span><span>2 mois renouvelable une fois</span></div>
-    </div>
-    <p>Nous vous remercions de bien vouloir nous confirmer votre accord <strong>avant vendredi 16 février, 12h00</strong>. Passé ce délai, nous serions contraints de nous tourner vers d'autres candidatures.</p>
-    <p>Dans l'attente de votre retour,<br><strong>Sophie Martin</strong><br><em>Responsable Ressources Humaines — ComStudio</em></p>
-  </div>
-</div>`,
-
-`<div class="doc" style="padding:0;overflow:hidden;max-width:660px;width:100%">
-  <div class="slack-topbar">💬 Slack — #général — Lundi 4 mars</div>
-  <div class="slack-body">
-    <div class="slack-msg"><div class="slack-time">09:02</div><div class="slack-content"><span class="slack-user">sophie.martin</span><span class="slack-text">Bienvenue à Mehdi qui nous rejoint aujourd'hui en tant que chargé de com' ! 🎉</span><span class="slack-react">👋 👋 🎉 😊</span></div></div>
-    <div class="slack-msg"><div class="slack-time">09:48</div><div class="slack-content"><span class="slack-user">thomas.rey <em class="slack-badge">Manager</em></span><span class="slack-text">Mehdi, désolé je suis en réunion jusqu'à 11h. Tu peux t'installer au bureau 12, l'ordi est configuré. Les accès arrivent dans la journée. On se fait un point à 11h si t'as des questions !</span><span class="slack-react">—</span></div></div>
-    <div class="slack-msg"><div class="slack-time">12:31</div><div class="slack-content"><span class="slack-user">thomas.rey <em class="slack-badge">Manager</em></span><span class="slack-text">Finalement j'ai un déjeuner client, on reporte à demain matin 9h ?</span><span class="slack-react">—</span></div></div>
-    <div class="slack-msg slack-reply"><div class="slack-time">12:34</div><div class="slack-content"><span class="slack-user">mehdi.arif</span><span class="slack-text">Pas de souci, à demain ! 👍</span></div></div>
-    <div class="slack-note">📷 &nbsp;Bureau 12, 09h17 — ordinateur éteint, badge posé sur le clavier</div>
-  </div>
-</div>`,
-
-`<div class="doc doc-paper">
-  <div class="email-meta email-alert">
-    <div class="email-row"><span class="email-lbl">De :</span><span>contact@fondation-espoir.org</span></div>
-    <div class="email-row"><span class="email-lbl">À :</span><span>thomas.rey@comstudio.fr</span></div>
-    <div class="email-row"><span class="email-lbl">Cc :</span><span>sophie.martin@comstudio.fr</span></div>
-    <div class="email-row"><span class="email-lbl">Objet :</span><strong>⚠️ Envoi avec ancienne identité visuelle</strong></div>
-    <div class="email-row"><span class="email-lbl">Date :</span><span>Jeudi 21 mars, 11h14</span></div>
-  </div>
-  <div class="email-body">
-    <p>Bonjour Thomas,</p>
-    <p>Nous avons bien reçu les éléments envoyés hier par votre collaborateur <strong>Mehdi Arif</strong> concernant notre prochaine campagne de communication.</p>
-    <p>Cependant, nous constatons que les visuels transmis utilisent votre <strong>ancienne charte graphique</strong> (logo et couleurs pré-janvier 2024), alors que nous avions déjà intégré votre nouvelle identité dans nos propres documents de travail.</p>
-    <p>Pourriez-vous nous faire parvenir une version corrigée rapidement ? Nous avons une réunion de validation interne <strong>vendredi matin</strong>.</p>
-    <p>Merci de votre compréhension.<br><strong>Isabelle Fontaine</strong><br><em>Chargée de partenariats — Fondation Espoir</em></p>
-    <div class="email-attach">📎 visuel_campagne_comstudio_v1.pdf &nbsp;<span style="color:#999;font-style:italic">— Logo version 2022 visible</span></div>
-  </div>
-</div>`,
-
-`<div class="doc doc-paper">
-  <div class="eval-top">
-    <div class="eval-confid">CONFIDENTIEL</div>
-    <div class="eval-title">Évaluation — Fin de période d'essai</div>
-    <div class="eval-meta">Mehdi Arif &nbsp;·&nbsp; Chargé de communication &nbsp;·&nbsp; Manager : Thomas Rey &nbsp;·&nbsp; 3 mai</div>
-  </div>
-  <div class="eval-grid">
-    <div class="eval-row eval-head"><span>Critère</span><span>Note</span><span>Commentaire</span></div>
-    <div class="eval-row"><span>Qualité du travail</span><span class="estars">●●●●○</span><span>"Bonne exécution sur les tâches confiées"</span></div>
-    <div class="eval-row"><span>Respect des délais</span><span class="estars">●●●●○</span><span>"Ponctuel et fiable"</span></div>
-    <div class="eval-row"><span>Intégration équipe</span><span class="estars">●●●○○</span><span>"Apprécié mais reste discret"</span></div>
-    <div class="eval-row"><span>Autonomie / Initiative</span><span class="estars elow">●●○○○</span><span>"Attend les consignes plutôt que de proposer"</span></div>
-    <div class="eval-row"><span>Maîtrise des outils</span><span class="estars elow">●●○○○</span><span>"Quelques erreurs en début de poste"</span></div>
-  </div>
-  <div class="eval-comment">
-    <div class="eval-comment-lbl">Appréciation générale — Thomas Rey</div>
-    <p>"Mehdi est agréable et sérieux dans l'exécution. On note cependant un manque de proactivité qui nous interpelle pour un profil com'. On aurait aimé plus de prises d'initiative spontanées."</p>
-  </div>
-  <div class="eval-decision">
-    <span>☐ Renouvellement confirmé</span>
-    <span>☐ Période d'essai non renouvelée</span>
-    <span class="eval-pending">☑ Décision en attente — point RH prévu</span>
-  </div>
-</div>`,
-];
 
 // ══ STORAGE ══
 const KGS = 'mh_gs2';
@@ -527,6 +341,7 @@ function render(){
   else if(S.view==='voted') r.innerHTML=vVoted();
   else if(S.view==='admin') r.innerHTML=vAdmin();
   else if(S.view==='preview') r.innerHTML=vPreview();
+  else if(S.view==='rolePreview') r.innerHTML=vRolePreview();
   bind();
 }
 
@@ -535,20 +350,18 @@ function vWelcome(){return`
   <div class="welcome-box">
     <div class="game-eyebrow">Jeu pédagogique · Média &amp; recrutement</div>
     <h1 class="game-title">Le Recrutement<br>de Mehdi</h1>
-    <p class="game-desc">Choisissez votre rôle dans cette histoire</p>
-    <div class="role-grid">
-      <button class="role-card role-c" onclick="chooseRole('c')">
+    <p class="game-desc">Rejoignez la session pour participer</p>
+    <button class="btn-primary" onclick="joinRandom()" style="margin-bottom:20px">Rejoindre →</button>
+    <div class="role-grid" style="margin-bottom:8px">
+      <button class="role-card role-c" onclick="previewRole('c')">
         <div class="role-icon">👤</div>
-        <div class="role-name">Je suis le candidat</div>
-        <div class="role-hint">Vous êtes Mehdi Arif</div>
+        <div class="role-name" style="font-size:.8rem">Voir côté candidat</div>
       </button>
-      <button class="role-card role-r" onclick="chooseRole('r')">
+      <button class="role-card role-r" onclick="previewRole('r')">
         <div class="role-icon">📋</div>
-        <div class="role-name">Je suis le recruteur</div>
-        <div class="role-hint">Vous êtes Sophie Martin, RRH</div>
+        <div class="role-name" style="font-size:.8rem">Voir côté recruteur</div>
       </button>
     </div>
-    <button class="preview-link" onclick="S.view='preview';S.previewStep=0;render()">👁 Aperçu complet — les 6 étapes</button><br>
     <button class="admin-link" onclick="S.view='auth';render()">Espace animateur →</button>
   </div>
 </div>`}
@@ -580,6 +393,7 @@ function vWait(){
 
 function vVote(){
   const gs=S.gs||{step:0};const step=STEPS[gs.step];const ctx=CTX[S.role][gs.step];
+  const q=S.role==='c'?(step.qC||step.q):(step.qR||step.q);
   return`
 <div class="screen part-screen">
   <div class="part-inner">
@@ -588,7 +402,7 @@ function vVote(){
     <div class="step-chip">${step.title} · ${step.sub}</div>
     <div class="ctx-card ctx-small"><div class="ctx-label">Votre contexte</div><p>${ctx}</p></div>
     <div class="vote-area">
-      <p class="vote-q">${step.q}</p>
+      <p class="vote-q">${q}</p>
       <div class="likert-wrap">
         <div class="likert-ends"><span>${step.min}</span><span>${step.max}</span></div>
         <div class="likert-row">
@@ -641,6 +455,18 @@ ${S.proj?`<button class="proj-toggle-btn" onclick="toggleProj()">↙ Quitter</bu
         <div class="nav-row">
           <button class="nav-btn" onclick="aPrev()" ${gs.step===0?'disabled':''}>← Préc.</button>
           <button class="nav-btn nav-next" onclick="aNext()" ${gs.step===5?'disabled':''}>Suiv. →</button>
+        </div>
+      </div>
+      <div class="sb-divider"></div>
+      <div class="sb-section">
+        <div class="sb-label">Contextes participants</div>
+        <div class="biais-side biais-side-c" style="margin-bottom:6px">
+          <span class="biais-side-lbl">👤 Candidat — Mehdi</span>
+          <p style="font-size:.75rem;line-height:1.5">${CTX.c[gs.step]}</p>
+        </div>
+        <div class="biais-side biais-side-r">
+          <span class="biais-side-lbl">📋 Recruteur — Sophie</span>
+          <p style="font-size:.75rem;line-height:1.5">${CTX.r[gs.step]}</p>
         </div>
       </div>
       <div class="sb-divider"></div>
@@ -711,13 +537,13 @@ function vPreview(){
         <div class="preview-col-hdr"><span class="role-badge badge-c">👤 Candidat — Mehdi</span></div>
         <div class="preview-ctx"><div class="preview-ctx-lbl">Contexte secret</div><p>${CTX.c[i]}</p></div>
         <div class="preview-doc-wrap">${DOCS[i]}</div>
-        <div class="preview-vote-q">❓ ${step.q}<br><small style="font-size:.75rem;color:var(--dim);font-style:normal;display:block;margin-top:4px">${step.min} → ${step.max}</small></div>
+        <div class="preview-vote-q">❓ ${step.qC||step.q}<br><small style="font-size:.75rem;color:var(--dim);font-style:normal;display:block;margin-top:4px">${step.min} → ${step.max}</small></div>
       </div>
       <div class="preview-col">
         <div class="preview-col-hdr"><span class="role-badge badge-r">📋 Recruteur — Sophie</span></div>
         <div class="preview-ctx"><div class="preview-ctx-lbl">Contexte secret</div><p>${CTX.r[i]}</p></div>
         <div class="preview-doc-wrap">${DOCS[i]}</div>
-        <div class="preview-vote-q">❓ ${step.q}<br><small style="font-size:.75rem;color:var(--dim);font-style:normal;display:block;margin-top:4px">${step.min} → ${step.max}</small></div>
+        <div class="preview-vote-q">❓ ${step.qR||step.q}<br><small style="font-size:.75rem;color:var(--dim);font-style:normal;display:block;margin-top:4px">${step.min} → ${step.max}</small></div>
       </div>
     </div>
     <div class="biais-panel preview-biais">
@@ -735,7 +561,48 @@ function vPreview(){
   </div>
 </div>`}
 
+function previewRole(role){S.role=role;S.localStep=0;S.view='rolePreview';render()}
+
+function vRolePreview(){
+  const role=S.role;
+  const i=S.localStep||0;
+  const step=STEPS[i];
+  const ctx=CTX[role][i];
+  const q=role==='c'?(step.qC||step.q):(step.qR||step.q);
+  const isC=role==='c';
+  return`
+<div style="min-height:100vh;background:var(--bg);padding:0 0 60px">
+  <div style="max-width:700px;margin:0 auto;padding:20px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap">
+      <button class="back" onclick="S.view='welcome';render()">← Retour</button>
+      <span class="role-badge ${isC?'badge-c':'badge-r'}">${isC?'👤 Candidat — Mehdi':'📋 Recruteur — Sophie'}</span>
+      <div style="margin-left:auto;display:flex;gap:6px">
+        ${STEPS.map((_,n)=>`<button class="pnav-btn${n===i?' pnav-btn-cur':''}" onclick="S.localStep=${n};render()">${n+1}</button>`).join('')}
+      </div>
+    </div>
+    <div class="step-chip" style="display:inline-block;margin-bottom:14px">${step.title} · ${step.sub}</div>
+    <div class="ctx-card" style="margin-bottom:16px"><div class="ctx-label">Contexte secret</div><p>${ctx}</p></div>
+    <div style="margin-bottom:20px">${DOCS[i]}</div>
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--rad);padding:16px 18px;margin-bottom:20px">
+      <p style="font-size:1rem;font-weight:600;margin-bottom:16px;line-height:1.5">${q}</p>
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+        <span style="font-size:.7rem;color:var(--dim)">${step.min}</span>
+        <span style="font-size:.7rem;color:var(--dim)">${step.max}</span>
+      </div>
+      <div class="likert-row">
+        ${[1,2,3,4,5].map(n=>`<button class="lbtn" style="opacity:.4;cursor:default">${n}</button>`).join('')}
+      </div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="nav-btn" style="flex:1" onclick="S.localStep=Math.max(0,${i}-1);render()" ${i===0?'disabled':''}>← Étape préc.</button>
+      <button class="nav-btn nav-next" style="flex:1" onclick="S.localStep=Math.min(5,${i}+1);render()" ${i===5?'disabled':''}>Étape suiv. →</button>
+    </div>
+  </div>
+</div>`}
+
 // ══ ACTIONS ══
+async function joinRandom(){await chooseRole(Math.random()<0.5?'c':'r')}
+
 async function chooseRole(role){S.role=role;S.gs=await getGS();S.view='wait';startPoll();render()}
 
 async function tryAuth(){
