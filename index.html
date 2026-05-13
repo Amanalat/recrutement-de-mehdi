@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -400,7 +400,7 @@ function vWait(){
 <div class="screen part-screen">
   <div class="part-inner">
     <button class="back" onclick="S.view='welcome';stopPoll();render()">← Retour au menu</button><br>
-    <div class="role-badge ${S.role==='c'?'badge-c':'badge-r'}">${S.role==='c'?'👤 Candidat — Mehdi':'📋 Recruteur — Sophie'}</div><br>
+    <div class="role-badge ${S.role==='c'?'badge-c':'badge-r'}">${S.role==='c'?'👤 Candidat · Mehdi':'📋 Recruteur · Sophie'}</div><br>
     <div class="step-chip">${step.title} · ${step.sub}</div>
     <div class="ctx-card"><div class="ctx-label">Votre contexte</div><p>${ctx}</p></div>
     <div class="waiting-row"><div class="dot-pulse"></div><span>${gs.voting?'Vote en cours...':'En attente de l\'animateur...'}</span></div>
@@ -414,7 +414,7 @@ function vVote(){
 <div class="screen part-screen">
   <div class="part-inner">
     <button class="back" onclick="S.view='welcome';stopPoll();render()">← Retour au menu</button><br>
-    <div class="role-badge ${S.role==='c'?'badge-c':'badge-r'}">${S.role==='c'?'👤 Candidat — Mehdi':'📋 Recruteur — Sophie'}</div><br>
+    <div class="role-badge ${S.role==='c'?'badge-c':'badge-r'}">${S.role==='c'?'👤 Candidat · Mehdi':'📋 Recruteur · Sophie'}</div><br>
     <div class="step-chip">${step.title} · ${step.sub}</div>
     <div class="ctx-card ctx-small"><div class="ctx-label">Votre contexte</div><p>${ctx}</p></div>
     <div class="vote-area">
@@ -435,7 +435,7 @@ function vIntro(){
   return`
 <div class="screen part-screen">
   <div class="part-inner">
-    <div class="role-badge ${isC?'badge-c':'badge-r'}" style="margin-bottom:20px">${isC?'👤 Candidat — Mehdi':'📋 Recruteur — Sophie'}</div>
+    <div class="role-badge ${isC?'badge-c':'badge-r'}" style="margin-bottom:20px">${isC?'👤 Candidat · Mehdi':'📋 Recruteur · Sophie'}</div>
     <h2 style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:16px;line-height:1.2">Votre personnage</h2>
     <div class="intro-card">${INTRO[S.role]}</div>
     <button class="btn-primary" onclick="confirmIntro()">Je suis prêt·e →</button>
@@ -470,7 +470,7 @@ function vAdmin(){
 ${S.proj?`<button class="proj-toggle-btn" onclick="toggleProj()">↙ Quitter</button>`:''}
 <div class="admin-layout${S.proj?' proj-mode':''}">
   <div class="doc-panel">
-    <div class="doc-step-label">${step.title} — ${step.sub}</div>
+    <div class="doc-step-label">${step.title} · ${step.sub}</div>
     ${DOCS[gs.step]}
   </div>
   <div class="admin-sidebar">
@@ -489,11 +489,11 @@ ${S.proj?`<button class="proj-toggle-btn" onclick="toggleProj()">↙ Quitter</bu
       <div class="sb-section">
         <div class="sb-label">Contextes participants</div>
         <div class="biais-side biais-side-c" style="margin-bottom:6px">
-          <span class="biais-side-lbl">👤 Candidat — Mehdi</span>
+          <span class="biais-side-lbl">👤 Candidat · Mehdi</span>
           <p style="font-size:.75rem;line-height:1.5">${CTX.c[gs.step]}</p>
         </div>
         <div class="biais-side biais-side-r">
-          <span class="biais-side-lbl">📋 Recruteur — Sophie</span>
+          <span class="biais-side-lbl">📋 Recruteur · Sophie</span>
           <p style="font-size:.75rem;line-height:1.5">${CTX.r[gs.step]}</p>
         </div>
       </div>
@@ -559,16 +559,16 @@ function vPreview(){
       </div>
       <div class="preview-step-nav">${navBtns}</div>
     </div>
-    <div class="preview-step-title">${step.title} — ${step.sub}</div>
+    <div class="preview-step-title">${step.title} · ${step.sub}</div>
     <div class="preview-body">
       <div class="preview-col">
-        <div class="preview-col-hdr"><span class="role-badge badge-c">👤 Candidat — Mehdi</span></div>
+        <div class="preview-col-hdr"><span class="role-badge badge-c">👤 Candidat · Mehdi</span></div>
         <div class="preview-ctx"><div class="preview-ctx-lbl">Contexte secret</div><p>${CTX.c[i]}</p></div>
         <div class="preview-doc-wrap">${DOCS[i]}</div>
         <div class="preview-vote-q">❓ ${step.qC||step.q}<br><small style="font-size:.75rem;color:var(--dim);font-style:normal;display:block;margin-top:4px">${step.min} → ${step.max}</small></div>
       </div>
       <div class="preview-col">
-        <div class="preview-col-hdr"><span class="role-badge badge-r">📋 Recruteur — Sophie</span></div>
+        <div class="preview-col-hdr"><span class="role-badge badge-r">📋 Recruteur · Sophie</span></div>
         <div class="preview-ctx"><div class="preview-ctx-lbl">Contexte secret</div><p>${CTX.r[i]}</p></div>
         <div class="preview-doc-wrap">${DOCS[i]}</div>
         <div class="preview-vote-q">❓ ${step.qR||step.q}<br><small style="font-size:.75rem;color:var(--dim);font-style:normal;display:block;margin-top:4px">${step.min} → ${step.max}</small></div>
@@ -603,7 +603,7 @@ function vRolePreview(){
   <div style="max-width:700px;margin:0 auto;padding:20px">
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap">
       <button class="back" onclick="S.view='welcome';render()">← Retour</button>
-      <span class="role-badge ${isC?'badge-c':'badge-r'}">${isC?'👤 Candidat — Mehdi':'📋 Recruteur — Sophie'}</span>
+      <span class="role-badge ${isC?'badge-c':'badge-r'}">${isC?'👤 Candidat · Mehdi':'📋 Recruteur · Sophie'}</span>
       <div style="margin-left:auto;display:flex;gap:6px">
         ${STEPS.map((_,n)=>`<button class="pnav-btn${n===i?' pnav-btn-cur':''}" onclick="S.localStep=${n};render()">${n+1}</button>`).join('')}
       </div>
