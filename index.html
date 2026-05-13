@@ -633,7 +633,12 @@ async function joinRandom(){await chooseRole(Math.random()<0.5?'c':'r')}
 
 function confirmIntro(){S.view='wait';startPoll();render()}
 
-async function chooseRole(role){S.role=role;S.gs=await getGS();S.view='intro';render()}
+async function chooseRole(role){
+  S.role=role;
+  try{S.gs=await getGS();}catch(e){S.gs={step:0,voting:false,results:false,biais:false};}
+  S.view='intro';
+  render();
+}
 
 async function tryAuth(){
   const val=document.getElementById('ci')?.value||'';
