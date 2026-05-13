@@ -280,28 +280,42 @@ button{font-family:inherit;cursor:pointer}
   .email-meta{margin:-20px -20px 18px;padding:14px 20px}
   .lbtn{width:48px;height:48px;font-size:1rem}
 }
+
+/* ── INTRO PORTRAIT ── */
+.intro-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rad);padding:20px 22px;margin-bottom:24px}
+.intro-card p{font-size:.9rem;color:var(--text);line-height:1.75;margin-bottom:14px}
+.intro-card p:last-child{margin-bottom:0}
 </style>
 </head>
 <body>
 <div id="root"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="data.js"></script>
 <script>
 'use strict';
 
-// ══ STORAGE ══
-const KGS = 'mh_gs2';
-const KV  = n => `mh_v2_${n}`;
+// ══ SUPABASE ══
+// Remplace les deux valeurs ci-dessous par celles de ton projet Supabase
+// (Settings > API dans le dashboard)
+const SUPABASE_URL = 'COLLE_TON_PROJECT_URL_ICI';
+const SUPABASE_KEY = 'COLLE_TON_ANON_KEY_ICI';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-async function sGet(k){try{const r=await window.storage.get(k,true);return r?JSON.parse(r.value):null}catch(e){return null}}
-async function sSet(k,v){try{await window.storage.set(k,JSON.stringify(v),true)}catch(e){}}
+const KGS = 'game_state';
 
-async function getGS(){return await sGet(KGS)||{step:0,voting:false,results:false}}
-async function setGS(gs){await sSet(KGS,gs)}
-async function getVotes(n){return await sGet(KV(n))||[]}
-async function addVote(n,team,val){const v=await getVotes(n);v.push({t:team,v:val});await sSet(KV(n),v)}
+async function getGS(){
+  const {data}=await sb.from('game_kv').select('value').eq('key',KGS).maybeSingle();
+  return data?data.value:{step:0,voting:false,results:false,biais:false};
+}
+async function setGS(gs){await sb.from('game_kv').upsert({key:KGS,value:gs})}
+async function getVotes(n){
+  const {data}=await sb.from('votes').select('team,value').eq('step',n);
+  return data?data.map(r=>({t:r.team,v:r.value})):[];
+}
+async function addVote(n,team,val){await sb.from('votes').insert({step:n,team,value:val})}
 async function resetAll(){
-  await setGS({step:0,voting:false,results:false});
-  for(let i=0;i<6;i++)await sSet(KV(i),[]);
+  await sb.from('game_kv').upsert({key:KGS,value:{step:0,voting:false,results:false,biais:false}});
+  await sb.from('votes').delete().gte('step',0);
 }
 
 // ══ APP STATE ══
@@ -340,6 +354,7 @@ function render(){
   else if(S.view==='vote') r.innerHTML=vVote();
   else if(S.view==='voted') r.innerHTML=vVoted();
   else if(S.view==='admin') r.innerHTML=vAdmin();
+  else if(S.view==='intro') r.innerHTML=vIntro();
   else if(S.view==='preview') r.innerHTML=vPreview();
   else if(S.view==='rolePreview') r.innerHTML=vRolePreview();
   bind();
@@ -411,6 +426,18 @@ function vVote(){
       </div>
       <button class="btn-primary${S.sel?'':' btn-disabled'}" onclick="submitVote()" ${S.sel?'':'disabled'}>Valider mon vote →</button>
     </div>
+  </div>
+</div>`}
+
+function vIntro(){
+  const isC=S.role==='c';
+  return`
+<div class="screen part-screen">
+  <div class="part-inner">
+    <div class="role-badge ${isC?'badge-c':'badge-r'}" style="margin-bottom:20px">${isC?'👤 Candidat — Mehdi':'📋 Recruteur — Sophie'}</div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:16px;line-height:1.2">Votre personnage</h2>
+    <div class="intro-card">${INTRO[S.role]}</div>
+    <button class="btn-primary" onclick="confirmIntro()">Je suis prêt·e →</button>
   </div>
 </div>`}
 
@@ -603,7 +630,9 @@ function vRolePreview(){
 // ══ ACTIONS ══
 async function joinRandom(){await chooseRole(Math.random()<0.5?'c':'r')}
 
-async function chooseRole(role){S.role=role;S.gs=await getGS();S.view='wait';startPoll();render()}
+function confirmIntro(){S.view='wait';startPoll();render()}
+
+async function chooseRole(role){S.role=role;S.gs=await getGS();S.view='intro';render()}
 
 async function tryAuth(){
   const val=document.getElementById('ci')?.value||'';
