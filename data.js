@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 
 // ══════════════════════════════════════════════════
 //  CONFIGURATION
@@ -14,7 +14,8 @@ const ADMIN_CODE = 'mehdi2024'; // code animateur
 //
 //  Champs obligatoires :
 //    title  , numéro affiché (ex. "Étape 1")
-//    sub    , sous-titre (ex. "Découverte du CV")
+//    sub    , sous-titre court (ex. "Découverte du CV")
+//    when   , marqueur temporel (ex. "Lundi 5 février")
 //    q      , question de vote commune aux deux rôles
 //    min/max, libellés des extrémités de l'échelle Likert
 //    biais  , nom du biais cognitif
@@ -29,9 +30,12 @@ const ADMIN_CODE = 'mehdi2024'; // code animateur
 
 const STEPS = [
   {
-    title: 'Étape 1',
+    title: 'Acte 1',
     sub:   'Découverte du CV',
-    q:     'À la lecture de ce CV, ce profil vous semble-t-il convaincant pour le poste ?',
+    when:  'Lundi 5 février, 14h12',
+    q:     'Ce CV est-il convaincant pour le poste ?',
+    qC:    'Votre CV vous semble-t-il convaincant pour ce poste ?',
+    qR:    'Trouvez-vous ce CV convaincant pour le poste ?',
     min:   'Pas du tout convaincant',
     max:   'Tout à fait convaincant',
     biais:    'Biais de saillance',
@@ -40,20 +44,26 @@ const STEPS = [
     biaisR:   "Le trou visuel dans la chronologie attire immédiatement l'œil et active le souvenir du candidat précédent. Même si tout le reste est solide, c'est cette absence qui reste.",
   },
   {
-    title: 'Étape 2',
+    title: 'Acte 2',
     sub:   'Le trou dans le CV',
-    q:     "Comment s'est passé cet échange sur le départ de Lumeo ?",
-    min:   'Très mal',
-    max:   'Très bien',
+    when:  "Vendredi 9 février, entretien RH n°2",
+    q:     "Cet échange a-t-il permis de clarifier la situation ?",
+    qC:    "Cet échange a-t-il permis de clarifier votre situation ?",
+    qR:    "Cet échange vous a-t-il permis de clarifier la situation ?",
+    min:   'Pas du tout clarifié',
+    max:   'Totalement clarifié',
     biais:    'Effet Pygmalion',
     baisDef:  "Les attentes qu'on a envers quelqu'un modifient inconsciemment notre comportement, et provoquent chez l'autre exactement la réaction qu'on redoutait.",
     biaisC:   "Vous sentez la méfiance dans le ton de Sophie. Ça vous ferme. Vous avez peur de dire la vérité, pas parce que vous avez quelque chose à cacher, mais parce que vous savez qu'on ne vous croira pas.",
     biaisR:   "Votre méfiance a durci votre ton sans que vous le réalisiez. Mehdi a senti le jugement et s'est refermé. Vous avez obtenu exactement ce que vous craigniez, et interprété sa fermeture comme une confirmation.",
   },
   {
-    title: 'Étape 3',
+    title: 'Acte 3',
     sub:   'La décision de recrutement',
-    q:     'Cette décision vous semble-t-elle avoir été la bonne ?',
+    when:  "Mercredi 14 février, 17h43",
+    q:     'Cette décision est-elle la bonne ?',
+    qC:    "Votre décision de signer chez ComStudio vous semble-t-elle la bonne ?",
+    qR:    "Cette décision de recruter Mehdi vous semble-t-elle la bonne ?",
     min:   'Mauvaise décision',
     max:   'Bonne décision',
     biais:    'Rationalisation',
@@ -62,20 +72,26 @@ const STEPS = [
     biaisR:   "Vous avez dit oui sous pression, avec des réserves. À peine le contrat signé, vous avez commencé à construire des arguments pour vous convaincre, 'il a du potentiel', 'on verra bien', plutôt que d'admettre votre doute.",
   },
   {
-    title: 'Étape 4',
+    title: 'Acte 4',
     sub:   'Le premier jour',
-    q:     "Comment s'est passé ce premier jour ?",
-    min:   'Très mal',
-    max:   'Très bien',
+    when:  "Lundi 4 mars, premier jour de Mehdi",
+    q:     "Mehdi a-t-il pu démarrer son poste dans des conditions normales ?",
+    qC:    "Avez-vous pu démarrer votre poste dans des conditions normales ?",
+    qR:    "Mehdi a-t-il pu démarrer son poste dans des conditions normales ?",
+    min:   'Aucunement',
+    max:   'Totalement',
     biais:    "Erreur fondamentale d'attribution",
     baisDef:  "On explique le comportement des autres par ce qu'ils sont, pas par la situation dans laquelle ils se trouvent, et on s'exonère des conditions qu'on a créées.",
     biaisC:   "Vous avez tout fait pour vous montrer professionnel : arriver à l'heure, ne pas vous plaindre, vous rendre utile seul. Le problème, c'est l'organisation, pas vous.",
     biaisR:   "Vous avez posté un message de bienvenue, l'ordi était là, Thomas devait gérer. Si Mehdi a l'air perdu, votre premier réflexe n'est pas de remettre en cause l'onboarding.",
   },
   {
-    title: 'Étape 5',
+    title: 'Acte 5',
     sub:   "L'erreur de charte graphique",
+    when:  "Jeudi 21 mars, 11h14",
     q:     'À qui revient la responsabilité de cette erreur ?',
+    qC:    "À qui revient la responsabilité de cette erreur ?",
+    qR:    "À qui revient la responsabilité de cette erreur ?",
     min:   'Entièrement à Mehdi',
     max:   "Entièrement à l'entreprise",
     biais:    'Malédiction de la connaissance',
@@ -84,9 +100,12 @@ const STEPS = [
     biaisR:   "L'email de mise à jour avait été envoyé à toute l'équipe. Le drive était à jour. Pour vous, l'information était là, vous ne réalisez pas immédiatement que Mehdi n'existait pas encore dans l'entreprise à ce moment-là.",
   },
   {
-    title: 'Étape 6',
+    title: 'Acte 6',
     sub:   "Fin de période d'essai",
-    q:     "Cette évaluation de fin de période d'essai vous semble-t-elle juste ?",
+    when:  "Vendredi 3 mai, deux mois plus tard",
+    q:     "Cette évaluation de fin de période d'essai est-elle juste ?",
+    qC:    "L'évaluation que vous recevez vous semble-t-elle juste ?",
+    qR:    "L'évaluation que vous portez vous semble-t-elle juste ?",
     min:   'Totalement injuste',
     max:   'Totalement juste',
     biais:    'Biais rétrospectif + ancrage',
@@ -98,39 +117,42 @@ const STEPS = [
 
 
 // ══════════════════════════════════════════════════
-//  CONTEXTES SECRETS
+//  CONTEXTES PARTICIPANT
 //  CTX.c[i] = texte affiché au candidat à l'étape i
 //  CTX.r[i] = texte affiché au recruteur à l'étape i
+//
+//  Règle de rédaction : faits uniquement, jamais d'interprétation
+//  ni de ressenti. Le biais doit naître chez le participant.
 // ══════════════════════════════════════════════════
 
 const CTX = {
   c: [
-    // Étape 1, CV
-    "Ce CV, vous l'avez retravaillé pendant deux semaines. Le bénévolat chez Passerelle, 18 mois sans salaire, c'est l'expérience dont vous êtes le plus fier : audience triplée, articles de presse obtenus, site refait de zéro. Mais vous savez que le trou d'un mois va sauter aux yeux. Vous avez préparé une réponse. Vous espérez qu'on vous laisse l'expliquer.",
-    // Étape 2, Entretien
-    "Chez Lumeo, votre manager vous rendait responsable de ses propres erreurs devant l'équipe. Après un an, vous avez démissionné, sans pouvoir le prouver, sans témoin. Vous ne pouvez pas dire ça dans un entretien. Alors vous dites 'raisons personnelles'. Sophie insiste. Chaque question supplémentaire vous ferme un peu plus : vous avez peur que la vérité se retourne contre vous.",
-    // Étape 3, Décision
-    "Ce matin, vous avez reçu une autre offre, une grande agence internationale, 200€ de plus par mois. Vous avez choisi ComStudio parce que vous croyez au projet et voulez construire quelque chose de concret, pas juste exécuter. Le délai de 48h est court, mais la décision est mûrement réfléchie. Vous signez.",
-    // Étape 4, Premier jour
-    "Thomas vous a dit d'attendre le point de 11h pour vos accès, vous ne voulez pas court-circuiter votre manager dès le premier matin. À 11h15, un message : réunion prolongée, point reporté à demain. Plus d'interlocuteur désigné. Vous déjeunez seul. L'après-midi, vous relisez le site, les réseaux sociaux, les campagnes récentes de ComStudio, vous prenez des notes, vous préparez des questions. À 18h, vous avez quatre pages de travail préparatoire et vous n'avez toujours pas eu accès à un seul outil de l'entreprise. Vous rangez vos affaires et rentrez chez vous.",
-    // Étape 5, Charte graphique
-    "Vous avez passé trois jours sur ce visuel, votre premier grand livrable. Vous avez utilisé les fichiers du dossier 'Charte graphique' sur le drive partagé de l'équipe : c'est le seul dossier que vous connaissiez, le seul qu'on vous ait montré. Personne ne vous a signalé qu'une mise à jour avait eu lieu, ni qu'il existait une version plus récente.",
-    // Étape 6, Bilan
-    "Thomas évoque un 'manque d'initiative'. Vous demandez un exemple concret. Il répond : 'vous auriez dû le sentir'. Vous repensez à vos deux mois : vous avez exécuté ce qu'on vous demandait, vous avez évité de déranger, vous avez fait confiance aux process. On vous reproche aujourd'hui de ne pas avoir deviné des règles implicites que personne ne vous a jamais expliquées.",
+    // Acte 1, CV
+    "Votre CV affiche 14 mois chez Lumeo, un mois non renseigné en décembre 2021, puis 18 mois bénévoles chez Passerelle. À Lumeo, votre manager direct vous tenait régulièrement responsable de ses propres erreurs en réunion d'équipe. Vous êtes parti après une ultime injustice, sans rien pouvoir prouver. Vous savez que ce trou d'un mois va attirer l'œil. Vous espérez qu'on vous laisse l'expliquer.",
+    // Acte 2, Entretien
+    "Vous avez démissionné de Lumeo après 14 mois. Votre manager vous attribuait ses erreurs en réunion, plusieurs fois par semaine, et critiquait votre travail devant les clients. La dernière injustice a été la goutte d'eau. Vous n'avez ni email, ni témoin, ni preuve concrète. C'est le deuxième entretien chez ComStudio. Sophie revient sur les raisons de votre départ et insiste. Vous savez que parler de tout ça sans preuve va sonner comme une excuse facile.",
+    // Acte 3, Décision
+    "Vous avez 48h pour répondre à l'offre ComStudio. Ce matin, une seconde proposition est arrivée d'une grande agence internationale : 200€ de plus par mois, processus plus rapide, équipe plus grosse. ComStudio est un studio de taille moyenne, projet plus exposé, possibilité de prendre des initiatives sur du concret. Vous n'avez pas tenté de négocier le salaire avec ComStudio. Vous signez ComStudio le soir même.",
+    // Acte 4, Premier jour
+    "Premier jour. 9h17, vous êtes au bureau 12. L'ordinateur est éteint, le badge posé sur le clavier, aucune session ne s'ouvre. Votre manager Thomas est en réunion et a reporté votre point d'accueil de 11h à demain. Personne ne vient vous voir. Vous déjeunez seul. L'après-midi, sans accès aux outils, vous lisez les anciennes publications de ComStudio et préparez des questions. À 17h52, vous postez un message Slack pour signaler ce qu'il vous manque. Personne ne répond. Vous rentrez chez vous.",
+    // Acte 5, Charte graphique
+    "Premier livrable, trois semaines après votre arrivée : un visuel pour la Fondation Espoir, partenaire majeur de ComStudio. Vous avez passé trois jours dessus. Vous utilisez les fichiers du dossier « Charte graphique » sur le drive partagé, le seul qu'on vous a montré lors de la prise en main. Aucune mention d'une version mise à jour, aucun signalement d'un autre dossier, aucune relecture demandée avant envoi. Vous envoyez le fichier au client.",
+    // Acte 6, Bilan
+    "Thomas vous remet votre évaluation de fin de période d'essai. Notes basses sur « autonomie/initiative » et « maîtrise des outils ». Il évoque un « manque d'initiative ». Vous demandez un exemple concret. Il répond : « vous auriez dû le sentir ». Vous avez exécuté toutes les tâches confiées, dans les délais, sans plainte. Aucun objectif de prise d'initiative spontanée ne vous avait été formulé. Aucun retour intermédiaire ne vous avait alerté pendant ces deux mois.",
   ],
   r: [
-    // Étape 1, CV
-    "Ce poste est ouvert depuis 4 mois. Le dernier profil similaire, avec un trou comparable dans le CV, est parti au bout de 3 semaines sans explication, laissant un client en pleine campagne sans interlocuteur. Depuis cet épisode, vous regardez ces périodes non renseignées différemment. La direction veut quelqu'un signé cette semaine.",
-    // Étape 2, Entretien
-    "Votre grille d'évaluation interne est claire sur ce point : un candidat doit pouvoir nommer les raisons de son départ. Mehdi hésite, regarde ailleurs, tourne autour du pot. Vous avez encore 3 candidats en attente. Vous notez : 'non transparent sur les raisons de départ'. La vraie question n'est pas ce qu'il cache, c'est pourquoi il cache.",
-    // Étape 3, Décision
-    "Votre N+1 a dit textuellement : 'on prend Mehdi ou on ferme le poste jusqu'en septembre'. Vous avez des réserves depuis l'entretien, mais vous n'avez pas le choix. Le contrat est signé le soir même, sans vérification de références, sans deuxième entretien. Vous essayez de vous convaincre que ça ira.",
-    // Étape 4, Premier jour
-    "Vous êtes en comité de direction toute la matinée. Vous avez demandé à Thomas de prendre en charge l'arrivée de Mehdi, il a dit 'c'est bon'. Vous avez posté un message de bienvenue sur Slack à 9h02. En fin de journée, vous apprenez que Mehdi n'a pas eu accès à ses outils. Thomas pensait que les accès se créaient automatiquement à la signature du contrat.",
-    // Étape 5, Charte graphique
-    "La fondation Espoir, c'est votre plus gros partenaire : 40 000€ de contrat annuel, renégocié dans trois semaines. L'email de mise à jour de la charte avait été envoyé à toute l'équipe le 15 janvier, avec la mention explicite 'merci d'archiver l'ancienne version'. Mehdi n'était pas encore là, mais le dossier drive avait bien été mis à jour ce jour-là. L'information était disponible.",
-    // Étape 6, Bilan
-    "Vous avez relu deux mois d'échanges. Mehdi n'a jamais proposé une idée spontanément, jamais alerté sur un problème avant qu'il devienne urgent, jamais pris contact en dehors des réunions planifiées. Il exécutait bien ce qu'on lui demandait, mais pour un poste de chargé de communication, l'autonomie et la proactivité ne sont pas des bonus. Ce sont des attendus fondamentaux du poste.",
+    // Acte 1, CV
+    "Le poste de chargé de communication est ouvert depuis 4 mois. Il y a 4 mois, vous avez recruté un profil au parcours très similaire, trou de CV inclus. Ce collaborateur a démissionné au bout de 3 semaines, sans préavis, en pleine campagne client. Vous avez géré la crise pendant trois jours et perdu la confiance du client concerné. Votre direction veut un recrutement bouclé cette semaine. Vous regardez désormais les périodes non renseignées avec une attention particulière.",
+    // Acte 2, Entretien
+    "Votre grille d'évaluation interne demande au candidat de nommer la raison de son départ précédent, en quelques mots clairs. Vous avez 3 autres candidats en attente d'un retour. Votre N+1 attend un nom signé cette semaine. C'est la deuxième fois que vous recevez Mehdi. Lors du premier entretien, il avait évoqué un « changement de cap professionnel » sans plus de détail. Vous voulez aujourd'hui une réponse précise.",
+    // Acte 3, Décision
+    "Votre N+1 a tranché en réunion : « on prend Mehdi ou on ferme le poste jusqu'en septembre ». Dans votre compte-rendu post-entretien, vous aviez consigné trois réserves, dont « manque de transparence sur le départ précédent ». Le contrat est validé le soir même. Pas de deuxième entretien programmé. Pas de prise de références auprès de Lumeo ou de Passerelle. Pas de test métier réalisé.",
+    // Acte 4, Premier jour
+    "Vous êtes en comité de direction toute la matinée, puis sur un déjeuner client toute l'après-midi. Thomas, manager direct de Mehdi, avait reçu pour mission de gérer l'arrivée et le point d'accueil. Vous avez posté un message de bienvenue à 9h02 sur Slack. À 18h, en quittant le bureau, vous apprenez par un collègue que Mehdi est rentré sans avoir eu accès à un seul outil de la journée. Thomas vous expliquera plus tard qu'il pensait que les accès se créaient automatiquement à la signature du contrat.",
+    // Acte 5, Charte graphique
+    "La Fondation Espoir est votre plus gros partenaire : 40 000€ de contrat annuel, renégociation dans 3 semaines. Le 15 janvier, un email équipe annonçait la nouvelle charte graphique avec la mention explicite « merci d'archiver l'ancienne version ». Mehdi a été recruté le 14 février et a pris son poste le 4 mars : il n'a jamais reçu cet email. Le drive partagé contient encore les deux dossiers côte à côte, sans aucune signalétique de version, et personne ne l'a relu avant envoi.",
+    // Acte 6, Bilan
+    "Vous relisez 2 mois d'échanges Slack et mail avec Mehdi avant le point de fin de période d'essai. Vous notez qu'il n'a jamais proposé d'idée spontanément, jamais alerté sur un problème avant qu'il devienne urgent, jamais initié de contact hors des réunions planifiées. L'incident de la charte graphique du 21 mars revient régulièrement dans les conversations d'équipe. Pour un poste de chargé de communication, la proactivité fait partie des attendus fondamentaux du métier.",
   ],
 };
 
@@ -138,12 +160,12 @@ const CTX = {
 // ══════════════════════════════════════════════════
 //  DOCUMENTS PROJETÉS
 //  DOCS[i] = HTML du document affiché à l'étape i.
-//  Les classes CSS sont définies dans index.html.
+//  Les classes CSS sont définies dans index.html / screen.html.
 // ══════════════════════════════════════════════════
 
 const DOCS = [
 
-/* ── Étape 1 : CV ── */
+/* ── Acte 1 : CV ── */
 `<div class="doc doc-paper">
   <div class="cv-header">
     <div class="cv-name">MEHDI ARIF</div>
@@ -181,7 +203,7 @@ const DOCS = [
   </div>
 </div>`,
 
-/* ── Étape 2 : Extrait d'entretien ── */
+/* ── Acte 2 : Extrait d'entretien ── */
 `<div class="doc doc-paper">
   <div class="transcript-header">
     <span>🎙 EXTRAIT D'ENTRETIEN, Enregistrement RH nº2</span>
@@ -199,7 +221,7 @@ const DOCS = [
   </div>
 </div>`,
 
-/* ── Étape 3 : Email d'offre ── */
+/* ── Acte 3 : Email d'offre ── */
 `<div class="doc doc-paper">
   <div class="email-meta">
     <div class="email-row"><span class="email-lbl">De :</span><span>sophie.martin@comstudio.fr</span></div>
@@ -221,7 +243,7 @@ const DOCS = [
   </div>
 </div>`,
 
-/* ── Étape 4 : Slack premier jour ── */
+/* ── Acte 4 : Slack premier jour ── */
 `<div class="doc" style="padding:0;overflow:hidden;max-width:660px;width:100%">
   <div class="slack-topbar">💬 Slack, #général, Lundi 4 mars</div>
   <div class="slack-body">
@@ -257,10 +279,18 @@ const DOCS = [
       </div>
     </div>
     <div class="slack-note">📷 &nbsp;Bureau 12, 09h17, ordinateur éteint, badge posé sur le clavier</div>
+    <div class="slack-msg" style="margin-top:14px">
+      <div class="slack-time">17:52</div>
+      <div class="slack-content">
+        <span class="slack-user">mehdi.arif</span>
+        <span class="slack-text">Bonsoir à tous. Petit point en fin de journée : je n'ai pas eu accès à la suite Adobe, ni au drive partagé, ni à ma boîte mail pro aujourd'hui. Pas de panique, je récupère tout ça demain matin avec Thomas. Bonne soirée !</span>
+        <span class="slack-react" style="color:#bbb;font-style:italic;font-size:.72rem">aucune réponse</span>
+      </div>
+    </div>
   </div>
 </div>`,
 
-/* ── Étape 5 : Email réclamation charte ── */
+/* ── Acte 5 : Email réclamation charte ── */
 `<div class="doc doc-paper">
   <div class="email-meta email-alert">
     <div class="email-row"><span class="email-lbl">De :</span><span>contact@fondation-espoir.org</span></div>
@@ -279,7 +309,7 @@ const DOCS = [
   </div>
 </div>`,
 
-/* ── Étape 6 : Évaluation fin de période d'essai ── */
+/* ── Acte 6 : Évaluation fin de période d'essai ── */
 `<div class="doc doc-paper">
   <div class="eval-top">
     <div class="eval-confid">CONFIDENTIEL</div>
@@ -288,15 +318,15 @@ const DOCS = [
   </div>
   <div class="eval-grid">
     <div class="eval-row eval-head"><span>Critère</span><span>Note</span><span>Commentaire</span></div>
-    <div class="eval-row"><span>Qualité du travail</span><span class="estars">●●●●○</span><span>"Bonne exécution sur les tâches confiées"</span></div>
+    <div class="eval-row"><span>Qualité du travail</span><span class="estars">●●●○○</span><span>"Exécution correcte, l'incident charte du 21 mars interroge"</span></div>
     <div class="eval-row"><span>Respect des délais</span><span class="estars">●●●●○</span><span>"Ponctuel et fiable"</span></div>
     <div class="eval-row"><span>Intégration équipe</span><span class="estars">●●●○○</span><span>"Apprécié mais reste discret"</span></div>
     <div class="eval-row"><span>Autonomie / Initiative</span><span class="estars elow">●●○○○</span><span>"Attend les consignes plutôt que de proposer"</span></div>
-    <div class="eval-row"><span>Maîtrise des outils</span><span class="estars elow">●●○○○</span><span>"Quelques erreurs en début de poste"</span></div>
+    <div class="eval-row"><span>Maîtrise des outils</span><span class="estars elow">●●○○○</span><span>"Erreur sur la charte graphique en mars"</span></div>
   </div>
   <div class="eval-comment">
     <div class="eval-comment-lbl">Appréciation générale, Thomas Rey</div>
-    <p>"Mehdi est agréable et sérieux dans l'exécution. On note cependant un manque de proactivité qui nous interpelle pour un profil com'. On aurait aimé plus de prises d'initiative spontanées."</p>
+    <p>"Profil agréable et fiable sur l'exécution. L'incident de mars a marqué l'équipe, et le manque de propositions spontanées sur 2 mois nous interpelle pour un poste de chargé de communication où la proactivité est attendue."</p>
   </div>
   <div class="eval-decision">
     <span>☐ Renouvellement confirmé</span>
@@ -309,18 +339,21 @@ const DOCS = [
 
 
 // ══════════════════════════════════════════════════
-//  PORTRAITS PSYCHOLOGIQUES
-//  Affichés à chaque participant avant le début du jeu.
-//  INTRO.c = portrait du candidat (Mehdi)
-//  INTRO.r = portrait du recruteur (Sophie)
+//  PORTRAITS PSYCHOLOGIQUES (app de travail uniquement)
+//  Conservés pour index.html, non utilisés par participant.html.
+//  Version raccourcie et factuelle.
 // ══════════════════════════════════════════════════
 
 const INTRO = {
-  c: `<p>Mehdi a 27 ans. Il est compétent, consciencieux, et il le sait, mais il a appris à ne pas trop le montrer. Pendant 14 mois chez Lumeo, son manager lui attribuait ses propres erreurs devant l'équipe. Mehdi n'a jamais protesté car il ne voulait pas mal se faire voir et estimait que la bonne tenue des projets était le plus important.</p>
-<p>14 mois plus tard, une ultime injustice fut la goutte d'eau, et il partit avant de craquer. Il est parti sans explication officielle. Fragilisé, il s'est investi dans une association locale pour reconstruire sa confiance en lui.</p>
-<p>Il se sent à nouveau prêt à s'engager pleinement dans le monde du travail, et cherche un endroit où il ne risque plus de rencontrer le même type de situation toxique. Mais sa méfiance est désormais présente tout le temps, comme une protection.</p>`,
+  c: `<p>Vous êtes <strong>Mehdi Arif</strong>, candidat au poste de chargé de communication chez ComStudio.</p>
+<p>Vous allez vivre six moments-clés de ce recrutement, comme si vous étiez à sa place.</p>`,
 
-  r: `<p>Sophie a 38 ans. Responsable des ressources humaines, elle est rigoureuse, engagée dans son métier, attachée à protéger son équipe et aider la boîte.</p>
-<p>Il y a quatre mois, elle a recruté quelqu'un dont le CV avait un trou. Elle l'avait remarqué. Les explications étaient vagues mais le candidat paraissait sincère et motivé, et elle l'avait recruté. Il faut dire qu'ils manquent de bons profils pour un tel poste. Ce collaborateur avait disparu trois semaines après son arrivée, laissant un client en pleine campagne sans interlocuteur. Elle a dû gérer une crise difficile.</p>
-<p>Elle possède désormais un regard bien plus sévère sur le parcours des candidats.</p>`,
+  r: `<p>Vous êtes <strong>Sophie Martin</strong>, responsable RH chez ComStudio.</p>
+<p>Vous allez vivre six moments-clés du recrutement de Mehdi, comme si vous étiez à sa place.</p>`,
+};
+
+// Méta-rôles pour l'affichage UI (libellés courts)
+const ROLES = {
+  c: { name: 'Mehdi Arif',    short: 'Mehdi',  label: 'Candidat',     initial: 'M' },
+  r: { name: 'Sophie Martin', short: 'Sophie', label: 'Recruteuse RH', initial: 'S' },
 };

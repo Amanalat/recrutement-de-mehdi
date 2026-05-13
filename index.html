@@ -88,15 +88,44 @@ button{font-family:inherit;cursor:pointer}
 @keyframes dpulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.7)}}
 
 .vote-area{padding-top:4px}
-.vote-q{font-size:1.1rem;font-weight:600;margin-bottom:24px;line-height:1.5}
-.likert-wrap{margin-bottom:28px}
-.likert-ends{display:flex;justify-content:space-between;margin-bottom:8px}
-.likert-ends span{font-size:.7rem;color:var(--dim);max-width:38%}
-.likert-ends span:last-child{text-align:right}
-.likert-row{display:flex;gap:8px;justify-content:center}
-.lbtn{width:54px;height:54px;border-radius:50%;border:2px solid var(--border);background:var(--bg2);color:var(--text);font-size:1.1rem;font-weight:700;transition:all .15s}
-.lbtn:hover{border-color:var(--c);background:var(--c2);transform:scale(1.08)}
-.lbtn-sel{border-color:var(--g)!important;background:rgba(34,197,94,.15)!important;color:var(--g)}
+.vote-q{font-size:1.1rem;font-weight:600;margin-bottom:22px;line-height:1.45}
+
+/* ══════════════════════════════════════════════════════════
+   SLIDER de réponse — design unifié partout (mêmes specs
+   que participant.html / solo.html / screen.html).
+   ══════════════════════════════════════════════════════════ */
+.answer-card{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:22px 22px 18px;margin:0 0 16px}
+.answer-value{text-align:center;font-family:'Playfair Display',serif;font-size:3.4rem;font-weight:900;letter-spacing:-0.03em;line-height:1;color:var(--dim);font-variant-numeric:tabular-nums;margin-bottom:4px;transition:color .25s}
+.answer-value.is-set{color:var(--g)}
+.answer-status{text-align:center;font-size:.74rem;color:var(--dim);letter-spacing:0.22em;text-transform:uppercase;font-weight:600;margin-bottom:22px;min-height:1em}
+
+.slider-bounds{display:flex;justify-content:space-between;gap:14px;padding:0 0 16px}
+.slider-bound{font-size:.86rem;font-weight:600;color:var(--text);line-height:1.3;max-width:46%}
+.slider-bound.is-min{text-align:left}
+.slider-bound.is-max{text-align:right}
+
+.slider-wrap{position:relative;padding:0;margin-bottom:2px}
+.slider{-webkit-appearance:none;appearance:none;width:100%;height:36px;background:transparent;outline:none;margin:0;cursor:grab;display:block}
+.slider:active{cursor:grabbing}
+.slider::-webkit-slider-runnable-track{height:8px;border-radius:4px;background:linear-gradient(to right,var(--g) 0%,var(--g) var(--pct, 0%),var(--border) var(--pct, 0%),var(--border) 100%)}
+.slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:28px;height:28px;border-radius:50%;background:var(--text);border:3px solid var(--g);margin-top:-10px;box-shadow:0 6px 18px rgba(0,0,0,.5);transition:transform .15s, box-shadow .25s}
+.slider:active::-webkit-slider-thumb{transform:scale(1.08);box-shadow:0 6px 18px rgba(0,0,0,.5), 0 0 0 10px rgba(34,197,94,.18)}
+.slider::-moz-range-track{height:8px;border-radius:4px;background:var(--border)}
+.slider::-moz-range-progress{height:8px;border-radius:4px;background:var(--g)}
+.slider::-moz-range-thumb{width:28px;height:28px;border-radius:50%;background:var(--text);border:3px solid var(--g);box-shadow:0 6px 18px rgba(0,0,0,.5)}
+
+.slider-ticks{position:relative;height:36px;margin:0 14px}
+.slider-tick{position:absolute;top:0;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px}
+.slider-tick-dot{width:5px;height:5px;border-radius:50%;background:var(--border)}
+.slider-tick-num{font-family:'Playfair Display',serif;font-size:.94rem;font-weight:700;color:var(--dim);line-height:1}
+
+.validate{width:100%;background:var(--g);color:#000;padding:16px 24px;border-radius:14px;font-size:1rem;font-weight:700;letter-spacing:-0.01em;border:none;cursor:pointer;opacity:0;transform:translateY(10px);pointer-events:none;transition:opacity .35s cubic-bezier(.2,.8,.2,1), transform .35s cubic-bezier(.2,.8,.2,1);display:block;margin-top:14px}
+.validate.is-visible{opacity:1;transform:none;pointer-events:auto}
+.validate:active{transform:scale(.98)}
+
+/* Fondu d'entrée pour transitions de vue */
+@keyframes screenFadeIn{from{opacity:0}to{opacity:1}}
+.part-screen .part-inner{animation:screenFadeIn .5s ease-out}
 
 /* ── VOTED ── */
 .voted-box{text-align:center}
@@ -358,6 +387,7 @@ function render(){
   else if(S.view==='preview') r.innerHTML=vPreview();
   else if(S.view==='rolePreview') r.innerHTML=vRolePreview();
   bind();
+  if(S.view==='vote') initSliderPct();
 }
 
 function vWelcome(){return`
@@ -400,7 +430,7 @@ function vWait(){
 <div class="screen part-screen">
   <div class="part-inner">
     <button class="back" onclick="S.view='welcome';stopPoll();render()">← Retour au menu</button><br>
-    <div class="role-badge ${S.role==='c'?'badge-c':'badge-r'}">${S.role==='c'?'👤 Candidat · Mehdi':'📋 Recruteur · Sophie'}</div><br>
+    <div class="role-badge ${S.role==='c'?'badge-c':'badge-r'}">${S.role==='c'?'👤 Mehdi · Candidat':'📋 Sophie · Recruteuse RH'}</div><br>
     <div class="step-chip">${step.title} · ${step.sub}</div>
     <div class="ctx-card"><div class="ctx-label">Votre contexte</div><p>${ctx}</p></div>
     <div class="waiting-row"><div class="dot-pulse"></div><span>${gs.voting?'Vote en cours...':'En attente de l\'animateur...'}</span></div>
@@ -410,22 +440,38 @@ function vWait(){
 function vVote(){
   const gs=S.gs||{step:0};const step=STEPS[gs.step];const ctx=CTX[S.role][gs.step];
   const q=S.role==='c'?(step.qC||step.q):(step.qR||step.q);
+  const hasVal = S.sel !== null && S.sel !== undefined && S.sel !== false;
+  const initial = hasVal ? S.sel : 3;
+  const display = hasVal ? (typeof S.sel==='number'?S.sel.toFixed(1):S.sel) : '—';
+  const status = hasVal ? 'Réponse sélectionnée' : 'Faites glisser pour répondre';
   return`
 <div class="screen part-screen">
   <div class="part-inner">
     <button class="back" onclick="S.view='welcome';stopPoll();render()">← Retour au menu</button><br>
-    <div class="role-badge ${S.role==='c'?'badge-c':'badge-r'}">${S.role==='c'?'👤 Candidat · Mehdi':'📋 Recruteur · Sophie'}</div><br>
-    <div class="step-chip">${step.title} · ${step.sub}</div>
+    <div class="role-badge ${S.role==='c'?'badge-c':'badge-r'}">${S.role==='c'?'👤 Mehdi · Candidat':'📋 Sophie · Recruteuse RH'}</div><br>
+    <div class="step-chip">${step.title} · ${step.sub} &nbsp;·&nbsp; ${step.when}</div>
     <div class="ctx-card ctx-small"><div class="ctx-label">Votre contexte</div><p>${ctx}</p></div>
     <div class="vote-area">
       <p class="vote-q">${q}</p>
-      <div class="likert-wrap">
-        <div class="likert-ends"><span>${step.min}</span><span>${step.max}</span></div>
-        <div class="likert-row">
-          ${[1,2,3,4,5].map(n=>`<button class="lbtn${S.sel===n?' lbtn-sel':''}" onclick="selL(${n})">${n}</button>`).join('')}
+      <div class="answer-card">
+        <div class="answer-value ${hasVal?'is-set':''}" id="val-display">${display}</div>
+        <div class="answer-status" id="val-status">${status}</div>
+        <div class="slider-bounds">
+          <div class="slider-bound is-min">${step.min}</div>
+          <div class="slider-bound is-max">${step.max}</div>
+        </div>
+        <div class="slider-wrap">
+          <input class="slider" type="range" min="1" max="5" step="0.1" value="${initial}" data-slider aria-label="Choisissez une valeur entre 1 et 5">
+        </div>
+        <div class="slider-ticks">
+          <div class="slider-tick" style="left:0%"><div class="slider-tick-dot"></div><span class="slider-tick-num">1</span></div>
+          <div class="slider-tick" style="left:25%"><div class="slider-tick-dot"></div><span class="slider-tick-num">2</span></div>
+          <div class="slider-tick" style="left:50%"><div class="slider-tick-dot"></div><span class="slider-tick-num">3</span></div>
+          <div class="slider-tick" style="left:75%"><div class="slider-tick-dot"></div><span class="slider-tick-num">4</span></div>
+          <div class="slider-tick" style="left:100%"><div class="slider-tick-dot"></div><span class="slider-tick-num">5</span></div>
         </div>
       </div>
-      <button class="btn-primary${S.sel?'':' btn-disabled'}" onclick="submitVote()" ${S.sel?'':'disabled'}>Valider mon vote →</button>
+      <button class="validate${hasVal?' is-visible':''}" id="validate-btn" onclick="submitVote()">Valider la réponse</button>
     </div>
   </div>
 </div>`}
@@ -435,7 +481,7 @@ function vIntro(){
   return`
 <div class="screen part-screen">
   <div class="part-inner">
-    <div class="role-badge ${isC?'badge-c':'badge-r'}" style="margin-bottom:20px">${isC?'👤 Candidat · Mehdi':'📋 Recruteur · Sophie'}</div>
+    <div class="role-badge ${isC?'badge-c':'badge-r'}" style="margin-bottom:20px">${isC?'👤 Mehdi · Candidat':'📋 Sophie · Recruteuse RH'}</div>
     <h2 style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:16px;line-height:1.2">Votre personnage</h2>
     <div class="intro-card">${INTRO[S.role]}</div>
     <button class="btn-primary" onclick="confirmIntro()">Je suis prêt·e →</button>
@@ -489,11 +535,11 @@ ${S.proj?`<button class="proj-toggle-btn" onclick="toggleProj()">↙ Quitter</bu
       <div class="sb-section">
         <div class="sb-label">Contextes participants</div>
         <div class="biais-side biais-side-c" style="margin-bottom:6px">
-          <span class="biais-side-lbl">👤 Candidat · Mehdi</span>
+          <span class="biais-side-lbl">👤 Mehdi · Candidat</span>
           <p style="font-size:.75rem;line-height:1.5">${CTX.c[gs.step]}</p>
         </div>
         <div class="biais-side biais-side-r">
-          <span class="biais-side-lbl">📋 Recruteur · Sophie</span>
+          <span class="biais-side-lbl">📋 Sophie · Recruteuse RH</span>
           <p style="font-size:.75rem;line-height:1.5">${CTX.r[gs.step]}</p>
         </div>
       </div>
@@ -562,13 +608,13 @@ function vPreview(){
     <div class="preview-step-title">${step.title} · ${step.sub}</div>
     <div class="preview-body">
       <div class="preview-col">
-        <div class="preview-col-hdr"><span class="role-badge badge-c">👤 Candidat · Mehdi</span></div>
+        <div class="preview-col-hdr"><span class="role-badge badge-c">👤 Mehdi · Candidat</span></div>
         <div class="preview-ctx"><div class="preview-ctx-lbl">Contexte secret</div><p>${CTX.c[i]}</p></div>
         <div class="preview-doc-wrap">${DOCS[i]}</div>
         <div class="preview-vote-q">❓ ${step.qC||step.q}<br><small style="font-size:.75rem;color:var(--dim);font-style:normal;display:block;margin-top:4px">${step.min} → ${step.max}</small></div>
       </div>
       <div class="preview-col">
-        <div class="preview-col-hdr"><span class="role-badge badge-r">📋 Recruteur · Sophie</span></div>
+        <div class="preview-col-hdr"><span class="role-badge badge-r">📋 Sophie · Recruteuse RH</span></div>
         <div class="preview-ctx"><div class="preview-ctx-lbl">Contexte secret</div><p>${CTX.r[i]}</p></div>
         <div class="preview-doc-wrap">${DOCS[i]}</div>
         <div class="preview-vote-q">❓ ${step.qR||step.q}<br><small style="font-size:.75rem;color:var(--dim);font-style:normal;display:block;margin-top:4px">${step.min} → ${step.max}</small></div>
@@ -603,22 +649,31 @@ function vRolePreview(){
   <div style="max-width:700px;margin:0 auto;padding:20px">
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap">
       <button class="back" onclick="S.view='welcome';render()">← Retour</button>
-      <span class="role-badge ${isC?'badge-c':'badge-r'}">${isC?'👤 Candidat · Mehdi':'📋 Recruteur · Sophie'}</span>
+      <span class="role-badge ${isC?'badge-c':'badge-r'}">${isC?'👤 Mehdi · Candidat':'📋 Sophie · Recruteuse RH'}</span>
       <div style="margin-left:auto;display:flex;gap:6px">
         ${STEPS.map((_,n)=>`<button class="pnav-btn${n===i?' pnav-btn-cur':''}" onclick="S.localStep=${n};render()">${n+1}</button>`).join('')}
       </div>
     </div>
-    <div class="step-chip" style="display:inline-block;margin-bottom:14px">${step.title} · ${step.sub}</div>
+    <div class="step-chip" style="display:inline-block;margin-bottom:14px">${step.title} · ${step.sub} &nbsp;·&nbsp; ${step.when}</div>
     <div class="ctx-card" style="margin-bottom:16px"><div class="ctx-label">Contexte secret</div><p>${ctx}</p></div>
     <div style="margin-bottom:20px">${DOCS[i]}</div>
-    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--rad);padding:16px 18px;margin-bottom:20px">
-      <p style="font-size:1rem;font-weight:600;margin-bottom:16px;line-height:1.5">${q}</p>
-      <div style="display:flex;justify-content:space-between;margin-bottom:8px">
-        <span style="font-size:.7rem;color:var(--dim)">${step.min}</span>
-        <span style="font-size:.7rem;color:var(--dim)">${step.max}</span>
-      </div>
-      <div class="likert-row">
-        ${[1,2,3,4,5].map(n=>`<button class="lbtn" style="opacity:.4;cursor:default">${n}</button>`).join('')}
+    <div style="margin-bottom:20px">
+      <p style="font-size:1.05rem;font-weight:600;margin-bottom:14px;line-height:1.45">${q}</p>
+      <div class="answer-card">
+        <div class="slider-bounds">
+          <div class="slider-bound is-min">${step.min}</div>
+          <div class="slider-bound is-max">${step.max}</div>
+        </div>
+        <div class="slider-wrap">
+          <input class="slider" type="range" min="1" max="5" step="0.1" value="3" disabled style="--pct:50%">
+        </div>
+        <div class="slider-ticks">
+          <div class="slider-tick" style="left:0%"><div class="slider-tick-dot"></div><span class="slider-tick-num">1</span></div>
+          <div class="slider-tick" style="left:25%"><div class="slider-tick-dot"></div><span class="slider-tick-num">2</span></div>
+          <div class="slider-tick" style="left:50%"><div class="slider-tick-dot"></div><span class="slider-tick-num">3</span></div>
+          <div class="slider-tick" style="left:75%"><div class="slider-tick-dot"></div><span class="slider-tick-num">4</span></div>
+          <div class="slider-tick" style="left:100%"><div class="slider-tick-dot"></div><span class="slider-tick-num">5</span></div>
+        </div>
       </div>
     </div>
     <div style="display:flex;gap:8px">
@@ -648,13 +703,46 @@ async function tryAuth(){
   } else {S.authErr=true;render()}
 }
 
+// Conservé pour compat éventuelle (clic ancien). Plus utilisé en vue Vote.
 function selL(n){S.sel=n;render()}
 
+// Slider : input event ; on met à jour --pct, la valeur affichée, et on déclenche
+// le bouton "Valider" 500ms après l'arrêt du mouvement.
+let _validateTimer=null;
+function onSliderInput(input){
+  const v=Math.round(parseFloat(input.value)*10)/10;
+  const pct=((v-1)/4)*100;
+  input.style.setProperty('--pct', pct+'%');
+  S.sel=v;
+  const display=document.getElementById('val-display');
+  const status=document.getElementById('val-status');
+  if(display){display.textContent=v.toFixed(1);display.classList.add('is-set');}
+  if(status){status.textContent='Réponse sélectionnée';}
+  const btn=document.getElementById('validate-btn');
+  if(btn) btn.classList.remove('is-visible');
+  if(_validateTimer) clearTimeout(_validateTimer);
+  _validateTimer=setTimeout(()=>{
+    const b=document.getElementById('validate-btn');
+    if(b) b.classList.add('is-visible');
+  }, 500);
+}
+function initSliderPct(){
+  const sl=document.querySelector('[data-slider]');
+  if(!sl)return;
+  const v=parseFloat(sl.value);
+  sl.style.setProperty('--pct', (((v-1)/4)*100)+'%');
+}
+
 async function submitVote(){
-  if(!S.sel)return;
+  if(S.sel===null||S.sel===undefined||S.sel===false)return;
+  if(_validateTimer){clearTimeout(_validateTimer);_validateTimer=null;}
   const gs=S.gs||{step:0};
-  await addVote(gs.step,S.role,S.sel);
-  S.voted[gs.step]=true;S.view='voted';render();
+  const value=S.sel;
+  S.voted[gs.step]=true;
+  S.sel=null;
+  S.view='voted';
+  render();
+  await addVote(gs.step,S.role,value);
 }
 
 async function aPrev(){
@@ -695,6 +783,11 @@ function bind(){
   const ci=document.getElementById('ci');
   if(ci)ci.addEventListener('keydown',e=>{if(e.key==='Enter')tryAuth()});
 }
+
+// Délégation pour les sliders (input range)
+document.addEventListener('input', function(e){
+  if(e.target.matches('[data-slider]')) onSliderInput(e.target);
+});
 
 // ══ BOOT ══
 render();

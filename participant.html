@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="oklch(0.13 0.02 270)">
+<title>Le recrutement de Mehdi · Participant</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:           oklch(0.13 0.02 270);
+  --bg-elev:      oklch(0.18 0.022 270);
+  --bg-elev2:     oklch(0.22 0.024 270);
+  --border:       oklch(0.30 0.025 270);
+  --border-soft:  oklch(0.25 0.022 270);
+  --text:         oklch(0.96 0.008 270);
+  --text-soft:    oklch(0.80 0.015 270);
+  --dim:          oklch(0.58 0.025 270);
+
+  --c:            oklch(0.72 0.15 245);
+  --c-tint:       oklch(0.32 0.08 245);
+  --c-glow:       oklch(0.72 0.15 245 / 0.18);
+
+  --r:            oklch(0.78 0.14 70);
+  --r-tint:       oklch(0.34 0.08 70);
+  --r-glow:       oklch(0.78 0.14 70 / 0.18);
+
+  --ok:           oklch(0.78 0.16 150);
+  --ok-glow:      oklch(0.78 0.16 150 / 0.20);
+
+  --warn:         oklch(0.70 0.18 30);
+}
+
+html,body{
+  height:100%;
+  font-family:'DM Sans',system-ui,-apple-system,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.55;
+  font-size:16px;
+  -webkit-font-smoothing:antialiased;
+  overscroll-behavior:none;
+}
+body{
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+  min-height:100dvh;
+  padding-top:env(safe-area-inset-top);
+  padding-bottom:env(safe-area-inset-bottom);
+}
+button{font-family:inherit;cursor:pointer;background:none;border:none;color:inherit;-webkit-tap-highlight-color:transparent}
+
+/* ── ROOT ── */
+#root{flex:1;display:flex;flex-direction:column;width:100%;max-width:560px;margin:0 auto;padding:18px}
+
+/* ── ÉCRAN ACCUEIL ── */
+.w-wrap{flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center}
+.w-eyebrow{font-size:.72rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--dim);margin-bottom:22px}
+.w-title{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,9vw,3.2rem);font-weight:900;line-height:1.02;margin-bottom:18px;letter-spacing:-0.02em}
+.w-sub{color:var(--text-soft);font-size:1.02rem;line-height:1.6;margin-bottom:40px;max-width:36ch;margin-left:auto;margin-right:auto}
+.w-cta{
+  background:var(--text);color:var(--bg);
+  padding:18px 28px;border-radius:14px;
+  font-size:1rem;font-weight:700;letter-spacing:-0.01em;
+  width:100%;max-width:320px;margin:0 auto 16px;
+  transition:transform .18s cubic-bezier(.2,.8,.2,1);
+}
+.w-cta:active{transform:scale(.97)}
+.w-banner{
+  margin-top:auto;padding:14px 16px;
+  background:oklch(0.22 0.06 30);
+  border:1px solid oklch(0.42 0.10 30);
+  color:oklch(0.92 0.06 60);
+  border-radius:12px;
+  font-size:.84rem;line-height:1.5;
+  display:none;
+}
+.w-banner.is-on{display:block}
+
+/* ── ÉCRAN RÉVÉLATION DU RÔLE ── */
+.rr-wrap{flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:24px 0}
+.rr-eyebrow{font-size:.7rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--dim);margin-bottom:18px}
+.rr-mark{
+  width:96px;height:96px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 24px;
+  font-family:'Playfair Display',serif;
+  font-size:2.4rem;font-weight:900;
+  letter-spacing:-0.02em;
+}
+.rr-mark.is-c{background:var(--c-glow);color:var(--c);box-shadow:0 0 0 1px var(--c-tint)}
+.rr-mark.is-r{background:var(--r-glow);color:var(--r);box-shadow:0 0 0 1px var(--r-tint)}
+.rr-name{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:700;letter-spacing:-0.015em;margin-bottom:4px}
+.rr-label{color:var(--text-soft);font-size:1rem;margin-bottom:30px}
+.rr-bio{
+  text-align:left;
+  background:var(--bg-elev);
+  border:1px solid var(--border-soft);
+  border-radius:14px;
+  padding:18px 20px;
+  margin-bottom:28px;
+}
+.rr-bio p{color:var(--text-soft);font-size:.95rem;line-height:1.65;margin-bottom:10px}
+.rr-bio p:last-child{margin-bottom:0}
+.rr-bio strong{color:var(--text);font-weight:600}
+.rr-cta{
+  background:var(--text);color:var(--bg);
+  padding:16px 24px;border-radius:14px;
+  font-weight:700;font-size:.98rem;
+  width:100%;
+  transition:transform .18s cubic-bezier(.2,.8,.2,1);
+}
+.rr-cta:active{transform:scale(.97)}
+
+/* ── ÉTAPE DE JEU ── */
+.stage{flex:1;display:flex;flex-direction:column;padding:6px 0;animation:fadeIn .5s ease-out}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+.s-top{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.s-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  height:22px;padding:0 9px;border-radius:11px;
+  background:var(--bg-elev);
+  border:1px solid var(--border-soft);
+  color:var(--text-soft);
+  font-weight:500;font-size:.74rem;
+  letter-spacing:0.01em;
+}
+.s-pill .s-dot{width:6px;height:6px;border-radius:50%}
+.s-pill.is-c .s-dot{background:var(--c)}
+.s-pill.is-r .s-dot{background:var(--r)}
+.s-when{
+  color:var(--dim);
+  font-size:.74rem;
+  font-feature-settings:"tnum";
+  margin-left:auto;
+  white-space:nowrap;
+}
+
+.s-act{font-size:.7rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+.s-act-num{color:var(--text-soft);font-weight:700}
+.s-title{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700;line-height:1.15;letter-spacing:-0.015em;margin-bottom:22px}
+
+.s-ctx{
+  background:var(--bg-elev);
+  border:1px solid var(--border-soft);
+  border-radius:14px;
+  padding:16px 18px;
+  margin-bottom:24px;
+}
+.s-ctx p{font-size:.95rem;line-height:1.65;color:var(--text)}
+
+.s-doc-hint{
+  color:var(--dim);
+  font-size:.8rem;
+  text-align:center;
+  margin-bottom:22px;
+  padding:10px 12px;
+  border:1px dashed var(--border-soft);
+  border-radius:10px;
+}
+
+/* ══════════════════════════════════════════════════════════
+   SLIDER de réponse — design unifié partout
+   Slider continu 1.0 → 5.0 par pas de 0.1, valeur affichée,
+   bouton "Valider" qui apparait 500ms après le 1er mouvement.
+   Toute modification ici doit être répliquée à l'identique
+   sur solo.html, screen.html et index.html.
+   ══════════════════════════════════════════════════════════ */
+.answer-card{
+  background:var(--bg-elev);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:22px 22px 18px;
+  margin:0 0 16px;
+  box-shadow:0 1px 0 oklch(1 0 0 / 0.02) inset;
+}
+
+.answer-value{
+  text-align:center;
+  font-family:'Playfair Display',serif;
+  font-size:3.4rem;font-weight:900;
+  letter-spacing:-0.03em;line-height:1;
+  color:var(--dim);
+  font-variant-numeric:tabular-nums;
+  margin-bottom:4px;
+  transition:color .25s;
+}
+.answer-value.is-set{color:var(--ok)}
+
+.answer-status{
+  text-align:center;
+  font-size:.74rem;
+  color:var(--dim);
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  font-weight:600;
+  margin-bottom:22px;
+  min-height:1em;
+}
+
+.slider-bounds{
+  display:flex;justify-content:space-between;
+  gap:14px;
+  padding:0 0 16px;
+}
+.slider-bound{
+  font-size:.86rem;font-weight:600;
+  color:var(--text);
+  line-height:1.3;
+  max-width:46%;
+}
+.slider-bound.is-min{text-align:left}
+.slider-bound.is-max{text-align:right}
+
+/* Input range custom */
+.slider-wrap{position:relative;padding:0;margin-bottom:2px}
+.slider{
+  -webkit-appearance:none;appearance:none;
+  width:100%;height:36px;
+  background:transparent;outline:none;margin:0;
+  cursor:grab;
+  display:block;
+}
+.slider:active{cursor:grabbing}
+.slider::-webkit-slider-runnable-track{
+  height:8px;border-radius:4px;
+  background:linear-gradient(to right,
+    var(--ok) 0%,
+    var(--ok) var(--pct, 0%),
+    var(--border) var(--pct, 0%),
+    var(--border) 100%);
+}
+.slider::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;
+  width:28px;height:28px;border-radius:50%;
+  background:var(--text);
+  border:3px solid var(--ok);
+  margin-top:-10px;
+  box-shadow:0 6px 18px oklch(0 0 0 / 0.5);
+  transition:transform .15s, box-shadow .25s;
+}
+.slider:active::-webkit-slider-thumb{
+  transform:scale(1.08);
+  box-shadow:0 6px 18px oklch(0 0 0 / 0.5), 0 0 0 10px var(--ok-glow);
+}
+.slider::-moz-range-track{
+  height:8px;border-radius:4px;background:var(--border);
+}
+.slider::-moz-range-progress{
+  height:8px;border-radius:4px;background:var(--ok);
+}
+.slider::-moz-range-thumb{
+  width:28px;height:28px;border-radius:50%;
+  background:var(--text);border:3px solid var(--ok);
+  box-shadow:0 6px 18px oklch(0 0 0 / 0.5);
+}
+
+/* Ticks 1 → 5 alignés sous le thumb */
+.slider-ticks{
+  position:relative;height:36px;
+  margin:0 14px;
+}
+.slider-tick{
+  position:absolute;top:0;
+  transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+}
+.slider-tick-dot{
+  width:5px;height:5px;border-radius:50%;
+  background:var(--border);
+}
+.slider-tick-num{
+  font-family:'Playfair Display',serif;
+  font-size:.94rem;font-weight:700;
+  color:var(--dim);line-height:1;
+}
+
+/* Bouton "Valider", apparait 500ms après le 1er mouvement */
+.validate{
+  width:100%;
+  background:var(--ok);
+  color:oklch(0.13 0.02 270);
+  padding:16px 24px;border-radius:14px;
+  font-size:1rem;font-weight:700;
+  letter-spacing:-0.01em;
+  border:none;cursor:pointer;
+  opacity:0;transform:translateY(10px);
+  pointer-events:none;
+  transition:opacity .35s cubic-bezier(.2,.8,.2,1), transform .35s cubic-bezier(.2,.8,.2,1);
+  display:block;margin-top:auto;
+}
+.validate.is-visible{
+  opacity:1;transform:none;pointer-events:auto;
+}
+.validate:active{transform:scale(.98)}
+
+/* ── VOTED / WAIT ── */
+.v-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px 16px;animation:fadeIn .5s ease-out}
+.v-mark{
+  width:88px;height:88px;border-radius:50%;
+  background:var(--ok-glow);
+  border:1px solid var(--ok);
+  color:var(--ok);
+  display:flex;align-items:center;justify-content:center;
+  font-size:2rem;font-weight:700;
+  margin-bottom:22px;
+  position:relative;
+}
+.v-mark::before{
+  content:"";position:absolute;inset:-8px;border-radius:50%;
+  border:1px solid var(--ok);opacity:.35;
+  animation:vPulse 2.4s ease-out infinite;
+}
+@keyframes vPulse{0%{transform:scale(.92);opacity:.6}100%{transform:scale(1.35);opacity:0}}
+.v-mark.is-wait{background:var(--bg-elev);border-color:var(--border);color:var(--text-soft)}
+.v-mark.is-wait::before{border-color:var(--text-soft)}
+.v-title{font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:700;margin-bottom:10px;letter-spacing:-0.01em}
+.v-sub{color:var(--text-soft);font-size:.94rem;max-width:32ch;line-height:1.55}
+.v-progress{
+  margin-top:30px;
+  display:flex;gap:5px;
+  width:100%;max-width:240px;
+}
+.v-dot{flex:1;height:3px;border-radius:1.5px;background:var(--border-soft);transition:background .4s}
+.v-dot.is-done{background:var(--ok)}
+.v-dot.is-cur{background:var(--text)}
+.v-step-info{margin-top:12px;color:var(--dim);font-size:.78rem;letter-spacing:0.04em}
+
+/* ── ÉCRAN FIN ── */
+.e-wrap{flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:24px 16px;animation:fadeIn .5s ease-out;position:relative;z-index:1}
+.e-mark{
+  width:96px;height:96px;border-radius:50%;
+  background:var(--ok-glow);border:1px solid var(--ok);color:var(--ok);
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.2rem;font-weight:700;
+  margin:0 auto 26px;
+  position:relative;
+}
+.e-mark::before{
+  content:"";position:absolute;inset:-10px;border-radius:50%;
+  border:1px solid var(--ok);opacity:.3;
+  animation:vPulse 2.4s ease-out infinite;
+}
+.e-eyebrow{font-size:.7rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--dim);margin-bottom:22px}
+.e-title{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,9vw,3rem);font-weight:900;line-height:1.05;margin-bottom:18px;letter-spacing:-0.02em}
+.e-sub{color:var(--text-soft);font-size:1rem;max-width:34ch;margin:0 auto 24px;line-height:1.6}
+.e-foot{color:var(--dim);font-size:.78rem;letter-spacing:0.04em}
+
+/* ── CONFETTIS ── */
+.confetti-stage{
+  position:fixed;inset:0;
+  pointer-events:none;overflow:hidden;
+  z-index:0;
+}
+.confetti-piece{
+  position:absolute;
+  top:-24px;
+  width:8px;height:14px;
+  border-radius:1.5px;
+  opacity:0;
+  will-change:transform, opacity;
+  animation:confetti-fall linear forwards;
+}
+@keyframes confetti-fall{
+  0%   { transform:translate3d(0, 0, 0) rotateZ(0deg);   opacity:0 }
+  6%   { opacity:1 }
+  88%  { opacity:1 }
+  100% { transform:translate3d(var(--dx), 110vh, 0) rotateZ(var(--rz)); opacity:0 }
+}
+
+/* ── LOADING ── */
+.loading{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--dim);font-size:.85rem;gap:14px}
+.loading-dot{width:10px;height:10px;border-radius:50%;background:var(--text-soft);animation:loadPulse 1.4s ease-in-out infinite}
+@keyframes loadPulse{0%,100%{opacity:.3;transform:scale(.85)}50%{opacity:1;transform:scale(1)}}
+
+/* ── RESPONSIVE ── */
+@media (max-height: 700px){
+  .s-title{font-size:1.45rem;margin-bottom:14px}
+  .s-ctx{padding:13px 15px;margin-bottom:18px}
+  .lk{height:56px;font-size:1.15rem}
+  .rr-mark{width:80px;height:80px;font-size:2rem;margin-bottom:18px}
+}
+@media (max-width: 360px){.lk{height:54px;font-size:1.1rem}}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}
+}
+</style>
+</head>
+<body>
+<div id="root">
+  <div class="loading"><div class="loading-dot"></div>Chargement...</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="data.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  // ── ÉTAT ──
+  const S = {
+    view: 'welcome',
+    role: null,
+    gs: null,
+    voted: {},
+    selected: null,
+    validateTimer: null,
+    offline: false,
+    confettiSpawned: false,
+  };
+  let pollTmr = null;
+  let sb = null;
+
+  // ── INIT SUPABASE (résilient) ──
+  const SUPABASE_URL = 'https://itfwepbhfbtodjkttkxf.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_fhNdwRE5atqIpqczpHxTHw_6SyRnxTq';
+
+  try {
+    if (typeof supabase !== 'undefined' && supabase && typeof supabase.createClient === 'function') {
+      sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    } else {
+      S.offline = true;
+      console.warn('Supabase library indisponible, mode hors-ligne.');
+    }
+  } catch (e) {
+    S.offline = true;
+    console.error('Supabase init failed:', e);
+  }
+
+  // ── DB HELPERS ──
+  const KGS = 'game_state';
+  const DEFAULT_GS = { step:0, voting:false, results:false, biais:false };
+
+  async function getGS(){
+    if(!sb) return { ...DEFAULT_GS };
+    try {
+      const { data } = await sb.from('game_kv').select('value').eq('key', KGS).maybeSingle();
+      return data ? data.value : { ...DEFAULT_GS };
+    } catch(e){
+      console.warn('getGS error', e);
+      return { ...DEFAULT_GS };
+    }
+  }
+  async function addVote(n, team, val){
+    if(!sb) return;
+    try { await sb.from('votes').insert({ step:n, team, value:val }); }
+    catch(e){ console.error('addVote failed', e); }
+  }
+
+  // ── POLL ──
+  function startPoll(){ stopPoll(); pollTmr = setInterval(tick, 2400); }
+  function stopPoll(){ if(pollTmr){ clearInterval(pollTmr); pollTmr = null; } }
+
+  async function tick(){
+    if(!sb) return;
+    const gs = await getGS();
+    const prevStep = S.gs ? S.gs.step : -1;
+    const prevVoting = S.gs ? S.gs.voting : false;
+    const oldGS = S.gs;
+    S.gs = gs;
+
+    if(S.view === 'wait' || S.view === 'stage'){
+      const stepChanged = gs.step !== prevStep;
+      const votingChanged = gs.voting !== prevVoting;
+
+      if(stepChanged){
+        resetSelection();
+        S.view = (gs.voting && !S.voted[gs.step]) ? 'stage' : 'wait';
+        render(); return;
+      }
+      if(votingChanged && gs.voting && !S.voted[gs.step] && S.view === 'wait'){
+        resetSelection();
+        S.view = 'stage';
+        render(); return;
+      }
+      if(votingChanged && !gs.voting && S.view === 'stage'){
+        S.view = 'wait';
+        render(); return;
+      }
+    }
+  }
+
+  function resetSelection(){
+    S.selected = null;
+    if(S.validateTimer){ clearTimeout(S.validateTimer); S.validateTimer = null; }
+  }
+
+  // ── RENDER ──
+  function render(){
+    const r = document.getElementById('root');
+    let html = '';
+    switch(S.view){
+      case 'welcome':  html = vWelcome();  break;
+      case 'loading':  html = vLoading();  break;
+      case 'reveal':   html = vReveal();   break;
+      case 'stage':    html = vStage();    break;
+      case 'wait':     html = vWait();     break;
+      case 'voted':    html = vVoted();    break;
+      case 'end':      html = vEnd();      break;
+      default:         html = vWelcome();
+    }
+    r.innerHTML = html;
+    if(S.view === 'stage'){ initSliderPct(); }
+    if(S.view === 'end' && !S.confettiSpawned){
+      spawnConfetti();
+      S.confettiSpawned = true;
+    }
+  }
+
+  function spawnConfetti(){
+    const stage = document.getElementById('confetti-stage');
+    if(!stage) return;
+    const colors = [
+      'oklch(0.78 0.16 150)', // ok green
+      'oklch(0.72 0.15 245)', // c blue
+      'oklch(0.78 0.14 70)',  // r amber
+      'oklch(0.78 0.18 320)', // pink-violet
+      'oklch(0.86 0.16 95)',  // pale yellow
+      'oklch(0.96 0.008 270)' // near-white
+    ];
+    const N = 90;
+    const frag = document.createDocumentFragment();
+    for(let i = 0; i < N; i++){
+      const c = document.createElement('span');
+      c.className = 'confetti-piece';
+      const w = 5 + Math.random() * 6;
+      const h = 8 + Math.random() * 12;
+      const dx = (Math.random() - 0.5) * 360;
+      const rz = (Math.random() < 0.5 ? -1 : 1) * (360 + Math.random() * 720);
+      const dur = 3.4 + Math.random() * 2.2;
+      const delay = Math.random() * 0.6;
+      c.style.cssText =
+        `left:${Math.random()*100}%;` +
+        `width:${w}px;height:${h}px;` +
+        `background:${colors[Math.floor(Math.random()*colors.length)]};` +
+        `--dx:${dx}px;--rz:${rz}deg;` +
+        `animation-duration:${dur}s;animation-delay:${delay}s;`;
+      frag.appendChild(c);
+    }
+    stage.appendChild(frag);
+    // Cleanup après l'anim
+    setTimeout(() => { if(stage) stage.innerHTML = ''; }, 7000);
+  }
+
+  function vWelcome(){
+    return `
+<div class="w-wrap">
+  <div class="w-eyebrow">Conférence · biais cognitifs</div>
+  <h1 class="w-title">Le recrutement<br>de Mehdi</h1>
+  <p class="w-sub">Vous allez vivre une histoire en six actes. Suivez le rythme de la salle. Aucune préparation requise.</p>
+  <button class="w-cta" data-action="join">Rejoindre la session</button>
+  <div class="w-banner ${S.offline ? 'is-on' : ''}">
+    Connexion à la session indisponible. L'écran fonctionnera quand l'animateur lancera la session ou quand votre réseau sera rétabli.
+  </div>
+</div>`;
+  }
+
+  function vReveal(){
+    const role = ROLES[S.role];
+    const isC = S.role === 'c';
+    return `
+<div class="rr-wrap">
+  <div class="rr-eyebrow">Vous incarnez</div>
+  <div class="rr-mark ${isC?'is-c':'is-r'}">${role.initial}</div>
+  <div class="rr-name">${role.name}</div>
+  <div class="rr-label">${role.label}</div>
+  <div class="rr-bio">${INTRO[S.role]}</div>
+  <button class="rr-cta" data-action="enterStage">Je suis prêt</button>
+</div>`;
+  }
+
+  function vStage(){
+    const gs = S.gs || DEFAULT_GS;
+    const step = STEPS[gs.step];
+    const ctx = CTX[S.role][gs.step];
+    const q = pickQuestion(step, S.role);
+    const role = ROLES[S.role];
+    const isC = S.role === 'c';
+
+    const hasVal = S.selected !== null && S.selected !== undefined;
+    const initial = hasVal ? S.selected : 3;
+    const display = hasVal ? S.selected.toFixed(1) : '—';
+    const status = hasVal ? 'Réponse sélectionnée' : 'Faites glisser pour répondre';
+
+    return `
+<div class="stage">
+  <div class="s-top">
+    <span class="s-pill ${isC?'is-c':'is-r'}">
+      <span class="s-dot"></span><span>${role.short} · ${role.label}</span>
+    </span>
+    <span class="s-when">${step.when}</span>
+  </div>
+
+  <div class="s-act"><span class="s-act-num">${step.title}</span> · ${step.sub}</div>
+  <div class="s-title">${q}</div>
+
+  <div class="s-ctx"><p>${ctx}</p></div>
+
+  <div class="s-doc-hint">Document projeté à l'écran</div>
+
+  <div class="answer-card">
+    <div class="answer-value ${hasVal?'is-set':''}" id="val-display">${display}</div>
+    <div class="answer-status" id="val-status">${status}</div>
+
+    <div class="slider-bounds">
+      <div class="slider-bound is-min">${step.min}</div>
+      <div class="slider-bound is-max">${step.max}</div>
+    </div>
+
+    <div class="slider-wrap">
+      <input class="slider" type="range" min="1" max="5" step="0.1" value="${initial}" data-slider aria-label="Choisissez une valeur entre 1 et 5">
+    </div>
+
+    <div class="slider-ticks">
+      <div class="slider-tick" style="left:0%"><div class="slider-tick-dot"></div><span class="slider-tick-num">1</span></div>
+      <div class="slider-tick" style="left:25%"><div class="slider-tick-dot"></div><span class="slider-tick-num">2</span></div>
+      <div class="slider-tick" style="left:50%"><div class="slider-tick-dot"></div><span class="slider-tick-num">3</span></div>
+      <div class="slider-tick" style="left:75%"><div class="slider-tick-dot"></div><span class="slider-tick-num">4</span></div>
+      <div class="slider-tick" style="left:100%"><div class="slider-tick-dot"></div><span class="slider-tick-num">5</span></div>
+    </div>
+  </div>
+
+  <button class="validate${hasVal?' is-visible':''}" id="validate-btn" data-action="validate">Valider la réponse</button>
+</div>`;
+  }
+
+  function vWait(){
+    const gs = S.gs || DEFAULT_GS;
+    const isC = S.role === 'c';
+    const role = ROLES[S.role];
+    const dots = STEPS.map((_, i) => {
+      const cls = i < gs.step ? 'is-done' : i === gs.step ? 'is-cur' : '';
+      return `<div class="v-dot ${cls}"></div>`;
+    }).join('');
+    const voted = !!S.voted[gs.step];
+
+    return `
+<div class="v-wrap">
+  <div class="s-top" style="width:100%;max-width:300px;margin-bottom:32px">
+    <span class="s-pill ${isC?'is-c':'is-r'}">
+      <span class="s-dot"></span><span>${role.short} · ${role.label}</span>
+    </span>
+  </div>
+  <div class="v-mark ${voted ? '' : 'is-wait'}">${voted ? '✓' : '…'}</div>
+  <div class="v-title">${voted ? 'Réponse enregistrée' : 'En attente'}</div>
+  <p class="v-sub">${voted ? "L'animateur passera bientôt à l'acte suivant." : "L'animateur va ouvrir la prochaine question."}</p>
+  <div class="v-step-info">Acte ${gs.step+1} sur ${STEPS.length}</div>
+  <div class="v-progress">${dots}</div>
+</div>`;
+  }
+
+  function vVoted(){
+    const isC = S.role === 'c';
+    const role = ROLES[S.role];
+    return `
+<div class="v-wrap">
+  <div class="s-top" style="width:100%;max-width:300px;margin-bottom:32px">
+    <span class="s-pill ${isC?'is-c':'is-r'}">
+      <span class="s-dot"></span><span>${role.short} · ${role.label}</span>
+    </span>
+  </div>
+  <div class="v-mark">✓</div>
+  <div class="v-title">Vote pris en compte</div>
+  <p class="v-sub">Restez à l'écoute, on poursuit l'histoire.</p>
+</div>`;
+  }
+
+  function vEnd(){
+    return `
+<div class="confetti-stage" id="confetti-stage"></div>
+<div class="e-wrap">
+  <div class="e-mark">✓</div>
+  <div class="e-eyebrow">Vous avez vécu les six actes</div>
+  <h1 class="e-title">Merci d'avoir<br>participé à l'expérience.</h1>
+  <p class="e-sub">Restez avec nous pour la suite, on va maintenant prendre le temps de relire ensemble ce qui s'est joué.</p>
+  <div class="e-foot">Gardez votre téléphone à portée</div>
+</div>`;
+  }
+
+  function vLoading(){
+    return `<div class="loading"><div class="loading-dot"></div>Connexion en cours</div>`;
+  }
+
+  // ── HELPERS ──
+  function pickQuestion(step, role){
+    if(role === 'c' && step.qC) return step.qC;
+    if(role === 'r' && step.qR) return step.qR;
+    return step.q;
+  }
+
+  // ── ACTIONS ──
+  async function joinRandom(){
+    S.view = 'loading';
+    render();
+    if(sb){
+      try { S.gs = await getGS(); } catch(e){ S.gs = { ...DEFAULT_GS }; }
+    } else {
+      S.gs = { ...DEFAULT_GS };
+    }
+    S.role = Math.random() < 0.5 ? 'c' : 'r';
+    S.view = 'reveal';
+    render();
+  }
+
+  function enterStage(){
+    const gs = S.gs || DEFAULT_GS;
+    S.view = (gs.voting && !S.voted[gs.step]) ? 'stage' : 'wait';
+    if(sb) startPoll();
+    render();
+  }
+
+  // ── SLIDER : mouvement ──
+  function onSliderInput(input){
+    const v = Math.round(parseFloat(input.value) * 10) / 10;
+    const pct = ((v - 1) / 4) * 100;
+    input.style.setProperty('--pct', pct + '%');
+
+    S.selected = v;
+
+    const display = document.getElementById('val-display');
+    const status = document.getElementById('val-status');
+    if(display){
+      display.textContent = v.toFixed(1);
+      display.classList.add('is-set');
+    }
+    if(status){ status.textContent = 'Réponse sélectionnée'; }
+
+    // Cache le bouton à chaque mouvement et le ré-affiche 500ms après l'arrêt
+    const btn = document.getElementById('validate-btn');
+    if(btn) btn.classList.remove('is-visible');
+    if(S.validateTimer) clearTimeout(S.validateTimer);
+    S.validateTimer = setTimeout(() => {
+      const b = document.getElementById('validate-btn');
+      if(b) b.classList.add('is-visible');
+    }, 500);
+  }
+
+  // Au render de la vue stage, initialise --pct du slider
+  function initSliderPct(){
+    const slider = document.querySelector('[data-slider]');
+    if(!slider) return;
+    const v = parseFloat(slider.value);
+    const pct = ((v - 1) / 4) * 100;
+    slider.style.setProperty('--pct', pct + '%');
+  }
+
+  async function confirmVote(){
+    if(S.selected === null || S.selected === undefined) return;
+    if(S.validateTimer){ clearTimeout(S.validateTimer); S.validateTimer = null; }
+
+    const gs = S.gs || DEFAULT_GS;
+    const step = gs.step;
+    const value = S.selected;
+    const isLast = step >= STEPS.length - 1;
+
+    S.voted[step] = true;
+    S.selected = null;
+    S.view = 'voted';
+    render();
+
+    await addVote(step, S.role, value);
+
+    setTimeout(() => {
+      if(S.view === 'voted'){
+        S.view = isLast ? 'end' : 'wait';
+        if(isLast){ stopPoll(); }
+        render();
+      }
+    }, 900);
+  }
+
+  // ── EVENT DELEGATION ──
+  document.addEventListener('click', function(e){
+    const t = e.target.closest('[data-action]');
+    if(!t) return;
+    const action = t.dataset.action;
+    if(action === 'join') joinRandom();
+    else if(action === 'enterStage') enterStage();
+    else if(action === 'validate') confirmVote();
+  });
+  document.addEventListener('input', function(e){
+    if(e.target.matches('[data-slider]')) onSliderInput(e.target);
+  });
+
+  // ── BOOT ──
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le recrutement de Mehdi · Projection</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:           oklch(0.13 0.02 270);
+  --bg-elev:      oklch(0.18 0.022 270);
+  --bg-elev2:     oklch(0.22 0.024 270);
+  --border:       oklch(0.30 0.025 270);
+  --border-soft:  oklch(0.25 0.022 270);
+  --text:         oklch(0.96 0.008 270);
+  --text-soft:    oklch(0.82 0.015 270);
+  --dim:          oklch(0.62 0.025 270);
+  --dim-deep:     oklch(0.45 0.025 270);
+
+  --c:            oklch(0.74 0.15 245);
+  --c-tint:       oklch(0.34 0.08 245);
+  --c-glow:       oklch(0.74 0.15 245 / 0.18);
+
+  --r:            oklch(0.78 0.14 70);
+  --r-tint:       oklch(0.36 0.08 70);
+  --r-glow:       oklch(0.78 0.14 70 / 0.18);
+
+  --accent:       oklch(0.86 0.16 95);
+  --accent-glow:  oklch(0.86 0.16 95 / 0.14);
+}
+
+html,body{
+  height:100%;
+  font-family:'DM Sans',system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.5;
+  font-size:18px;
+  -webkit-font-smoothing:antialiased;
+  overflow:hidden;
+}
+button{font-family:inherit;cursor:pointer;background:none;border:none;color:inherit}
+
+/* ── LAYOUT PLEIN ÉCRAN ── */
+#root{
+  width:100vw;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  padding:48px 64px;
+  position:relative;
+}
+
+/* Texture subtile pour casser le flat du dark */
+#root::before{
+  content:"";
+  position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 20% 10%, oklch(0.22 0.04 270 / 0.4) 0%, transparent 50%),
+    radial-gradient(circle at 80% 90%, oklch(0.20 0.04 280 / 0.3) 0%, transparent 50%);
+  pointer-events:none;
+}
+#root > *{position:relative;z-index:1}
+
+/* ── HEADER ── */
+.head{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:32px;
+  margin-bottom:36px;
+}
+.head-left{display:flex;flex-direction:column;gap:6px}
+.head-act{
+  font-size:.78rem;
+  letter-spacing:0.32em;
+  text-transform:uppercase;
+  color:var(--dim);
+}
+.head-act strong{color:var(--text-soft);font-weight:700}
+.head-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.4rem,4vw,3.4rem);
+  font-weight:900;
+  line-height:1;
+  letter-spacing:-0.02em;
+}
+.head-when{
+  font-size:.96rem;
+  color:var(--dim);
+  letter-spacing:0.04em;
+  font-feature-settings:"tnum";
+  white-space:nowrap;
+  padding-bottom:8px;
+}
+.head-when::before{
+  content:"";
+  display:inline-block;
+  width:6px;height:6px;border-radius:50%;
+  background:var(--accent);
+  margin-right:10px;
+  vertical-align:middle;
+  box-shadow:0 0 0 4px var(--accent-glow);
+}
+
+/* Steps tracker */
+.tracker{
+  position:absolute;
+  top:24px;left:64px;right:64px;
+  display:flex;gap:6px;
+  z-index:2;
+}
+.tk{flex:1;height:3px;border-radius:1.5px;background:var(--border-soft);transition:background .6s}
+.tk.is-done{background:var(--ok,oklch(0.72 0.14 150))}
+.tk.is-cur{background:var(--text)}
+
+/* ── BODY ── */
+.body{
+  flex:1;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:32px;
+  min-height:0;
+  position:relative;
+}
+.body.has-side{grid-template-columns:1fr 480px}
+
+.doc-stage{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:0;
+  position:relative;
+  animation:docIn .55s cubic-bezier(.2,.8,.2,1);
+}
+@keyframes docIn{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:none}
+}
+
+.doc-stage .doc{
+  max-width:780px;
+  width:100%;
+  max-height:calc(100vh - 200px);
+  overflow:auto;
+  transform-origin:center top;
+}
+
+/* Side panel : question / résultats / biais */
+.side{
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  min-height:0;
+  animation:sideIn .55s cubic-bezier(.2,.8,.2,1);
+}
+@keyframes sideIn{
+  from{opacity:0;transform:translateX(20px)}
+  to{opacity:1;transform:none}
+}
+
+.side-card{
+  background:var(--bg-elev);
+  border:1px solid var(--border-soft);
+  border-radius:18px;
+  padding:24px 26px;
+}
+.side-card.is-feature{
+  background:var(--bg-elev2);
+  border-color:var(--border);
+}
+.side-lbl{
+  font-size:.72rem;
+  letter-spacing:0.28em;
+  text-transform:uppercase;
+  color:var(--dim);
+  margin-bottom:12px;
+  font-weight:600;
+}
+
+/* Question affichée */
+.q-text{
+  font-family:'Playfair Display',serif;
+  font-size:1.8rem;
+  font-weight:700;
+  line-height:1.2;
+  letter-spacing:-0.015em;
+  color:var(--text);
+  margin-bottom:22px;
+}
+
+/* ══════════════════════════════════════════════════════════
+   SLIDER de réponse — read-only sur projection.
+   Même langage visuel que participant + solo + index.
+   ══════════════════════════════════════════════════════════ */
+.answer-card{
+  background:var(--bg-elev2);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:22px 24px 20px;
+}
+.slider-bounds{display:flex;justify-content:space-between;gap:14px;padding:0 0 16px}
+.slider-bound{font-size:.96rem;font-weight:600;color:var(--text);line-height:1.35;max-width:46%}
+.slider-bound.is-min{text-align:left}
+.slider-bound.is-max{text-align:right}
+
+.slider-wrap{position:relative;padding:0;margin-bottom:2px}
+.slider{
+  -webkit-appearance:none;appearance:none;
+  width:100%;height:32px;background:transparent;outline:none;margin:0;display:block;
+  pointer-events:none;
+}
+.slider::-webkit-slider-runnable-track{
+  height:8px;border-radius:4px;
+  background:linear-gradient(to right,
+    var(--ok) 0%, var(--ok) var(--pct, 50%),
+    var(--border) var(--pct, 50%), var(--border) 100%);
+}
+.slider::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;
+  width:24px;height:24px;border-radius:50%;
+  background:var(--text);border:3px solid var(--ok);
+  margin-top:-8px;
+  box-shadow:0 6px 18px oklch(0 0 0 / 0.5);
+}
+.slider::-moz-range-track{height:8px;border-radius:4px;background:var(--border)}
+.slider::-moz-range-progress{height:8px;border-radius:4px;background:var(--ok)}
+.slider::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:var(--text);border:3px solid var(--ok);box-shadow:0 6px 18px oklch(0 0 0 / 0.5)}
+
+.slider-ticks{position:relative;height:36px;margin:0 14px}
+.slider-tick{position:absolute;top:0;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px}
+.slider-tick-dot{width:6px;height:6px;border-radius:50%;background:var(--border)}
+.slider-tick-num{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--dim);line-height:1}
+
+.answer-hint{
+  text-align:center;
+  font-size:.86rem;
+  color:var(--dim);
+  letter-spacing:0.04em;
+  margin-top:10px;
+}
+
+/* Résultats */
+.res-wrap{display:flex;flex-direction:column;gap:18px}
+.res-team{display:flex;flex-direction:column;gap:10px}
+.res-head{display:flex;justify-content:space-between;align-items:baseline}
+.res-name{font-size:.95rem;font-weight:600;display:flex;align-items:center;gap:8px}
+.res-name .rdot{width:8px;height:8px;border-radius:50%}
+.res-name.is-c .rdot{background:var(--c)}
+.res-name.is-r .rdot{background:var(--r)}
+.res-avg{
+  font-family:'Playfair Display',serif;
+  font-size:2.4rem;
+  font-weight:900;
+  line-height:1;
+  letter-spacing:-0.02em;
+}
+.res-avg small{font-size:.95rem;font-weight:400;color:var(--dim);font-family:'DM Sans',sans-serif;margin-left:4px}
+.res-avg.is-c{color:var(--c)}
+.res-avg.is-r{color:var(--r)}
+.res-bars{display:flex;gap:6px;height:88px;align-items:flex-end}
+.res-bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end}
+.res-bar{
+  width:100%;
+  border-radius:5px 5px 0 0;
+  min-height:5px;
+  transition:height .8s cubic-bezier(.2,.8,.2,1);
+  animation:barRise .8s cubic-bezier(.2,.8,.2,1);
+}
+@keyframes barRise{
+  from{height:5px}
+}
+.res-bar.is-c{background:var(--c)}
+.res-bar.is-r{background:var(--r)}
+.res-bar-lbl{font-size:.78rem;color:var(--dim)}
+.res-bar-n{font-size:.78rem;color:var(--text-soft);font-weight:600}
+
+/* Révélation biais */
+.bias-wrap{
+  background:linear-gradient(
+    150deg,
+    oklch(0.22 0.04 270) 0%,
+    oklch(0.20 0.03 280) 100%
+  );
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:32px 36px;
+  position:relative;
+  overflow:hidden;
+}
+.bias-wrap::before{
+  content:"";
+  position:absolute;top:-40%;right:-20%;
+  width:60%;height:200%;
+  background:radial-gradient(ellipse, var(--accent-glow), transparent 70%);
+  pointer-events:none;
+}
+.bias-lbl{
+  font-size:.74rem;
+  letter-spacing:0.32em;
+  text-transform:uppercase;
+  color:var(--accent);
+  font-weight:700;
+  margin-bottom:14px;
+  position:relative;
+}
+.bias-name{
+  font-family:'Playfair Display',serif;
+  font-size:2.4rem;
+  font-weight:900;
+  line-height:1.05;
+  letter-spacing:-0.02em;
+  margin-bottom:14px;
+  position:relative;
+}
+.bias-def{
+  color:var(--text-soft);
+  font-size:1.04rem;
+  line-height:1.55;
+  margin-bottom:22px;
+  font-style:italic;
+  max-width:60ch;
+  position:relative;
+}
+.bias-split{display:grid;grid-template-columns:1fr 1fr;gap:14px;position:relative}
+.bias-side{
+  padding:18px 20px;
+  border-radius:14px;
+  font-size:.94rem;
+  line-height:1.55;
+}
+.bias-side.is-c{background:var(--c-glow);border:1px solid var(--c-tint)}
+.bias-side.is-r{background:var(--r-glow);border:1px solid var(--r-tint)}
+.bias-side-lbl{
+  display:block;
+  font-size:.7rem;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  font-weight:700;
+  margin-bottom:8px;
+}
+.bias-side.is-c .bias-side-lbl{color:var(--c)}
+.bias-side.is-r .bias-side-lbl{color:var(--r)}
+.bias-side p{color:var(--text)}
+
+/* État neutre (welcome, attente) */
+.idle-wrap{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  gap:24px;
+}
+.idle-eyebrow{
+  font-size:.86rem;
+  letter-spacing:0.32em;
+  text-transform:uppercase;
+  color:var(--dim);
+  margin-bottom:8px;
+}
+.idle-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(3.5rem,7vw,6rem);
+  font-weight:900;
+  line-height:1;
+  letter-spacing:-0.025em;
+  max-width:14ch;
+}
+.idle-sub{
+  color:var(--text-soft);
+  font-size:1.15rem;
+  max-width:46ch;
+  line-height:1.6;
+}
+.idle-roles{
+  display:flex;gap:24px;margin-top:36px;
+}
+.idle-role{
+  display:flex;align-items:center;gap:10px;
+  font-size:.92rem;color:var(--dim);
+}
+.idle-role-dot{width:10px;height:10px;border-radius:50%}
+.idle-role-dot.is-c{background:var(--c)}
+.idle-role-dot.is-r{background:var(--r)}
+
+/* Documents projetés : redéfinitions tailles pour grand écran */
+.doc{background:oklch(0.98 0.003 270);color:oklch(0.12 0.012 270);border-radius:14px;box-shadow:0 24px 80px oklch(0 0 0 / 0.4);max-width:780px;width:100%}
+.doc-paper{padding:44px 48px}
+
+/* CV */
+.cv-header{border-bottom:3px solid oklch(0.18 0.02 270);padding-bottom:20px;margin-bottom:24px}
+.cv-name{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;letter-spacing:0.5px;color:oklch(0.10 0.015 270)}
+.cv-title{font-size:1.05rem;color:oklch(0.42 0.015 270);margin:4px 0}
+.cv-contact{font-family:monospace;font-size:.88rem;color:oklch(0.58 0.01 270);margin-top:6px}
+.cv-section{margin-bottom:22px}
+.cv-section-title{font-size:.78rem;text-transform:uppercase;letter-spacing:2px;color:oklch(0.68 0.01 270);border-bottom:1px solid oklch(0.92 0.005 270);padding-bottom:6px;margin-bottom:14px;font-weight:700}
+.cv-job{margin-bottom:16px}
+.cv-job-top{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:4px;margin-bottom:6px}
+.cv-job-top strong{font-size:1rem;color:oklch(0.14 0.015 270)}
+.cv-date{font-size:.86rem;color:oklch(0.62 0.01 270);font-family:monospace;white-space:nowrap}
+.cv-job ul{padding-left:22px}
+.cv-job li{font-size:.96rem;color:oklch(0.30 0.012 270);margin-bottom:3px;line-height:1.55}
+.cv-gap{background:oklch(0.96 0.06 90);border-left:4px solid oklch(0.72 0.16 70);padding:9px 14px;font-size:.92rem;color:oklch(0.40 0.10 70);margin:8px 0;border-radius:0 5px 5px 0;font-weight:600}
+.cv-section p{font-size:.96rem;color:oklch(0.30 0.012 270);margin-bottom:4px}
+
+/* Transcript */
+.transcript-header{background:oklch(0.18 0.02 270);color:oklch(0.72 0.01 270);padding:14px 22px;margin:-44px -48px 28px;font-size:.94rem;font-family:monospace;display:flex;justify-content:space-between}
+.transcript-body{display:flex;flex-direction:column;gap:16px}
+.tline{display:flex;gap:14px}
+.tspk{font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:1.5px;width:68px;flex-shrink:0;padding-top:4px}
+.tline-rh .tspk{color:oklch(0.55 0.14 35)}
+.tline-c .tspk{color:oklch(0.42 0.14 250)}
+.ttxt{font-size:1.02rem;color:oklch(0.18 0.015 270);line-height:1.6}
+.ttxt em{color:oklch(0.62 0.01 270);font-size:.96rem}
+
+/* Email */
+.email-meta{background:oklch(0.95 0.005 270);margin:-44px -48px 26px;padding:22px 48px;border-bottom:1px solid oklch(0.88 0.005 270)}
+.email-alert{background:oklch(0.97 0.04 70);border-bottom-color:oklch(0.85 0.08 70)}
+.email-row{display:flex;gap:14px;margin-bottom:4px;font-size:.94rem}
+.email-lbl{color:oklch(0.62 0.01 270);width:58px;flex-shrink:0}
+.email-body p{font-size:1.02rem;color:oklch(0.14 0.015 270);margin-bottom:16px;line-height:1.65}
+.email-table{background:oklch(0.95 0.005 270);border-radius:8px;padding:14px 18px;margin:14px 0}
+.email-tr{display:flex;gap:16px;padding:6px 0;border-bottom:1px solid oklch(0.90 0.005 270);font-size:.96rem}
+.email-tr:last-child{border-bottom:none}
+.email-tr span:first-child{color:oklch(0.62 0.01 270);width:130px;flex-shrink:0}
+.email-attach{background:oklch(0.95 0.04 245);border-radius:8px;padding:11px 16px;font-size:.92rem;color:oklch(0.42 0.14 250);margin-top:18px;border:1px solid oklch(0.84 0.08 245)}
+
+/* Slack */
+.slack-topbar{background:oklch(0.30 0.20 320);color:oklch(0.92 0.06 320);padding:14px 26px;font-size:1rem;font-weight:600}
+.slack-body{padding:26px}
+.slack-msg{display:flex;gap:12px;margin-bottom:16px}
+.slack-reply{padding-left:36px}
+.slack-time{font-size:.78rem;color:oklch(0.62 0.01 270);width:42px;flex-shrink:0;padding-top:3px}
+.slack-content{flex:1}
+.slack-user{font-weight:700;font-size:.96rem;color:oklch(0.14 0.015 270);display:block;margin-bottom:3px}
+.slack-badge{background:oklch(0.92 0.005 270);font-weight:400;font-size:.78rem;padding:2px 8px;border-radius:4px;margin-left:5px;font-style:normal;color:oklch(0.48 0.01 270)}
+.slack-text{font-size:.98rem;color:oklch(0.18 0.012 270);display:block;margin-bottom:4px;line-height:1.55}
+.slack-react{font-size:.9rem;color:oklch(0.58 0.01 270);display:block}
+.slack-note{background:oklch(0.95 0.005 270);border-radius:8px;padding:11px 16px;font-size:.86rem;color:oklch(0.58 0.01 270);font-style:italic;margin-top:8px}
+
+/* Eval */
+.eval-top{text-align:center;border-bottom:3px solid oklch(0.18 0.02 270);padding-bottom:16px;margin-bottom:18px}
+.eval-confid{display:inline-block;background:oklch(0.96 0.04 25);color:oklch(0.45 0.18 25);font-size:.76rem;font-weight:700;letter-spacing:2.5px;padding:4px 14px;border-radius:100px;margin-bottom:9px;border:1px solid oklch(0.88 0.08 25)}
+.eval-title{font-size:1.04rem;font-weight:700;letter-spacing:0.5px;margin-bottom:9px;font-family:'Playfair Display',serif}
+.eval-meta{font-size:.88rem;color:oklch(0.48 0.01 270);line-height:1.8}
+.eval-grid{margin-bottom:18px}
+.eval-row{display:grid;grid-template-columns:2fr 90px 2fr;gap:14px;padding:9px 0;border-bottom:1px solid oklch(0.94 0.005 270);font-size:.94rem;align-items:center}
+.eval-head{font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:1px;color:oklch(0.72 0.01 270)}
+.eval-row span:last-child{color:oklch(0.42 0.01 270);font-style:italic}
+.estars{letter-spacing:2px;color:oklch(0.72 0.16 70);font-size:1.05rem}
+.elow{color:oklch(0.62 0.18 25)}
+.eval-comment{background:oklch(0.96 0.005 270);border-radius:8px;padding:16px;margin-bottom:16px}
+.eval-comment-lbl{font-size:.78rem;text-transform:uppercase;letter-spacing:1px;color:oklch(0.68 0.01 270);margin-bottom:9px;font-weight:700}
+.eval-comment p{font-size:.98rem;color:oklch(0.20 0.012 270);line-height:1.6;font-style:italic}
+.eval-decision{display:flex;flex-wrap:wrap;gap:18px;font-size:.94rem;color:oklch(0.36 0.01 270);padding-top:12px;border-top:3px solid oklch(0.18 0.02 270)}
+.eval-pending{color:oklch(0.55 0.14 35);font-weight:700}
+
+/* Responsive : tablette / petit écran de secours */
+@media (max-width: 1100px){
+  #root{padding:32px 40px}
+  .head-title{font-size:2.4rem}
+  .body.has-side{grid-template-columns:1fr 400px}
+  .doc-paper{padding:32px}
+  .transcript-header{margin:-32px -32px 20px}
+  .email-meta{margin:-32px -32px 20px;padding:18px 32px}
+}
+@media (max-width: 900px){
+  .body.has-side{grid-template-columns:1fr;grid-template-rows:1fr auto}
+  .side{max-height:280px;overflow:auto}
+}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="data.js"></script>
+<script>
+(function(){
+'use strict';
+
+const SUPABASE_URL = 'https://itfwepbhfbtodjkttkxf.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_fhNdwRE5atqIpqczpHxTHw_6SyRnxTq';
+const KGS = 'game_state';
+const DEFAULT_GS = { step:0, voting:false, results:false, biais:false };
+
+let sb = null;
+try {
+  if (typeof supabase !== 'undefined' && supabase && typeof supabase.createClient === 'function') {
+    sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  } else {
+    console.warn('Supabase library indisponible, projection en mode idle.');
+  }
+} catch (e) {
+  console.error('Supabase init failed:', e);
+}
+
+async function getGS(){
+  if(!sb) return { ...DEFAULT_GS };
+  try {
+    const { data } = await sb.from('game_kv').select('value').eq('key', KGS).maybeSingle();
+    return data ? data.value : { ...DEFAULT_GS };
+  } catch(e) {
+    console.warn('getGS error', e);
+    return { ...DEFAULT_GS };
+  }
+}
+async function getVotes(n){
+  if(!sb) return [];
+  try {
+    const { data } = await sb.from('votes').select('team,value').eq('step', n);
+    return data ? data.map(r => ({ t:r.team, v:r.value })) : [];
+  } catch(e) {
+    console.warn('getVotes error', e);
+    return [];
+  }
+}
+
+const S = {gs:null, votes:[], started:false};
+let pollTmr=null;
+
+async function tick(){
+  const gs = await getGS();
+  const votes = (gs.voting || gs.results || gs.biais) ? await getVotes(gs.step) : [];
+  const gsChanged = JSON.stringify(gs)!==JSON.stringify(S.gs);
+  const vChanged = JSON.stringify(votes)!==JSON.stringify(S.votes);
+  if(gsChanged || vChanged){
+    S.gs = gs;
+    S.votes = votes;
+    render();
+  }
+}
+
+function render(){
+  const r = document.getElementById('root');
+  const gs = S.gs;
+
+  // Vue d'attente initiale (avant que la session démarre vraiment)
+  if(!gs || (gs.step===0 && !gs.voting && !gs.results && !gs.biais && !S.started)){
+    r.innerHTML = vIdle();
+    return;
+  }
+  S.started = true;
+  r.innerHTML = vStage();
+}
+
+function vIdle(){return `
+<div class="tracker">${STEPS.map(()=>`<div class="tk"></div>`).join('')}</div>
+<div class="idle-wrap">
+  <div class="idle-eyebrow">Conférence · biais cognitifs</div>
+  <h1 class="idle-title">Le recrutement de Mehdi</h1>
+  <p class="idle-sub">Six actes. Deux perspectives. Un seul candidat. Préparez-vous à regarder votre propre jugement à l'œuvre.</p>
+  <div class="idle-roles">
+    <div class="idle-role"><span class="idle-role-dot is-c"></span>Mehdi &nbsp;·&nbsp; Candidat</div>
+    <div class="idle-role"><span class="idle-role-dot is-r"></span>Sophie &nbsp;·&nbsp; Recruteuse RH</div>
+  </div>
+</div>`;}
+
+function vStage(){
+  const gs = S.gs;
+  const step = STEPS[gs.step];
+
+  // Tracker
+  const trk = STEPS.map((_,i)=>{
+    const cls = i < gs.step ? 'is-done' : i === gs.step ? 'is-cur' : '';
+    return `<div class="tk ${cls}"></div>`;
+  }).join('');
+
+  // Body : avec side panel si vote/résultats/biais affichés
+  const showSide = gs.voting || gs.results || gs.biais;
+  const bodyClass = showSide ? 'has-side' : '';
+
+  let sidePanel = '';
+  if(gs.biais){
+    sidePanel = vBias(step);
+  } else if(gs.results){
+    sidePanel = vResults(step);
+  } else if(gs.voting){
+    sidePanel = vQuestion(step);
+  }
+
+  return `
+<div class="tracker">${trk}</div>
+<div class="head">
+  <div class="head-left">
+    <div class="head-act"><strong>${step.title}</strong> &nbsp;·&nbsp; ${step.sub}</div>
+    <div class="head-title">${pageTitle(gs.step)}</div>
+  </div>
+  <div class="head-when">${step.when}</div>
+</div>
+<div class="body ${bodyClass}">
+  <div class="doc-stage">${DOCS[gs.step]}</div>
+  ${showSide ? `<div class="side">${sidePanel}</div>` : ''}
+</div>
+`;}
+
+function pageTitle(i){
+  // Titre court et évocateur pour chaque acte
+  const titles = [
+    "Le CV arrive sur le bureau",
+    "L'entretien creuse le trou",
+    "L'offre, et 48h pour décider",
+    "Premier jour, bureau 12",
+    "L'erreur découverte un jeudi",
+    "Le bilan, deux mois plus tard",
+  ];
+  return titles[i] || STEPS[i].sub;
+}
+
+function vQuestion(step){
+  return `
+<div class="side-card is-feature">
+  <div class="side-lbl">Question</div>
+  <div class="q-text">${step.q}</div>
+  <div class="answer-card">
+    <div class="slider-bounds">
+      <div class="slider-bound is-min">${step.min}</div>
+      <div class="slider-bound is-max">${step.max}</div>
+    </div>
+    <div class="slider-wrap">
+      <input class="slider" type="range" min="1" max="5" step="0.1" value="3" disabled style="--pct:50%">
+    </div>
+    <div class="slider-ticks">
+      <div class="slider-tick" style="left:0%"><div class="slider-tick-dot"></div><span class="slider-tick-num">1</span></div>
+      <div class="slider-tick" style="left:25%"><div class="slider-tick-dot"></div><span class="slider-tick-num">2</span></div>
+      <div class="slider-tick" style="left:50%"><div class="slider-tick-dot"></div><span class="slider-tick-num">3</span></div>
+      <div class="slider-tick" style="left:75%"><div class="slider-tick-dot"></div><span class="slider-tick-num">4</span></div>
+      <div class="slider-tick" style="left:100%"><div class="slider-tick-dot"></div><span class="slider-tick-num">5</span></div>
+    </div>
+    <div class="answer-hint">Répondez sur votre téléphone</div>
+  </div>
+</div>`;
+}
+
+function vResults(step){
+  const vC = S.votes.filter(v=>v.t==='c');
+  const vR = S.votes.filter(v=>v.t==='r');
+  const avgC = vC.length ? (vC.reduce((s,v)=>s+v.v,0)/vC.length) : null;
+  const avgR = vR.length ? (vR.reduce((s,v)=>s+v.v,0)/vR.length) : null;
+  const dC = [1,2,3,4,5].map(n=>vC.filter(v=>v.v===n).length);
+  const dR = [1,2,3,4,5].map(n=>vR.filter(v=>v.v===n).length);
+  const mx = Math.max(1, ...dC, ...dR);
+
+  const barC = dC.map((n,i)=>`
+    <div class="res-bar-col">
+      <div class="res-bar is-c" style="height:${Math.round(n/mx*78)+5}px"></div>
+      <div class="res-bar-n">${n}</div>
+      <div class="res-bar-lbl">${i+1}</div>
+    </div>`).join('');
+  const barR = dR.map((n,i)=>`
+    <div class="res-bar-col">
+      <div class="res-bar is-r" style="height:${Math.round(n/mx*78)+5}px"></div>
+      <div class="res-bar-n">${n}</div>
+      <div class="res-bar-lbl">${i+1}</div>
+    </div>`).join('');
+
+  return `
+<div class="side-card">
+  <div class="side-lbl">Résultats du vote</div>
+  <div class="q-text" style="font-size:1.15rem;margin-bottom:18px">${step.q}</div>
+  <div class="res-wrap">
+    <div class="res-team">
+      <div class="res-head">
+        <div class="res-name is-c"><span class="rdot"></span>Mehdi &nbsp;·&nbsp; Candidat</div>
+        <div class="res-avg is-c">${avgC!==null?avgC.toFixed(1):'—'}<small>/5</small></div>
+      </div>
+      <div class="res-bars">${barC}</div>
+    </div>
+    <div class="res-team">
+      <div class="res-head">
+        <div class="res-name is-r"><span class="rdot"></span>Sophie &nbsp;·&nbsp; Recruteuse RH</div>
+        <div class="res-avg is-r">${avgR!==null?avgR.toFixed(1):'—'}<small>/5</small></div>
+      </div>
+      <div class="res-bars">${barR}</div>
+    </div>
+  </div>
+</div>`;
+}
+
+function vBias(step){
+  return `
+<div class="bias-wrap">
+  <div class="bias-lbl">Le biais en jeu</div>
+  <div class="bias-name">${step.biais}</div>
+  <p class="bias-def">${step.baisDef}</p>
+  <div class="bias-split">
+    <div class="bias-side is-c">
+      <span class="bias-side-lbl">Mehdi · Candidat</span>
+      <p>${step.biaisC}</p>
+    </div>
+    <div class="bias-side is-r">
+      <span class="bias-side-lbl">Sophie · Recruteuse RH</span>
+      <p>${step.biaisR}</p>
+    </div>
+  </div>
+</div>`;
+}
+
+// Premier render synchrone, puis boot polling
+render();
+tick();
+pollTmr = setInterval(tick, 2200);
+})();
+</script>
+</body>
+</html>
