@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Le Recrutement de Mehdi — Démo</title>
+<title>Le Recrutement — Démo</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -172,20 +172,8 @@ function vWelcome(){return`
 <div class="screen-center">
   <div style="max-width:420px;width:100%">
     <div class="game-eyebrow">Jeu pédagogique · Mode démo</div>
-    <h1 class="game-title">Le Recrutement<br>de Mehdi</h1>
-    <p class="game-sub">Choisissez votre rôle pour commencer</p>
-    <div class="role-grid">
-      <button class="role-card role-c" onclick="start('c')">
-        <div class="role-icon">👤</div>
-        <div class="role-name">Mehdi</div>
-        <div class="role-hint">Le candidat</div>
-      </button>
-      <button class="role-card role-r" onclick="start('r')">
-        <div class="role-icon">📋</div>
-        <div class="role-name">Sophie</div>
-        <div class="role-hint">La recruteuse</div>
-      </button>
-    </div>
+    <h1 class="game-title">Le Recrutement</h1>
+    <button class="btn-primary" style="margin-top:24px" onclick="start(Math.random()<0.5?'c':'r')">Entrer →</button>
   </div>
 </div>`}
 
