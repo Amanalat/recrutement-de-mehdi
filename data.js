@@ -316,11 +316,11 @@ const DOCS = [
 // ══════════════════════════════════════════════════
 
 const INTRO = {
-  c: `<p>Mehdi a 27 ans. Il est compétent, consciencieux, et il le sait — mais il a appris à ne pas trop le montrer. Pendant 14 mois chez Lumeo, son manager lui attribuait ses propres erreurs devant l'équipe. Mehdi n'a jamais protesté car il ne voulait pas mal se faire voir et estimait que la bonne tenue des projets était le plus important.</p>
+  c: `<p>Mehdi a 27 ans. Il est compétent, consciencieux, et il le sait, mais il a appris à ne pas trop le montrer. Pendant 14 mois chez Lumeo, son manager lui attribuait ses propres erreurs devant l'équipe. Mehdi n'a jamais protesté car il ne voulait pas mal se faire voir et estimait que la bonne tenue des projets était le plus important.</p>
 <p>14 mois plus tard, une ultime injustice fut la goutte d'eau, et il partit avant de craquer. Il est parti sans explication officielle. Fragilisé, il s'est investi dans une association locale pour reconstruire sa confiance en lui.</p>
 <p>Il se sent à nouveau prêt à s'engager pleinement dans le monde du travail, et cherche un endroit où il ne risque plus de rencontrer le même type de situation toxique. Mais sa méfiance est désormais présente tout le temps, comme une protection.</p>`,
 
   r: `<p>Sophie a 38 ans. Responsable des ressources humaines, elle est rigoureuse, engagée dans son métier, attachée à protéger son équipe et aider la boîte.</p>
-<p>Il y a quatre mois, elle a recruté quelqu'un dont le CV avait un trou. Elle l'avait remarqué. Les explications étaient vagues mais le candidat paraissait sincère et motivé — et elle l'avait recruté. Il faut dire qu'ils manquent de bons profils pour un tel poste. Ce collaborateur avait disparu trois semaines après son arrivée, laissant un client en pleine campagne sans interlocuteur. Elle a dû gérer une crise difficile.</p>
+<p>Il y a quatre mois, elle a recruté quelqu'un dont le CV avait un trou. Elle l'avait remarqué. Les explications étaient vagues mais le candidat paraissait sincère et motivé, et elle l'avait recruté. Il faut dire qu'ils manquent de bons profils pour un tel poste. Ce collaborateur avait disparu trois semaines après son arrivée, laissant un client en pleine campagne sans interlocuteur. Elle a dû gérer une crise difficile.</p>
 <p>Elle possède désormais un regard bien plus sévère sur le parcours des candidats.</p>`,
 };

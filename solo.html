@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Le Recrutement de Mehdi — Démo</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07070f;--bg2:#0f0f1e;--bg3:#16162a;--border:#22223a;
+  --text:#e4e4f4;--dim:#6060a0;
+  --c:#4f8fff;--c2:rgba(79,143,255,.12);
+  --r:#f59e0b;--r2:rgba(245,158,11,.12);
+  --g:#22c55e;--red:#ef4444;
+  --rad:12px;--rad-sm:8px;
+}
+html,body{min-height:100%;font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;font-size:16px}
+button{font-family:inherit;cursor:pointer}
+
+.wrap{max-width:600px;margin:0 auto;padding:24px 16px 60px}
+.screen-center{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+
+.game-eyebrow{font-size:.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--dim);margin-bottom:12px;text-align:center}
+.game-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,6vw,3rem);font-weight:900;line-height:1.1;margin-bottom:8px;text-align:center;background:linear-gradient(135deg,#fff 40%,var(--dim));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.game-sub{color:var(--dim);font-size:.9rem;text-align:center;margin-bottom:32px}
+
+.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:400px){.role-grid{grid-template-columns:1fr}}
+.role-card{background:var(--bg2);border:2px solid var(--border);border-radius:var(--rad);padding:24px 16px;text-align:center;transition:all .2s;color:var(--text)}
+.role-card:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.4)}
+.role-c{border-color:color-mix(in srgb,var(--c) 40%,transparent)}
+.role-c:hover{background:var(--c2);border-color:var(--c)}
+.role-r{border-color:color-mix(in srgb,var(--r) 40%,transparent)}
+.role-r:hover{background:var(--r2);border-color:var(--r)}
+.role-icon{font-size:2rem;margin-bottom:8px}
+.role-name{font-weight:700;font-size:1rem;margin-bottom:4px}
+.role-hint{font-size:.75rem;color:var(--dim)}
+
+.role-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:100px;font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.8px;margin-bottom:16px}
+.badge-c{background:var(--c2);color:var(--c);border:1px solid color-mix(in srgb,var(--c) 30%,transparent)}
+.badge-r{background:var(--r2);color:var(--r);border:1px solid color-mix(in srgb,var(--r) 30%,transparent)}
+
+.progress-row{display:flex;gap:6px;margin-bottom:20px}
+.pdot{flex:1;height:4px;border-radius:2px;background:var(--border);transition:background .3s}
+.pdot-done{background:var(--g)}
+.pdot-cur{background:var(--r)}
+
+.step-chip{display:inline-block;background:var(--bg3);border:1px solid var(--border);border-radius:100px;padding:4px 14px;font-size:.72rem;color:var(--dim);margin-bottom:18px}
+
+.ctx-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rad);padding:16px 18px;margin-bottom:20px}
+.ctx-label{font-size:.65rem;text-transform:uppercase;letter-spacing:1px;color:var(--dim);margin-bottom:6px}
+.ctx-card p{font-size:.88rem;color:var(--text);line-height:1.65}
+
+.doc-wrap{overflow-x:auto;margin-bottom:24px}
+
+.vote-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rad);padding:20px;margin-bottom:20px}
+.vote-q{font-size:1rem;font-weight:600;margin-bottom:20px;line-height:1.5}
+.likert-ends{display:flex;justify-content:space-between;margin-bottom:8px}
+.likert-ends span{font-size:.7rem;color:var(--dim);max-width:40%}
+.likert-ends span:last-child{text-align:right}
+.likert-row{display:flex;gap:8px;justify-content:center;margin-bottom:20px}
+.lbtn{width:52px;height:52px;border-radius:50%;border:2px solid var(--border);background:var(--bg3);color:var(--text);font-size:1.1rem;font-weight:700;transition:all .15s}
+.lbtn:hover{border-color:var(--c);background:var(--c2);transform:scale(1.08)}
+.lbtn-sel{border-color:var(--g)!important;background:rgba(34,197,94,.15)!important;color:var(--g)}
+
+.btn-primary{width:100%;padding:15px;border-radius:var(--rad-sm);border:none;background:var(--g);color:#000;font-size:.95rem;font-weight:700;transition:opacity .2s}
+.btn-primary:hover:not(:disabled){opacity:.85}
+.btn-primary:disabled{opacity:.3;cursor:not-allowed}
+
+.intro-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rad);padding:20px 22px;margin-bottom:24px}
+.intro-card p{font-size:.9rem;color:var(--text);line-height:1.75;margin-bottom:14px}
+.intro-card p:last-child{margin-bottom:0}
+
+.end-icon{width:72px;height:72px;border-radius:50%;background:rgba(34,197,94,.15);border:2px solid var(--g);color:var(--g);font-size:1.8rem;display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+
+/* ── Documents (fond blanc sur fond sombre) ── */
+.doc{background:#fff;color:#1a1a2e;border-radius:var(--rad);box-shadow:0 8px 60px rgba(0,0,0,.6);max-width:560px;width:100%;overflow:hidden}
+.doc-paper{padding:28px}
+
+.cv-header{border-bottom:2.5px solid #1a1a2e;padding-bottom:14px;margin-bottom:18px}
+.cv-name{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:900;letter-spacing:1px;color:#0a0a1a}
+.cv-title{font-size:.9rem;color:#555;margin:2px 0}
+.cv-contact{font-family:monospace;font-size:.72rem;color:#888;margin-top:4px}
+.cv-section{margin-bottom:16px}
+.cv-section-title{font-size:.62rem;text-transform:uppercase;letter-spacing:2px;color:#aaa;border-bottom:1px solid #eee;padding-bottom:4px;margin-bottom:10px;font-weight:600}
+.cv-job{margin-bottom:12px}
+.cv-job-top{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:4px;margin-bottom:4px}
+.cv-job-top strong{font-size:.82rem;color:#111}
+.cv-date{font-size:.7rem;color:#999;font-family:monospace;white-space:nowrap}
+.cv-job ul{padding-left:16px}
+.cv-job li{font-size:.8rem;color:#444;margin-bottom:2px;line-height:1.5}
+.cv-gap{background:#fffbeb;border-left:3px solid #f59e0b;padding:6px 10px;font-size:.76rem;color:#92400e;margin:5px 0;border-radius:0 4px 4px 0}
+.cv-section p{font-size:.8rem;color:#444;margin-bottom:3px}
+
+.transcript-header{background:#1e1e2e;color:#aaa;padding:10px 16px;margin:-28px -28px 20px;font-size:.78rem;font-family:monospace;display:flex;justify-content:space-between}
+.transcript-body{display:flex;flex-direction:column;gap:12px}
+.tline{display:flex;gap:10px}
+.tspk{font-weight:700;font-size:.66rem;text-transform:uppercase;letter-spacing:1px;width:52px;flex-shrink:0;padding-top:2px}
+.tline-rh .tspk{color:#c2410c}
+.tline-c .tspk{color:#1d4ed8}
+.ttxt{font-size:.84rem;color:#222;line-height:1.6}
+.ttxt em{color:#999;font-size:.8rem}
+
+.email-meta{background:#f4f4f6;margin:-28px -28px 20px;padding:16px 28px;border-bottom:1px solid #e0e0e8}
+.email-alert{background:#fff7ed;border-bottom-color:#fed7aa}
+.email-row{display:flex;gap:10px;margin-bottom:3px;font-size:.8rem}
+.email-lbl{color:#aaa;width:46px;flex-shrink:0}
+.email-body p{font-size:.84rem;color:#1a1a2e;margin-bottom:12px;line-height:1.65}
+.email-table{background:#f4f4f6;border-radius:6px;padding:10px 12px;margin:10px 0}
+.email-tr{display:flex;gap:10px;padding:3px 0;border-bottom:1px solid #e8e8f0;font-size:.8rem}
+.email-tr:last-child{border-bottom:none}
+.email-tr span:first-child{color:#999;width:100px;flex-shrink:0}
+.email-attach{background:#eff6ff;border-radius:6px;padding:8px 12px;font-size:.76rem;color:#1d4ed8;margin-top:12px;border:1px solid #bfdbfe}
+
+.slack-topbar{background:#3c0063;color:#e0c8ff;padding:10px 18px;font-size:.82rem;font-weight:600}
+.slack-body{padding:18px}
+.slack-msg{display:flex;gap:8px;margin-bottom:12px}
+.slack-reply{padding-left:26px}
+.slack-time{font-size:.66rem;color:#aaa;width:34px;flex-shrink:0;padding-top:2px}
+.slack-content{flex:1}
+.slack-user{font-weight:700;font-size:.8rem;color:#1a1a2e;display:block;margin-bottom:2px}
+.slack-badge{background:#eee;font-weight:400;font-size:.66rem;padding:1px 5px;border-radius:3px;margin-left:4px;font-style:normal;color:#666}
+.slack-text{font-size:.82rem;color:#222;display:block;margin-bottom:3px;line-height:1.5}
+.slack-react{font-size:.76rem;color:#888;display:block}
+.slack-note{background:#f5f5f5;border-radius:6px;padding:8px 12px;font-size:.72rem;color:#999;font-style:italic;margin-top:6px}
+
+.eval-top{text-align:center;border-bottom:2.5px solid #1a1a2e;padding-bottom:12px;margin-bottom:14px}
+.eval-confid{display:inline-block;background:#fef2f2;color:#b91c1c;font-size:.62rem;font-weight:700;letter-spacing:2px;padding:2px 10px;border-radius:100px;margin-bottom:6px;border:1px solid #fecaca}
+.eval-title{font-size:.86rem;font-weight:700;letter-spacing:.5px;margin-bottom:6px;font-family:'Playfair Display',serif}
+.eval-meta{font-size:.72rem;color:#777;line-height:1.8}
+.eval-grid{margin-bottom:14px}
+.eval-row{display:grid;grid-template-columns:2fr 70px 2fr;gap:8px;padding:6px 0;border-bottom:1px solid #f0f0f0;font-size:.76rem;align-items:center}
+.eval-head{font-weight:700;font-size:.64rem;text-transform:uppercase;letter-spacing:1px;color:#bbb}
+.eval-row span:last-child{color:#666;font-style:italic}
+.estars{letter-spacing:2px;color:#f59e0b;font-size:.86rem}
+.elow{color:#ef4444}
+.eval-comment{background:#f8f8fb;border-radius:6px;padding:12px;margin-bottom:12px}
+.eval-comment-lbl{font-size:.64rem;text-transform:uppercase;letter-spacing:1px;color:#aaa;margin-bottom:6px;font-weight:600}
+.eval-comment p{font-size:.82rem;color:#333;line-height:1.6;font-style:italic}
+.eval-decision{display:flex;flex-wrap:wrap;gap:12px;font-size:.76rem;color:#555;padding-top:10px;border-top:2px solid #1a1a2e}
+.eval-pending{color:#c2410c;font-weight:600}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="data.js"></script>
+<script>
+'use strict';
+
+const SUPABASE_URL = 'https://itfwepbhfbtodjkttkxf.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_fhNdwRE5atqIpqczpHxTHw_6SyRnxTq';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let role = null;
+let step = 0;
+let sel  = null;
+let saving = false;
+let view = 'welcome';
+
+function render(){
+  const r = document.getElementById('root');
+  if(view==='welcome') r.innerHTML = vWelcome();
+  else if(view==='intro') r.innerHTML = vIntro();
+  else if(view==='step')  r.innerHTML = vStep();
+  else if(view==='end')   r.innerHTML = vEnd();
+  window.scrollTo(0,0);
+}
+
+function vWelcome(){return`
+<div class="screen-center">
+  <div style="max-width:420px;width:100%">
+    <div class="game-eyebrow">Jeu pédagogique · Mode démo</div>
+    <h1 class="game-title">Le Recrutement<br>de Mehdi</h1>
+    <p class="game-sub">Choisissez votre rôle pour commencer</p>
+    <div class="role-grid">
+      <button class="role-card role-c" onclick="start('c')">
+        <div class="role-icon">👤</div>
+        <div class="role-name">Mehdi</div>
+        <div class="role-hint">Le candidat</div>
+      </button>
+      <button class="role-card role-r" onclick="start('r')">
+        <div class="role-icon">📋</div>
+        <div class="role-name">Sophie</div>
+        <div class="role-hint">La recruteuse</div>
+      </button>
+    </div>
+  </div>
+</div>`}
+
+function vIntro(){
+  const isC = role==='c';
+  return`
+<div class="wrap">
+  <div class="role-badge ${isC?'badge-c':'badge-r'}">${isC?'👤 Candidat — Mehdi':'📋 Recruteur — Sophie'}</div>
+  <h2 style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:16px">Votre personnage</h2>
+  <div class="intro-card">${INTRO[role]}</div>
+  <button class="btn-primary" onclick="beginSteps()">Commencer →</button>
+</div>`}
+
+function vStep(){
+  const s   = STEPS[step];
+  const ctx = CTX[role][step];
+  const q   = role==='c'?(s.qC||s.q):(s.qR||s.q);
+  const isC = role==='c';
+  const isLast = step===STEPS.length-1;
+  const dots = STEPS.map((_,i)=>`<div class="pdot${i<step?' pdot-done':i===step?' pdot-cur':''}"></div>`).join('');
+  return`
+<div class="wrap">
+  <div class="role-badge ${isC?'badge-c':'badge-r'}">${isC?'👤 Mehdi':'📋 Sophie'}</div>
+  <div class="progress-row">${dots}</div>
+  <div class="step-chip">${s.title} · ${s.sub}</div>
+
+  <div class="ctx-card">
+    <div class="ctx-label">Votre contexte</div>
+    <p>${ctx}</p>
+  </div>
+
+  <div class="doc-wrap">${DOCS[step]}</div>
+
+  <div class="vote-box">
+    <p class="vote-q">${q}</p>
+    <div class="likert-ends">
+      <span>${s.min}</span><span>${s.max}</span>
+    </div>
+    <div class="likert-row">
+      ${[1,2,3,4,5].map(n=>`<button class="lbtn${sel===n?' lbtn-sel':''}" onclick="selVal(${n})">${n}</button>`).join('')}
+    </div>
+    <button class="btn-primary" onclick="next()" ${sel&&!saving?'':'disabled'}>
+      ${saving?'Enregistrement...':(isLast?'Terminer →':'Étape suivante →')}
+    </button>
+  </div>
+</div>`}
+
+function vEnd(){return`
+<div class="screen-center">
+  <div style="max-width:400px;width:100%;text-align:center">
+    <div class="end-icon">✓</div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:1.6rem;margin-bottom:12px">Merci !</h2>
+    <p style="color:var(--dim);font-size:.95rem;line-height:1.65">Vos ${STEPS.length} réponses ont bien été enregistrées.<br>Elles seront analysées lors de la session.</p>
+  </div>
+</div>`}
+
+function start(r){role=r;view='intro';render()}
+function beginSteps(){step=0;sel=null;view='step';render()}
+function selVal(n){sel=n;render()}
+
+async function next(){
+  if(!sel||saving)return;
+  saving=true;render();
+  try{await sb.from('votes').insert({step,team:role,value:sel})}
+  catch(e){console.error(e)}
+  saving=false;
+  step++;sel=null;
+  if(step>=STEPS.length)view='end';
+  render();
+}
+
+render();
+</script>
+</body>
+</html>

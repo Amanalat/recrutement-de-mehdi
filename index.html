@@ -297,8 +297,8 @@ button{font-family:inherit;cursor:pointer}
 // ══ SUPABASE ══
 // Remplace les deux valeurs ci-dessous par celles de ton projet Supabase
 // (Settings > API dans le dashboard)
-const SUPABASE_URL = 'COLLE_TON_PROJECT_URL_ICI';
-const SUPABASE_KEY = 'COLLE_TON_ANON_KEY_ICI';
+const SUPABASE_URL = 'https://itfwepbhfbtodjkttkxf.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_fhNdwRE5atqIpqczpHxTHw_6SyRnxTq';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const KGS = 'game_state';
@@ -377,6 +377,7 @@ function vWelcome(){return`
         <div class="role-name" style="font-size:.8rem">Voir côté recruteur</div>
       </button>
     </div>
+    <a class="preview-link" href="solo.html">Tester en solo →</a><br>
     <button class="admin-link" onclick="S.view='auth';render()">Espace animateur →</button>
   </div>
 </div>`}
