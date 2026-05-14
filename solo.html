@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="oklch(0.13 0.02 270)">
-<title>Le recrutement de Mehdi · Solo</title>
+<title>Le recrutement · Solo</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -343,15 +343,72 @@ button{font-family:inherit;cursor:pointer;background:none;border:none;color:inhe
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}
 }
+
+/* ── DÉBRIEF ── */
+.db-wrap{flex:1;display:flex;flex-direction:column;justify-content:center;padding:24px 0;animation:fadeIn .5s ease-out}
+.db-eyebrow{font-size:.7rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--dim);margin-bottom:14px;text-align:center}
+.db-title{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;line-height:1.2;margin-bottom:18px;letter-spacing:-0.015em}
+.db-card{background:var(--bg-elev);border:1px solid var(--border-soft);border-radius:14px;padding:18px 20px;margin-bottom:14px}
+.db-card p{font-size:.93rem;line-height:1.7;color:var(--text-soft);margin-bottom:10px}
+.db-card p:last-child{margin-bottom:0}
+.db-card strong{color:var(--text)}
+.db-roles{display:flex;gap:10px;margin-bottom:14px}
+.db-role{flex:1;padding:14px 10px;border-radius:12px;text-align:center;position:relative}
+.db-role.is-c{background:var(--c-glow);border:1px solid var(--c-tint)}
+.db-role.is-r{background:var(--r-glow);border:1px solid var(--r-tint)}
+.db-role-initial{font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:900;margin-bottom:4px}
+.db-role.is-c .db-role-initial{color:var(--c)}
+.db-role.is-r .db-role-initial{color:var(--r)}
+.db-role-name{font-size:.82rem;font-weight:600;color:var(--text);margin-bottom:2px}
+.db-role-desc{font-size:.72rem;color:var(--text-soft)}
+.db-role-badge{margin-top:6px;font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ok);border:1px solid var(--ok);border-radius:100px;padding:2px 8px;display:inline-block}
+.db-cta{background:var(--text);color:var(--bg);padding:16px 24px;border-radius:14px;font-weight:700;font-size:.98rem;width:100%;transition:transform .18s cubic-bezier(.2,.8,.2,1);margin-top:4px}
+.db-cta:active{transform:scale(.97)}
+
+/* ── FEEDBACK ── */
+.fb-wrap{flex:1;display:flex;flex-direction:column;padding:6px 0;animation:fadeIn .5s ease-out}
+.fb-section{background:var(--bg-elev);border:1px solid var(--border-soft);border-radius:14px;padding:18px 20px;margin-bottom:14px}
+.fb-q{font-size:.92rem;font-weight:600;color:var(--text);margin-bottom:12px;line-height:1.4}
+.fb-stars{display:flex;gap:7px}
+.fb-star{flex:1;height:44px;border-radius:10px;background:var(--bg-elev2);border:1px solid var(--border-soft);font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--dim);transition:all .15s;cursor:pointer}
+.fb-star.is-sel{background:var(--ok-glow);border-color:var(--ok);color:var(--ok)}
+.fb-star:active{transform:scale(.93)}
+.fb-labels{display:flex;justify-content:space-between;margin-top:7px;font-size:.72rem;color:var(--dim)}
+.fb-textarea{width:100%;background:var(--bg-elev2);border:1px solid var(--border-soft);border-radius:10px;padding:12px 14px;color:var(--text);font-family:inherit;font-size:.88rem;resize:none;height:96px;outline:none;transition:border-color .2s}
+.fb-textarea:focus{border-color:var(--ok)}
+.fb-textarea::placeholder{color:var(--dim)}
+
+/* ── RÉSULTATS ── */
+.rs-wrap{flex:1;padding:6px 0;animation:fadeIn .5s ease-out}
+.rs-title{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;margin-bottom:4px;letter-spacing:-0.015em}
+.rs-sub{color:var(--dim);font-size:.82rem;margin-bottom:22px}
+.rs-card{background:var(--bg-elev);border:1px solid var(--border-soft);border-radius:14px;padding:16px 20px;margin-bottom:14px}
+.rs-card-title{font-size:.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--dim);font-weight:700;margin-bottom:12px}
+.rs-stat{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border-soft);font-size:.88rem;color:var(--text-soft)}
+.rs-stat:last-child{border-bottom:none}
+.rs-val{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--ok)}
+.rs-loading{text-align:center;padding:60px 0;color:var(--dim);font-size:.9rem}
+.rs-step-roles{display:flex;gap:16px;font-size:.74rem;color:var(--dim);padding-bottom:8px;border-bottom:1px solid var(--border-soft);margin-bottom:4px}
+.rs-comment{font-size:.84rem;line-height:1.55;color:var(--text-soft);padding:10px 14px;background:var(--bg-elev2);border-radius:8px;margin-bottom:8px;border-left:3px solid var(--border);font-style:italic}
 </style>
 </head>
 <body>
 <div id="root"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="data.js"></script>
 <script>
 (function(){
   'use strict';
+
+  const SUPABASE_URL = 'https://itfwepbhfbtodjkttkxf.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_fhNdwRE5atqIpqczpHxTHw_6SyRnxTq';
+  let sb = null;
+  try {
+    if(typeof supabase !== 'undefined' && supabase && typeof supabase.createClient === 'function'){
+      sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    }
+  } catch(e){}
 
   const S = {
     view: 'welcome',
@@ -360,22 +417,64 @@ button{font-family:inherit;cursor:pointer;background:none;border:none;color:inhe
     selected: null,
     validateTimer: null,
     confettiSpawned: false,
+    votes: [],
+    fbImpression: null,
+    fbClarte: null,
+    fbText: '',
+    resultatsData: null,
+    resultatsLoading: false,
   };
+
+  if(window.location.search.includes('resultats')){
+    S.view = 'resultats';
+    S.resultatsLoading = true;
+  }
+
+  // ─ Pre-load documents ─
+  const DOC_CACHE = new Array(DOC_PATHS.length).fill('');
+  Promise.all(DOC_PATHS.map(async (path, i) => {
+    try {
+      const resp = await fetch(path);
+      DOC_CACHE[i] = await resp.text();
+      if(S.view === 'stage' && S.step === i) render();
+    } catch(e){ console.warn('Doc load failed:', path); }
+  }));
+
+  function initDoc(step){
+    if(step !== 3) return;
+    const container = document.querySelector('.s-doc');
+    if(!container) return;
+    const rows = Array.from(container.querySelectorAll('[data-slack-row]'));
+    rows.forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(8px)';
+    });
+    rows.forEach((el, i) => {
+      setTimeout(() => {
+        el.style.transition = 'opacity .4s ease, transform .4s ease';
+        el.style.opacity = '1';
+        el.style.transform = '';
+      }, 300 + i * 820);
+    });
+  }
 
   function render(){
     const r = document.getElementById('root');
     let html = '';
     switch(S.view){
-      case 'welcome': html = vWelcome(); break;
-      case 'reveal':  html = vReveal();  break;
-      case 'stage':   html = vStage();   break;
-      case 'end':     html = vEnd();     break;
-      default:        html = vWelcome();
+      case 'welcome':   html = vWelcome();   break;
+      case 'reveal':    html = vReveal();    break;
+      case 'stage':     html = vStage();     break;
+      case 'debrief':   html = vDebrief();   break;
+      case 'feedback':  html = vFeedback();  break;
+      case 'thanks':    html = vThanks();    break;
+      case 'resultats': html = vResultats(); break;
+      default:          html = vWelcome();
     }
     r.innerHTML = html;
     window.scrollTo(0, 0);
-    if(S.view === 'stage'){ initSliderPct(); }
-    if(S.view === 'end' && !S.confettiSpawned){
+    if(S.view === 'stage'){ initSliderPct(); initDoc(S.step); }
+    if(S.view === 'thanks' && !S.confettiSpawned){
       spawnConfetti();
       S.confettiSpawned = true;
     }
@@ -451,8 +550,8 @@ button{font-family:inherit;cursor:pointer;background:none;border:none;color:inhe
     return `
 <div class="w-wrap">
   <div class="w-eyebrow">Mode démo · test individuel</div>
-  <h1 class="w-title">Le recrutement<br>de Mehdi</h1>
-  <p class="w-sub">Vous allez vivre six actes du recrutement de Mehdi, depuis l'un des deux points de vue. Aucune préparation requise.</p>
+  <h1 class="w-title">Le recrutement</h1>
+  <p class="w-sub">Vous allez vivre six actes d'un recrutement, depuis l'un des deux points de vue. Aucune préparation requise.</p>
   <button class="w-cta" data-action="start">Commencer</button>
   <div class="w-info">Votre rôle sera attribué au hasard.</div>
 </div>`;
@@ -506,7 +605,7 @@ button{font-family:inherit;cursor:pointer;background:none;border:none;color:inhe
 
   <div class="s-ctx"><p>${ctx}</p></div>
 
-  <div class="s-doc">${DOCS[S.step]}</div>
+  <div class="s-doc">${DOC_CACHE[S.step] || DOCS[S.step] || ''}</div>
 
   <div class="answer-card">
     <div class="answer-value ${hasVal?'is-set':''}" id="val-display">${display}</div>
@@ -534,17 +633,145 @@ button{font-family:inherit;cursor:pointer;background:none;border:none;color:inhe
 </div>`;
   }
 
-  function vEnd(){
+  function vDebrief(){
+    const isC = S.role === 'c';
+    return `
+<div class="db-wrap">
+  <div class="db-eyebrow">Ce que vous venez de vivre</div>
+  <h2 class="db-title">Le but de cette expérience</h2>
+  <div class="db-card">
+    <p>Ce projet teste si les informations données autour d'éléments objectifs — <strong>un CV, un échange</strong> — altèrent le jugement et engagent des <strong>biais cognitifs</strong>.</p>
+    <p>Les participants ont été répartis aléatoirement en deux catégories :</p>
+  </div>
+  <div class="db-roles">
+    <div class="db-role is-c">
+      <div class="db-role-initial">M</div>
+      <div class="db-role-name">Mehdi Arif</div>
+      <div class="db-role-desc">Le candidat</div>
+      ${isC ? '<div class="db-role-badge">Votre rôle</div>' : ''}
+    </div>
+    <div class="db-role is-r">
+      <div class="db-role-initial">S</div>
+      <div class="db-role-name">Sophie Martin</div>
+      <div class="db-role-desc">La recruteuse</div>
+      ${!isC ? '<div class="db-role-badge">Votre rôle</div>' : ''}
+    </div>
+  </div>
+  <div class="db-card">
+    <p>En vivant la même scène depuis des points de vue opposés, chacun développe des <strong>interprétations différentes</strong> des mêmes faits — c'est précisément ce que révèlent les biais cognitifs.</p>
+  </div>
+  <button class="db-cta" data-action="goFeedback">Répondre au questionnaire →</button>
+</div>`;
+  }
+
+  function vFeedback(){
+    const imp = S.fbImpression;
+    const cla = S.fbClarte;
+    const canSubmit = imp !== null && cla !== null;
+    const starsImp = [1,2,3,4,5].map(v =>
+      `<button class="fb-star${imp===v?' is-sel':''}" data-fb-q="impression" data-fb-v="${v}">${v}</button>`
+    ).join('');
+    const starsCla = [1,2,3,4,5].map(v =>
+      `<button class="fb-star${cla===v?' is-sel':''}" data-fb-q="clarte" data-fb-v="${v}">${v}</button>`
+    ).join('');
+    return `
+<div class="fb-wrap">
+  <div class="s-act" style="margin-bottom:12px">Questionnaire · Retour sur l'expérience</div>
+  <h2 class="s-title" style="margin-bottom:20px">Votre avis nous intéresse</h2>
+
+  <div class="fb-section">
+    <div class="fb-q">Comment jugez-vous cet exercice ?</div>
+    <div class="fb-stars">${starsImp}</div>
+    <div class="fb-labels"><span>Peu utile</span><span>Très utile</span></div>
+  </div>
+
+  <div class="fb-section">
+    <div class="fb-q">Le trouvez-vous clair ?</div>
+    <div class="fb-stars">${starsCla}</div>
+    <div class="fb-labels"><span>Peu clair</span><span>Très clair</span></div>
+  </div>
+
+  <div class="fb-section">
+    <div class="fb-q">Que pourrait-on améliorer ? <span style="color:var(--dim);font-weight:400">(facultatif)</span></div>
+    <textarea class="fb-textarea" id="fb-text" placeholder="Vos suggestions...">${escHtml(S.fbText)}</textarea>
+  </div>
+
+  <button class="validate${canSubmit?' is-visible':''}" id="fb-submit-btn" data-action="submitFeedback">Envoyer mon retour</button>
+</div>`;
+  }
+
+  function vThanks(){
     return `
 <div class="confetti-stage" id="confetti-stage"></div>
 <div class="e-wrap">
   <div class="e-mark">✓</div>
   <div class="e-eyebrow">Vous avez vécu les six actes</div>
-  <h1 class="e-title">Merci d'avoir<br>participé à l'expérience.</h1>
+  <h1 class="e-title">Merci pour<br>votre retour.</h1>
   <p class="e-sub">Lors d'une session live, l'animateur reviendrait maintenant sur chaque acte pour révéler le biais en jeu.</p>
   <button class="e-restart" data-action="restart">Recommencer</button>
 </div>`;
   }
+
+  function vResultats(){
+    if(S.resultatsLoading){
+      return `<div class="rs-wrap"><p class="rs-loading">Chargement des résultats…</p></div>`;
+    }
+    const data = S.resultatsData || [];
+    if(!data.length){
+      return `<div class="rs-wrap"><h2 class="rs-title">Résultats</h2><p class="rs-sub" style="margin-top:16px">Aucune réponse enregistrée pour l'instant.</p></div>`;
+    }
+    const n = data.length;
+    const nC = data.filter(d => d.role === 'c').length;
+    const nR = n - nC;
+    const avgImp = avg(data.map(d => d.impression).filter(v => v != null));
+    const avgCla = avg(data.map(d => d.clarte).filter(v => v != null));
+    const comments = data.map(d => d.ameliorations).filter(Boolean);
+
+    const stepsHtml = STEPS.map((step, i) => {
+      const allV = data.map(d => (d.votes||[])[i]).filter(v => v != null);
+      const cV   = data.filter(d => d.role==='c').map(d => (d.votes||[])[i]).filter(v => v != null);
+      const rV   = data.filter(d => d.role==='r').map(d => (d.votes||[])[i]).filter(v => v != null);
+      const aAll = avg(allV); const aC = avg(cV); const aR = avg(rV);
+      return `
+<div class="rs-stat">
+  <span>${step.title} · ${step.sub}</span>
+  <span class="rs-val">${aAll ? aAll.toFixed(1) : '—'}</span>
+</div>
+<div class="rs-step-roles">
+  <span>Mehdi : ${aC ? aC.toFixed(1) : '—'}</span>
+  <span>Sophie : ${aR ? aR.toFixed(1) : '—'}</span>
+</div>`;
+    }).join('');
+
+    const commentsHtml = comments.length
+      ? comments.map(c => `<div class="rs-comment">${escHtml(c)}</div>`).join('')
+      : '<p style="color:var(--dim);font-size:.85rem">Aucune suggestion.</p>';
+
+    return `
+<div class="rs-wrap">
+  <h2 class="rs-title">Résultats</h2>
+  <p class="rs-sub">${n} participant${n>1?'s':''} · ${nC} Mehdi · ${nR} Sophie</p>
+
+  <div class="rs-card">
+    <div class="rs-card-title">Ressenti global</div>
+    <div class="rs-stat"><span>Utilité de l'exercice</span><span class="rs-val">${avgImp ? avgImp.toFixed(1)+' / 5' : '—'}</span></div>
+    <div class="rs-stat"><span>Clarté de l'exercice</span><span class="rs-val">${avgCla ? avgCla.toFixed(1)+' / 5' : '—'}</span></div>
+  </div>
+
+  <div class="rs-card">
+    <div class="rs-card-title">Votes par acte · moyenne toutes réponses</div>
+    ${stepsHtml}
+  </div>
+
+  <div class="rs-card">
+    <div class="rs-card-title">Pistes d'amélioration (${comments.length})</div>
+    ${commentsHtml}
+  </div>
+</div>`;
+  }
+
+  function avg(arr){ return arr.length ? arr.reduce((a,b)=>a+b,0)/arr.length : null; }
+  function escHtml(s){ if(!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
   function pickQuestion(step, role){
     if(role === 'c' && step.qC) return step.qC;
@@ -560,6 +787,10 @@ button{font-family:inherit;cursor:pointer;background:none;border:none;color:inhe
 
   function begin(){
     S.step = 0;
+    S.votes = [];
+    S.fbImpression = null;
+    S.fbClarte = null;
+    S.fbText = '';
     resetSelection();
     S.view = 'stage';
     render();
@@ -568,6 +799,10 @@ button{font-family:inherit;cursor:pointer;background:none;border:none;color:inhe
   function restart(){
     S.role = null;
     S.step = 0;
+    S.votes = [];
+    S.fbImpression = null;
+    S.fbClarte = null;
+    S.fbText = '';
     resetSelection();
     S.view = 'welcome';
     S.confettiSpawned = false;
@@ -582,16 +817,58 @@ button{font-family:inherit;cursor:pointer;background:none;border:none;color:inhe
   function confirmVote(){
     if(S.selected === null || S.selected === undefined) return;
     if(S.validateTimer){ clearTimeout(S.validateTimer); S.validateTimer = null; }
+    S.votes.push(S.selected);
     resetSelection();
     if(S.step >= STEPS.length - 1){
-      S.view = 'end';
+      S.view = 'debrief';
     } else {
       S.step++;
     }
     render();
   }
 
+  function pickFbStar(q, v){
+    const textEl = document.getElementById('fb-text');
+    if(textEl) S.fbText = textEl.value;
+    if(q === 'impression') S.fbImpression = v;
+    else if(q === 'clarte') S.fbClarte = v;
+    render();
+  }
+
+  async function submitFeedback(){
+    const textEl = document.getElementById('fb-text');
+    const text = (textEl ? textEl.value : S.fbText).trim();
+    if(sb){
+      try {
+        await sb.from('solo_feedback').insert({
+          role: S.role,
+          votes: S.votes,
+          impression: S.fbImpression,
+          clarte: S.fbClarte,
+          ameliorations: text || null,
+        });
+      } catch(e){ console.error('submitFeedback', e); }
+    }
+    S.view = 'thanks';
+    render();
+  }
+
+  async function loadResultats(){
+    if(!sb){ S.resultatsLoading = false; render(); return; }
+    try {
+      const { data } = await sb.from('solo_feedback').select('*').order('created_at', { ascending: false });
+      S.resultatsData = data || [];
+    } catch(e){
+      console.error('loadResultats', e);
+      S.resultatsData = [];
+    }
+    S.resultatsLoading = false;
+    render();
+  }
+
   document.addEventListener('click', function(e){
+    const fb = e.target.closest('[data-fb-q]');
+    if(fb){ pickFbStar(fb.dataset.fbQ, parseInt(fb.dataset.fbV)); return; }
     const t = e.target.closest('[data-action]');
     if(!t) return;
     const action = t.dataset.action;
@@ -599,12 +876,15 @@ button{font-family:inherit;cursor:pointer;background:none;border:none;color:inhe
     else if(action === 'begin') begin();
     else if(action === 'restart') restart();
     else if(action === 'validate') confirmVote();
+    else if(action === 'goFeedback'){ S.view = 'feedback'; render(); }
+    else if(action === 'submitFeedback') submitFeedback();
   });
   document.addEventListener('input', function(e){
     if(e.target.matches('[data-slider]')) onSliderInput(e.target);
   });
 
   render();
+  if(S.view === 'resultats' && S.resultatsLoading) loadResultats();
 })();
 </script>
 </body>

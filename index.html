@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Le Recrutement de Mehdi</title>
+<title>Le Recrutement</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -351,6 +351,16 @@ async function resetAll(){
 let S={view:'welcome',role:null,voted:{},gs:null,votes:[],proj:false,sel:null,authErr:false};
 let pollTmr=null;
 
+// ── Pre-load documents ──
+const DOC_CACHE = new Array(DOC_PATHS.length).fill('');
+Promise.all(DOC_PATHS.map(async (path, i) => {
+  try {
+    const resp = await fetch(path);
+    DOC_CACHE[i] = await resp.text();
+    if(S.view==='admin'||S.view==='preview'||S.view==='rolePreview') render();
+  } catch(e){ console.warn('Doc load failed:', path); }
+}));
+
 function startPoll(){if(pollTmr)clearInterval(pollTmr);pollTmr=setInterval(tick,2600)}
 function stopPoll(){if(pollTmr){clearInterval(pollTmr);pollTmr=null}}
 
@@ -394,7 +404,7 @@ function vWelcome(){return`
 <div class="screen">
   <div class="welcome-box">
     <div class="game-eyebrow">Jeu pédagogique · Média &amp; recrutement</div>
-    <h1 class="game-title">Le Recrutement<br>de Mehdi</h1>
+    <h1 class="game-title">Le Recrutement</h1>
     <p class="game-desc">Rejoignez la session pour participer</p>
     <button class="btn-primary" onclick="joinRandom()" style="margin-bottom:20px">Rejoindre →</button>
     <div class="role-grid" style="margin-bottom:8px">
@@ -517,7 +527,7 @@ ${S.proj?`<button class="proj-toggle-btn" onclick="toggleProj()">↙ Quitter</bu
 <div class="admin-layout${S.proj?' proj-mode':''}">
   <div class="doc-panel">
     <div class="doc-step-label">${step.title} · ${step.sub}</div>
-    ${DOCS[gs.step]}
+    ${DOC_CACHE[gs.step] || DOCS[gs.step] || ''}
   </div>
   <div class="admin-sidebar">
     <div class="sidebar-inner">
@@ -610,13 +620,13 @@ function vPreview(){
       <div class="preview-col">
         <div class="preview-col-hdr"><span class="role-badge badge-c">👤 Mehdi · Candidat</span></div>
         <div class="preview-ctx"><div class="preview-ctx-lbl">Contexte secret</div><p>${CTX.c[i]}</p></div>
-        <div class="preview-doc-wrap">${DOCS[i]}</div>
+        <div class="preview-doc-wrap">${DOC_CACHE[i] || DOCS[i] || ''}</div>
         <div class="preview-vote-q">❓ ${step.qC||step.q}<br><small style="font-size:.75rem;color:var(--dim);font-style:normal;display:block;margin-top:4px">${step.min} → ${step.max}</small></div>
       </div>
       <div class="preview-col">
         <div class="preview-col-hdr"><span class="role-badge badge-r">📋 Sophie · Recruteuse RH</span></div>
         <div class="preview-ctx"><div class="preview-ctx-lbl">Contexte secret</div><p>${CTX.r[i]}</p></div>
-        <div class="preview-doc-wrap">${DOCS[i]}</div>
+        <div class="preview-doc-wrap">${DOC_CACHE[i] || DOCS[i] || ''}</div>
         <div class="preview-vote-q">❓ ${step.qR||step.q}<br><small style="font-size:.75rem;color:var(--dim);font-style:normal;display:block;margin-top:4px">${step.min} → ${step.max}</small></div>
       </div>
     </div>
@@ -656,7 +666,7 @@ function vRolePreview(){
     </div>
     <div class="step-chip" style="display:inline-block;margin-bottom:14px">${step.title} · ${step.sub} &nbsp;·&nbsp; ${step.when}</div>
     <div class="ctx-card" style="margin-bottom:16px"><div class="ctx-label">Contexte secret</div><p>${ctx}</p></div>
-    <div style="margin-bottom:20px">${DOCS[i]}</div>
+    <div style="margin-bottom:20px">${DOC_CACHE[i] || DOCS[i] || ''}</div>
     <div style="margin-bottom:20px">
       <p style="font-size:1.05rem;font-weight:600;margin-bottom:14px;line-height:1.45">${q}</p>
       <div class="answer-card">

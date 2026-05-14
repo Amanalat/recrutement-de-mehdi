@@ -159,10 +159,20 @@ const CTX = {
 
 // ══════════════════════════════════════════════════
 //  DOCUMENTS PROJETÉS
-//  DOCS[i] = HTML du document affiché à l'étape i.
-//  Les classes CSS sont définies dans index.html / screen.html.
+//  DOC_PATHS[i] = chemin du fichier HTML pour l'étape i.
+//  Chargés dynamiquement via fetch() — modifiables dans docs/.
 // ══════════════════════════════════════════════════
 
+const DOC_PATHS = [
+  'docs/acte1-cv.html',
+  'docs/acte2-entretien.html',
+  'docs/acte3-email-offre.html',
+  'docs/acte4-slack.html',
+  'docs/acte5-email-charte.html',
+  'docs/acte6-evaluation.html',
+];
+
+/* ── Legacy inline DOCS (conservé en fallback) ── */
 const DOCS = [
 
 /* ── Acte 1 : CV ── */

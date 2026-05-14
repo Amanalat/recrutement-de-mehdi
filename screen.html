@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Le recrutement de Mehdi · Projection</title>
+<title>Le recrutement · Projection</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -526,6 +526,35 @@ async function getVotes(n){
 
 const S = {gs:null, votes:[], started:false};
 let pollTmr=null;
+let lastAnimatedStep = -1;
+
+// Pre-load documents
+const DOC_CACHE = new Array(DOC_PATHS.length).fill('');
+Promise.all(DOC_PATHS.map(async (path, i) => {
+  try {
+    const resp = await fetch(path);
+    DOC_CACHE[i] = await resp.text();
+    if(S.gs && S.gs.step === i) render();
+  } catch(e){ console.warn('Doc load failed:', path); }
+}));
+
+function initDoc(step){
+  if(step !== 3) return;
+  const container = document.querySelector('.doc-stage');
+  if(!container) return;
+  const rows = Array.from(container.querySelectorAll('[data-slack-row]'));
+  rows.forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(8px)';
+  });
+  rows.forEach((el, i) => {
+    setTimeout(() => {
+      el.style.transition = 'opacity .4s ease, transform .4s ease';
+      el.style.opacity = '1';
+      el.style.transform = '';
+    }, 300 + i * 820);
+  });
+}
 
 async function tick(){
   const gs = await getGS();
@@ -550,13 +579,18 @@ function render(){
   }
   S.started = true;
   r.innerHTML = vStage();
+  const curStep = S.gs.step;
+  if(curStep !== lastAnimatedStep){
+    lastAnimatedStep = curStep;
+    initDoc(curStep);
+  }
 }
 
 function vIdle(){return `
 <div class="tracker">${STEPS.map(()=>`<div class="tk"></div>`).join('')}</div>
 <div class="idle-wrap">
   <div class="idle-eyebrow">Conférence · biais cognitifs</div>
-  <h1 class="idle-title">Le recrutement de Mehdi</h1>
+  <h1 class="idle-title">Le recrutement</h1>
   <p class="idle-sub">Six actes. Deux perspectives. Un seul candidat. Préparez-vous à regarder votre propre jugement à l'œuvre.</p>
   <div class="idle-roles">
     <div class="idle-role"><span class="idle-role-dot is-c"></span>Mehdi &nbsp;·&nbsp; Candidat</div>
@@ -597,7 +631,7 @@ function vStage(){
   <div class="head-when">${step.when}</div>
 </div>
 <div class="body ${bodyClass}">
-  <div class="doc-stage">${DOCS[gs.step]}</div>
+  <div class="doc-stage">${DOC_CACHE[gs.step] || DOCS[gs.step] || ''}</div>
   ${showSide ? `<div class="side">${sidePanel}</div>` : ''}
 </div>
 `;}
