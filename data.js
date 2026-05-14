@@ -177,14 +177,14 @@ const DOCS = [
 
 /* ── Acte 1 : CV ── */
 `<div class="doc doc-paper">
-  <div class="cv-header">
+  <div class="cv-header" data-anim-row>
     <div class="cv-name">MEHDI ARIF</div>
     <div class="cv-title">Chargé de communication</div>
     <div class="cv-contact">mehdi.arif@email.com &nbsp;·&nbsp; 06 XX XX XX XX &nbsp;·&nbsp; Paris 75011</div>
   </div>
   <div class="cv-section">
-    <div class="cv-section-title">Expériences professionnelles</div>
-    <div class="cv-job">
+    <div class="cv-section-title" data-anim-row>Expériences professionnelles</div>
+    <div class="cv-job" data-anim-row>
       <div class="cv-job-top"><strong>Chargé de communication, Agence Lumeo, Paris</strong><span class="cv-date">Sept. 2020 – Nov. 2021 · 14 mois</span></div>
       <ul>
         <li>Gestion des réseaux sociaux (45 000 abonnés cumulés)</li>
@@ -192,8 +192,8 @@ const DOCS = [
         <li>Coordination avec les équipes créatives</li>
       </ul>
     </div>
-    <div class="cv-gap">▸ Décembre 2021, période de transition</div>
-    <div class="cv-job">
+    <p style="font-size:.78rem;color:oklch(0.58 0.01 270);font-style:italic;padding:3px 12px;margin:2px 0">▸ Décembre 2021, période de transition</p>
+    <div class="cv-job" data-anim-row>
       <div class="cv-job-top"><strong>Bénévole Communication, Association Passerelle, Paris</strong><span class="cv-date">Janv. 2022 – Juin 2023 · 18 mois</span></div>
       <ul>
         <li>Refonte du site web et des supports de communication</li>
@@ -202,12 +202,12 @@ const DOCS = [
       </ul>
     </div>
   </div>
-  <div class="cv-section">
+  <div class="cv-section" data-anim-row>
     <div class="cv-section-title">Formation</div>
     <p>Licence Information-Communication, Université Lyon 2</p>
     <p>Formation "Community Management", OpenClassrooms (2022)</p>
   </div>
-  <div class="cv-section">
+  <div class="cv-section" data-anim-row>
     <div class="cv-section-title">Compétences</div>
     <p>Canva &nbsp;·&nbsp; Adobe Suite &nbsp;·&nbsp; Meta Business Suite &nbsp;·&nbsp; Notion &nbsp;·&nbsp; Mailchimp</p>
   </div>
@@ -220,36 +220,36 @@ const DOCS = [
     <span>Durée : 3 min 12</span>
   </div>
   <div class="transcript-body">
-    <div class="tline tline-rh"><span class="tspk">Sophie</span><span class="ttxt">Sur votre CV, entre novembre 2021 et janvier 2022, je vois une période qui n'est pas renseignée. C'était quoi, cette période ?</span></div>
-    <div class="tline tline-c"><span class="tspk">Mehdi</span><span class="ttxt">Oui, tout à fait. J'ai quitté l'agence Lumeo fin novembre et j'ai pris un peu de temps pour moi avant de m'engager chez Passerelle. C'était une transition voulue.</span></div>
-    <div class="tline tline-rh"><span class="tspk">Sophie</span><span class="ttxt">D'accord. Et ce départ de Lumeo, c'était dans quelles circonstances ?</span></div>
-    <div class="tline tline-c"><span class="tspk">Mehdi</span><span class="ttxt">C'était... une décision personnelle. Le poste ne correspondait plus à ce que je cherchais, disons. J'avais envie de m'investir différemment.</span></div>
-    <div class="tline tline-rh"><span class="tspk">Sophie</span><span class="ttxt">Est-ce que vous pouvez m'en dire un peu plus sur ce qui n'allait pas ?</span></div>
-    <div class="tline tline-c"><span class="tspk">Mehdi</span><span class="ttxt"><em>[silence, 3 secondes]</em>&nbsp; Disons que l'environnement de travail n'était pas idéal pour moi. Mais j'en tire des apprentissages, et c'est ce qui m'a amené vers le bénévolat ensuite.</span></div>
-    <div class="tline tline-rh"><span class="tspk">Sophie</span><span class="ttxt">Très bien. Et chez Passerelle, c'était une expérience enrichissante ?</span></div>
-    <div class="tline tline-c"><span class="tspk">Mehdi</span><span class="ttxt">Vraiment, oui. C'est là où j'ai le plus progressé, en fait.</span></div>
+    <div class="tline tline-rh" data-anim-row><span class="tspk">Sophie</span><span class="ttxt">Sur votre CV, entre novembre 2021 et janvier 2022, je vois une période qui n'est pas renseignée. C'était quoi, cette période ?</span></div>
+    <div class="tline tline-c" data-anim-row><span class="tspk">Mehdi</span><span class="ttxt">Oui, tout à fait. J'ai quitté l'agence Lumeo fin novembre et j'ai pris un peu de temps pour moi avant de m'engager chez Passerelle. C'était une transition voulue.</span></div>
+    <div class="tline tline-rh" data-anim-row><span class="tspk">Sophie</span><span class="ttxt">D'accord. Et ce départ de Lumeo, c'était dans quelles circonstances ?</span></div>
+    <div class="tline tline-c" data-anim-row><span class="tspk">Mehdi</span><span class="ttxt">C'était... une décision personnelle. Le poste ne correspondait plus à ce que je cherchais, disons. J'avais envie de m'investir différemment.</span></div>
+    <div class="tline tline-rh" data-anim-row><span class="tspk">Sophie</span><span class="ttxt">Est-ce que vous pouvez m'en dire un peu plus sur ce qui n'allait pas ?</span></div>
+    <div class="tline tline-c" data-anim-row><span class="tspk">Mehdi</span><span class="ttxt"><em>[silence, 3 secondes]</em>&nbsp; Disons que l'environnement de travail n'était pas idéal pour moi. Mais j'en tire des apprentissages, et c'est ce qui m'a amené vers le bénévolat ensuite.</span></div>
+    <div class="tline tline-rh" data-anim-row><span class="tspk">Sophie</span><span class="ttxt">Très bien. Et chez Passerelle, c'était une expérience enrichissante ?</span></div>
+    <div class="tline tline-c" data-anim-row><span class="tspk">Mehdi</span><span class="ttxt">Vraiment, oui. C'est là où j'ai le plus progressé, en fait.</span></div>
   </div>
 </div>`,
 
 /* ── Acte 3 : Email d'offre ── */
 `<div class="doc doc-paper">
-  <div class="email-meta">
+  <div class="email-meta" data-anim-row>
     <div class="email-row"><span class="email-lbl">De :</span><span>sophie.martin@comstudio.fr</span></div>
     <div class="email-row"><span class="email-lbl">À :</span><span>mehdi.arif@email.com</span></div>
     <div class="email-row"><span class="email-lbl">Objet :</span><strong>Offre de poste, Chargé de communication</strong></div>
     <div class="email-row"><span class="email-lbl">Date :</span><span>Mercredi 14 février, 17h43</span></div>
   </div>
   <div class="email-body">
-    <p>Bonjour Mehdi,</p>
-    <p>Suite à nos échanges, nous avons le plaisir de vous adresser une proposition formelle pour le poste de <strong>Chargé de communication</strong> au sein de ComStudio.</p>
-    <div class="email-table">
+    <p data-anim-row>Bonjour Mehdi,</p>
+    <p data-anim-row>Suite à nos échanges, nous avons le plaisir de vous adresser une proposition formelle pour le poste de <strong>Chargé de communication</strong> au sein de ComStudio.</p>
+    <div class="email-table" data-anim-row>
       <div class="email-tr"><span>Contrat</span><span>CDI, temps plein</span></div>
       <div class="email-tr"><span>Rémunération</span><span>2 400 € brut / mois</span></div>
       <div class="email-tr"><span>Prise de poste</span><span>Lundi 4 mars</span></div>
       <div class="email-tr"><span>Période d'essai</span><span>2 mois renouvelable une fois</span></div>
     </div>
-    <p>Nous vous remercions de bien vouloir nous confirmer votre accord <strong>avant vendredi 16 février, 12h00</strong>. Passé ce délai, nous serions contraints de nous tourner vers d'autres candidatures.</p>
-    <p>Dans l'attente de votre retour,<br><strong>Sophie Martin</strong><br><em>Responsable Ressources Humaines, ComStudio</em></p>
+    <p data-anim-row>Nous vous remercions de bien vouloir nous confirmer votre accord <strong>avant vendredi 16 février, 12h00</strong>. Passé ce délai, nous serions contraints de nous tourner vers d'autres candidatures.</p>
+    <p data-anim-row>Dans l'attente de votre retour,<br><strong>Sophie Martin</strong><br><em>Responsable Ressources Humaines, ComStudio</em></p>
   </div>
 </div>`,
 
@@ -257,7 +257,7 @@ const DOCS = [
 `<div class="doc" style="padding:0;overflow:hidden;max-width:660px;width:100%">
   <div class="slack-topbar">💬 Slack, #général, Lundi 4 mars</div>
   <div class="slack-body">
-    <div class="slack-msg">
+    <div class="slack-msg" data-anim-row>
       <div class="slack-time">09:02</div>
       <div class="slack-content">
         <span class="slack-user">sophie.martin</span>
@@ -265,7 +265,7 @@ const DOCS = [
         <span class="slack-react">👋 👋 🎉 😊</span>
       </div>
     </div>
-    <div class="slack-msg">
+    <div class="slack-msg" data-anim-row>
       <div class="slack-time">09:48</div>
       <div class="slack-content">
         <span class="slack-user">thomas.rey <em class="slack-badge">Manager</em></span>
@@ -273,7 +273,7 @@ const DOCS = [
         <span class="slack-react">·</span>
       </div>
     </div>
-    <div class="slack-msg">
+    <div class="slack-msg" data-anim-row>
       <div class="slack-time">12:31</div>
       <div class="slack-content">
         <span class="slack-user">thomas.rey <em class="slack-badge">Manager</em></span>
@@ -281,15 +281,15 @@ const DOCS = [
         <span class="slack-react">·</span>
       </div>
     </div>
-    <div class="slack-msg slack-reply">
+    <div class="slack-msg slack-reply" data-anim-row>
       <div class="slack-time">12:34</div>
       <div class="slack-content">
         <span class="slack-user">mehdi.arif</span>
         <span class="slack-text">Pas de souci, à demain ! 👍</span>
       </div>
     </div>
-    <div class="slack-note">📷 &nbsp;Bureau 12, 09h17, ordinateur éteint, badge posé sur le clavier</div>
-    <div class="slack-msg" style="margin-top:14px">
+    <div class="slack-note" data-anim-row>📷 &nbsp;Bureau 12, 09h17, ordinateur éteint, badge posé sur le clavier</div>
+    <div class="slack-msg" style="margin-top:14px" data-anim-row>
       <div class="slack-time">17:52</div>
       <div class="slack-content">
         <span class="slack-user">mehdi.arif</span>
@@ -302,7 +302,7 @@ const DOCS = [
 
 /* ── Acte 5 : Email réclamation charte ── */
 `<div class="doc doc-paper">
-  <div class="email-meta email-alert">
+  <div class="email-meta email-alert" data-anim-row>
     <div class="email-row"><span class="email-lbl">De :</span><span>contact@fondation-espoir.org</span></div>
     <div class="email-row"><span class="email-lbl">À :</span><span>thomas.rey@comstudio.fr</span></div>
     <div class="email-row"><span class="email-lbl">Cc :</span><span>sophie.martin@comstudio.fr</span></div>
@@ -310,35 +310,35 @@ const DOCS = [
     <div class="email-row"><span class="email-lbl">Date :</span><span>Jeudi 21 mars, 11h14</span></div>
   </div>
   <div class="email-body">
-    <p>Bonjour Thomas,</p>
-    <p>Nous avons bien reçu les éléments envoyés hier par votre collaborateur <strong>Mehdi Arif</strong> concernant notre prochaine campagne de communication.</p>
-    <p>Cependant, nous constatons que les visuels transmis utilisent votre <strong>ancienne charte graphique</strong> (logo et couleurs pré-janvier 2024), alors que nous avions déjà intégré votre nouvelle identité dans nos propres documents de travail.</p>
-    <p>Pourriez-vous nous faire parvenir une version corrigée rapidement ? Nous avons une réunion de validation interne <strong>vendredi matin</strong>.</p>
-    <p>Merci de votre compréhension.<br><strong>Isabelle Fontaine</strong><br><em>Chargée de partenariats, Fondation Espoir</em></p>
-    <div class="email-attach">📎 visuel_campagne_comstudio_v1.pdf &nbsp;<span style="color:#999;font-style:italic">— Logo version 2022 visible</span></div>
+    <p data-anim-row>Bonjour Thomas,</p>
+    <p data-anim-row>Nous avons bien reçu les éléments envoyés hier par votre collaborateur <strong>Mehdi Arif</strong> concernant notre prochaine campagne de communication.</p>
+    <p data-anim-row>Cependant, nous constatons que les visuels transmis utilisent votre <strong>ancienne charte graphique</strong> (logo et couleurs pré-janvier 2024), alors que nous avions déjà intégré votre nouvelle identité dans nos propres documents de travail.</p>
+    <p data-anim-row>Pourriez-vous nous faire parvenir une version corrigée rapidement ? Nous avons une réunion de validation interne <strong>vendredi matin</strong>.</p>
+    <p data-anim-row>Merci de votre compréhension.<br><strong>Isabelle Fontaine</strong><br><em>Chargée de partenariats, Fondation Espoir</em></p>
+    <div class="email-attach" data-anim-row>📎 visuel_campagne_comstudio_v1.pdf &nbsp;<span style="color:#999;font-style:italic">— Logo version 2022 visible</span></div>
   </div>
 </div>`,
 
 /* ── Acte 6 : Évaluation fin de période d'essai ── */
 `<div class="doc doc-paper">
-  <div class="eval-top">
+  <div class="eval-top" data-anim-row>
     <div class="eval-confid">CONFIDENTIEL</div>
     <div class="eval-title">Évaluation, Fin de période d'essai</div>
     <div class="eval-meta">Mehdi Arif &nbsp;·&nbsp; Chargé de communication &nbsp;·&nbsp; Manager : Thomas Rey &nbsp;·&nbsp; 3 mai</div>
   </div>
   <div class="eval-grid">
-    <div class="eval-row eval-head"><span>Critère</span><span>Note</span><span>Commentaire</span></div>
-    <div class="eval-row"><span>Qualité du travail</span><span class="estars">●●●○○</span><span>"Exécution correcte, l'incident charte du 21 mars interroge"</span></div>
-    <div class="eval-row"><span>Respect des délais</span><span class="estars">●●●●○</span><span>"Ponctuel et fiable"</span></div>
-    <div class="eval-row"><span>Intégration équipe</span><span class="estars">●●●○○</span><span>"Apprécié mais reste discret"</span></div>
-    <div class="eval-row"><span>Autonomie / Initiative</span><span class="estars elow">●●○○○</span><span>"Attend les consignes plutôt que de proposer"</span></div>
-    <div class="eval-row"><span>Maîtrise des outils</span><span class="estars elow">●●○○○</span><span>"Erreur sur la charte graphique en mars"</span></div>
+    <div class="eval-row eval-head" data-anim-row><span>Critère</span><span>Note</span><span>Commentaire</span></div>
+    <div class="eval-row" data-anim-row><span>Qualité du travail</span><span class="estars">●●●○○</span><span>"Exécution correcte, l'incident charte du 21 mars interroge"</span></div>
+    <div class="eval-row" data-anim-row><span>Respect des délais</span><span class="estars">●●●●○</span><span>"Ponctuel et fiable"</span></div>
+    <div class="eval-row" data-anim-row><span>Intégration équipe</span><span class="estars">●●●○○</span><span>"Apprécié mais reste discret"</span></div>
+    <div class="eval-row" data-anim-row><span>Autonomie / Initiative</span><span class="estars elow">●●○○○</span><span>"Attend les consignes plutôt que de proposer"</span></div>
+    <div class="eval-row" data-anim-row><span>Maîtrise des outils</span><span class="estars elow">●●○○○</span><span>"Erreur sur la charte graphique en mars"</span></div>
   </div>
-  <div class="eval-comment">
+  <div class="eval-comment" data-anim-row>
     <div class="eval-comment-lbl">Appréciation générale, Thomas Rey</div>
     <p>"Profil agréable et fiable sur l'exécution. L'incident de mars a marqué l'équipe, et le manque de propositions spontanées sur 2 mois nous interpelle pour un poste de chargé de communication où la proactivité est attendue."</p>
   </div>
-  <div class="eval-decision">
+  <div class="eval-decision" data-anim-row>
     <span>☐ Renouvellement confirmé</span>
     <span>☐ Période d'essai non renouvelée</span>
     <span class="eval-pending">☑ Décision en attente, point RH prévu</span>

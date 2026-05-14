@@ -415,7 +415,6 @@ button{font-family:inherit;cursor:pointer;background:none;border:none;color:inhe
     role: null,
     step: 0,
     selected: null,
-    validateTimer: null,
     confettiSpawned: false,
     votes: [],
     fbImpression: null,
@@ -440,25 +439,54 @@ button{font-family:inherit;cursor:pointer;background:none;border:none;color:inhe
     } catch(e){ console.warn('Doc load failed:', path); }
   }));
 
+  let _activeAudio = null;
+
+  function stopActiveAudio(){
+    if(_activeAudio){ _activeAudio.pause(); _activeAudio = null; }
+  }
+
   function initDoc(step){
-    if(step !== 3) return;
+    stopActiveAudio();
     const container = document.querySelector('.s-doc');
     if(!container) return;
-    const rows = Array.from(container.querySelectorAll('[data-slack-row]'));
+    const rows = Array.from(container.querySelectorAll('[data-anim-row]'));
+    if(!rows.length) return;
+
     rows.forEach(el => {
       el.style.opacity = '0';
-      el.style.transform = 'translateY(8px)';
+      el.style.transform = 'translateY(10px)';
     });
-    rows.forEach((el, i) => {
-      setTimeout(() => {
-        el.style.transition = 'opacity .4s ease, transform .4s ease';
+
+    if(step === 1){
+      let i = 0;
+      function playNext(){
+        if(i >= rows.length) return;
+        const el = rows[i];
+        el.style.transition = 'opacity .35s ease, transform .35s ease';
         el.style.opacity = '1';
         el.style.transform = '';
-      }, 300 + i * 820);
+        const audio = new Audio(encodeURI('Audio échange 2/' + (i + 1) + '.mp3'));
+        _activeAudio = audio;
+        audio.play().catch(() => {});
+        audio.onended = () => { i++; playNext(); };
+      }
+      playNext();
+      return;
+    }
+
+    const intervals = [220, 650, 220, 820, 220, 280];
+    const interval = intervals[step] !== undefined ? intervals[step] : 300;
+    rows.forEach((el, i) => {
+      setTimeout(() => {
+        el.style.transition = 'opacity .45s ease, transform .45s ease';
+        el.style.opacity = '1';
+        el.style.transform = '';
+      }, 200 + i * interval);
     });
   }
 
   function render(){
+    stopActiveAudio();
     const r = document.getElementById('root');
     let html = '';
     switch(S.view){
@@ -504,12 +532,7 @@ button{font-family:inherit;cursor:pointer;background:none;border:none;color:inhe
     if(status){ status.textContent = 'Réponse sélectionnée'; }
 
     const btn = document.getElementById('validate-btn');
-    if(btn) btn.classList.remove('is-visible');
-    if(S.validateTimer) clearTimeout(S.validateTimer);
-    S.validateTimer = setTimeout(() => {
-      const b = document.getElementById('validate-btn');
-      if(b) b.classList.add('is-visible');
-    }, 500);
+    if(btn) btn.classList.add('is-visible');
   }
 
   function spawnConfetti(){
@@ -811,12 +834,10 @@ button{font-family:inherit;cursor:pointer;background:none;border:none;color:inhe
 
   function resetSelection(){
     S.selected = null;
-    if(S.validateTimer){ clearTimeout(S.validateTimer); S.validateTimer = null; }
   }
 
   function confirmVote(){
     if(S.selected === null || S.selected === undefined) return;
-    if(S.validateTimer){ clearTimeout(S.validateTimer); S.validateTimer = null; }
     S.votes.push(S.selected);
     resetSelection();
     if(S.step >= STEPS.length - 1){
